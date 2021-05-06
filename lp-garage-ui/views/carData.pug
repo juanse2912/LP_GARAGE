@@ -1,0 +1,73 @@
+form(id="cardata_form" novalidate action="/api/cardata" method="post").needs-validation
+    label(for="cardata_make").form-label Marca
+    input(id="cardata_make" type="text" required).form-control
+    label(for="cardata_model").form-label Modelo
+    input(id="cardata_model" type="text" required).form-control
+    label(for="cardata_displacement").form-label Cilindrada
+    .input-group.mb-3
+        input(id="cardata_displacement" type="number" required).form-control.align-right
+        select.form-select.input-group-text(id="cardata_displacement_units" aria-label="unidades cilindrada")
+            option(value="cc" selected) Centímetros cúbicos 
+            option(value="l") Litros 
+            option(value="cu ft") Pies cúbicos
+    label(for="cardata_cylinders").form-label Número de cilindros
+    .input-group.mb-3
+        span.input-group-text.badge.bg-primary
+            output(for="cardata_cylinders" id="cardata_cylinders_output") 4
+        input(id="cardata_cylinders" type="range" min=1 max=16 value=4 oninput="document.getElementById('cardata_cylinders_output').value = value").form-control.form-range
+    label(for="cardata_weight").form-label Peso del vehículo
+    .input-group.mb-3
+        input(id="cardata_weight" type="number" required).form-control.align-right
+        select.form-select.input-group-text(id="cardata_weight_units" aria-label="unidades peso vehículo") 
+            option(value="Kg" selected) Kilogramos 
+            option(value="Ton") Toneladas 
+            option(value="Lb") Libras
+    label(for="cardata_compressionratio").form-label Relación de compresión
+    .input-group.mb-3
+        input(id="cardata_compressionratio" type="number" required).form-control.align-right
+        .input-group-text :1
+    label(for="cardata_maxpower").form-label Potencia máxima (estándar)
+    .input-group.mb-3
+        input(id="cardata_maxpower" type="number" required).form-control.align-right
+        select.form-select.input-group-text(id="cardata_maxpower_help" aria-label="unidades potencia máxima") 
+            option(value="bhp" selected) Brake Horsepower
+            option(value="KW") KW 
+    label(for="cardata_rpmmaxpower").form-label RPM a potencia máxima
+    input(id="cardata_rpmmaxpower" type="number" required).form-control
+    label(for="cardata_name").form-label Nombre único 
+    input(id="cardata_name" type="text" required pattern="[\\w\\-. ]{3,255}$").form-control
+    .d-grid.gap-2.d-md-flex.justify-content-md-end.mt-3
+        button(type="submit" id="btn_save" value="submit").btn.btn-primary Guardar    
+        button(type="button" id="btn-cancel").btn.btn-secondary Cancelar
+    script.
+        function generateName() {
+            if (document.getElementById('cardata_name').value != "" ) {
+                return
+            }
+            let make = document.getElementById('cardata_make').value
+            let model = document.getElementById('cardata_model').value
+            let disp = document.getElementById('cardata_displacement').value
+            if ( make=="" || model=="" || disp=="") {
+                return;
+            }
+            let pattern = /[^\w\-.]+/g;
+            let name = make.replace(pattern, '') + "_" +
+                model.replace(pattern, '') + "_" +
+                disp.replace(pattern, '') + "_" +
+                Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3);
+            document.getElementById('cardata_name').value = name;
+        }
+
+        for (let f of ['cardata_name', 'cardata_make', 'cardata_model', 'cardata_displacement']) {
+            document.getElementById(f).addEventListener('focusout', generateName)
+        }
+        document.getElementById('cardata_form').addEventListener("submit", (e)=>{
+            form = document.getElementById("cardata_form");
+            console.log("Form submitted")
+            if (!form.checkValidity()){
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            form.classList.add('was-validated')
+        })
+        

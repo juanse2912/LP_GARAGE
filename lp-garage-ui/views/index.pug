@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div(id="wrapper").d-flex
+    //- Sidebar
+    include sidebar.pug
+    //- Page Content
+    div(id="page-content-wrapper")
+        //- navbar
+        include navbar.pug 
+        .container-fluid 
+          h1.mt-4 Welcome 
+          p This is a test
+          include carData.pug
+          p EoF
+

@@ -1,0 +1,29 @@
+.icon {
+  display:inline-block;
+  content:"";
+  vertical-align: -.125em;
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: 1rem 1rem;
+  padding-left:1.5rem;
+}
+
+.icon.engine{
+  background-image: url("/images/engine-icon.svg");
+}
+
+.icon.gearbox {
+  background-image: url("/images/shift-icon.svg");
+}
+
+.icon.brakes {
+  background-image: url("/images/brakedisk-icon.svg");
+}
+
+.icon.suspenssion {
+  background-image: url("/images/suspenssion-icon.svg");
+}
+
+input.align-right {
+  text-align: right;
+}

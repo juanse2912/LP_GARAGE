@@ -1,15 +1,16 @@
 const math = require("mathjs")
 
+//math.createUnit("rpm",`${2*Math.PI} rad/min`)
 
 class Engine {
     constructor(displacement, cylinders, compressionRatio, maxPower, rpmMaxPower, intakeType, admissionAirPressure, admissionAirTemperature){
         this.engineData = {};
         this.engineData["VH"] = math.unit(displacement).to("m^3");
-        this.engineData["NC"] = math.unit(cylinders);
-        this.engineData["RC"] = math.unit(compressionRatio);
+        this.engineData["NC"] = cylinders; //math.unit(cylinders);
+        this.engineData["RC"] = compressionRatio; //math.unit(compressionRatio);
         this.engineData["PA"] = math.unit(admissionAirPressure).to("kPa");
         this.engineData["TA"] = math.unit(admissionAirTemperature).to("K");
-        this.engineData["n"] = math.unit(rpmMaxPower);
+        this.engineData["n"] = rpmMaxPower; //math.unit(rpmMaxPower, "rpm");
         
         // fuel volumetric performance
         if(intakeType === "N") { // Athmospheric/Carburated
@@ -22,9 +23,9 @@ class Engine {
         //ENGINE CONSTANTS
         //================
         // CA: Air constant
-        this.engineData["CA"] = 0.287;
+        this.engineData["CA"] = math.unit("0.287 kJ/(kg K)");
         // k: Adiabatic constant
-        this.engineDAta["k"] = 1.40;
+        this.engineData["k"] = 1.40;
         // afr: Air-Fuel relation
         this.engineData["afr"] = 14.7;
         // LHV: Fuel calorific power
@@ -42,37 +43,37 @@ class Engine {
         math.evaluate("Vh = VH/NC", this.engineData);
 
         //VC: combustion chamber volume
-        math.evaluate("VC = Vh/(RC-1)", this.engineData);
+        math.evaluate("VC = Vh/(RC - 1)", this.engineData);
 
         // pA: Air density
         math.evaluate("pA = PA/(CA*TA)", this.engineData);
         
-        // PC: Combustion pressure
+        // PC: compression pressure
         math.evaluate("PC = (PA*(Vh+VC)^k)/VC^k", this.engineData);
 
         //TC: compression temperature
         math.evaluate("TC = (TA*(Vh+VC)^(k-1))/VC^(k-1)", this.engineData);
 
         // ma: Air mass
-        math.evaluate("ma = ((nV*Vh*n*pA)/200)/60", this.engineData);
+        math.evaluate("ma = ((nV*Vh*n*pA)/200)/60s", this.engineData);
 
         // mc: fuel mass
         math.evaluate("mc = ma/afr", this.engineData);
 
         // Qap: Contributed heat
-        math.evaluate("Qap = mc/LHV", this.engineData);
+        math.evaluate("Qap = mc*LHV", this.engineData);
 
         // Tz: Combustion temperature
-        math.evaluate("Tz = (Qap/(cev+ma)) + TC", this.engineData);
+        math.evaluate("Tz = (1 K)*(Qap/(cev*ma)) + TC", this.engineData);
 
         // Pz: Combustion pressure
         math.evaluate("Pz =(Tz*PC)/TC", this.engineData);
 
         // l1: Pressure differential 
-        math.evaluate("l1 = PC/Pz", this.engineData);
+        math.evaluate("l1 = Pz/PC", this.engineData);
 
         // Pi: Medium indicated pressure
-        math.evaluate("", this.engineData); //TODO
+        //math.evaluate("", this.engineData); //TODO
 
 
     }
@@ -126,3 +127,5 @@ class Engine {
         return this._returnValue("Pz", units)
     }
 }
+
+module.exports.Engine = Engine;

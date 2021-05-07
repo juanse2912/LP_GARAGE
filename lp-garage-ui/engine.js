@@ -67,7 +67,7 @@ class Engine {
         math.evaluate("Tz = (1 K)*(Qap/(cev*ma)) + TC", this.engineData);
 
         // Pz: Combustion pressure
-        math.evaluate("Pz =(Tz*PC)/TC", this.engineData);
+        math.evaluate("Pz = (Tz*PC)/TC", this.engineData);
 
         // l1: Pressure differential 
         math.evaluate("l1 = Pz/PC", this.engineData);
@@ -125,6 +125,10 @@ class Engine {
 
     combustionPressure(units) {
         return this._returnValue("Pz", units)
+    }
+
+    mediumIndicativePressure(units) {
+        return this._returnValue("Pi", units)
     }
 }
 

@@ -10,7 +10,7 @@ const DIR = "../vehicles/"
  * @returns {Promise<any|Error>}
  */
 async function saveVehicleFile(vehicle) {
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         let filepath = path.join(__dirname, DIR, `${vehicle.id}.json`);
         let vdata = vehicle.toJSON(true);
         let data = Buffer.from(
@@ -18,13 +18,13 @@ async function saveVehicleFile(vehicle) {
             "utf-8"
         )
         fs.writeFile(filepath, data)
-            .then( () => {
+            .then(() => {
                 resolve(vdata);
             })
-            .catch( e=> {
+            .catch(e => {
                 reject(e);
             })
-    } )
+    })
 }
 
 /**
@@ -34,12 +34,12 @@ async function saveVehicleFile(vehicle) {
  */
 async function getVehicleFromFile(id) {
     console.debug(`Reading vehicle: ${id}`)
-    return new Promise( (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         let filepath = path.join(__dirname, DIR, `${id}.json`);
         fs.access(filepath, fsconstants.R_OK)
-            .then( ()=> {
+            .then(() => {
                 fs.readFile(filepath, "utf-8")
-                    .then( data => {
+                    .then(data => {
                         let vehicle = Vehicle.fromJSON(JSON.parse(data))
                         console.debug("Vehicle data", vehicle)
                         resolve(vehicle)
@@ -48,15 +48,15 @@ async function getVehicleFromFile(id) {
                         reject(e);
                     })
             })
-            .catch( e => {
+            .catch(e => {
                 reject(e);
             })
     })
 }
 
-module.exports.validateVehicleRequest = function(req, res, next) {
-    if(!req.params.id){
-        res.status(412).json({"Error":"Missing vehicle id"})
+module.exports.validateVehicleRequest = function (req, res, next) {
+    if (!req.params.id) {
+        res.status(412).json({ "Error": "Missing vehicle id" })
     } else {
         console.debug("Valid request")
         next()
@@ -69,19 +69,19 @@ module.exports.validateVehicleRequest = function(req, res, next) {
  * @param express.req req
  * @param express.res res
  */
-module.exports.getVehicles = function(req, res) {
+module.exports.getVehicles = function (req, res) {
     fs.readdir(path.join(__dirname, DIR))
-    .then( files => {
-        let r = { "vehicles":[]}
-        for (let f of files) {
-            r.vehicles.push(f.substr(0, f.lastIndexOf(".")));
-        }
-        res.json( r );
-    })
-    .catch( e => { 
-        console.error(e);
-        res.status(500).json({"Error":e.message});
-     } )
+        .then(files => {
+            let r = { "vehicles": [] }
+            for (let f of files) {
+                r.vehicles.push(f.substr(0, f.lastIndexOf(".")));
+            }
+            res.json(r);
+        })
+        .catch(e => {
+            console.error(e);
+            res.status(500).json({ "Error": e.message });
+        })
 }
 
 /**
@@ -89,11 +89,11 @@ module.exports.getVehicles = function(req, res) {
  * @param {express.Request} req 
  * @param {express.Response} res 
  */
-module.exports.getVehicle = function(req, res) {
+module.exports.getVehicle = function (req, res) {
     console.debug("Getting vehicle ", req.params);
     getVehicleFromFile(req.params.id)
-        .then( vehicle => {
-            if(req.params.part) {
+        .then(vehicle => {
+            if (req.params.part) {
                 let part = vehicle.getPart(req.params.part);
                 if (req.params.subpart) {
                     let subpart = part.getPart(req.params.subpart);
@@ -103,26 +103,26 @@ module.exports.getVehicle = function(req, res) {
                 }
             } else {
                 res.json(vehicle.toJSON(true));
-            } 
+            }
         })
-        .catch( e => {
+        .catch(e => {
             console.error(e);
             res.status(500).json("Error getting Vehicle data: " + e.message)
         })
 }
 
-module.exports.storeNewVehicle = function(req, res) {
-    let storeVehicle = new Promise( (resolve, reject) => {
+module.exports.storeNewVehicle = function (req, res) {
+    let storeVehicle = new Promise((resolve, reject) => {
         //TODO: validate JSON schema
         let vehicleData = req.body;
         if (vehicleData.id && vehicleData.make && vehicleData.model && vehicleData.year) {
             let vehicle = Vehicle.fromJSON(vehicleData);
             let filepath = path.join(__dirname, DIR, `${req.params
-    .id}.json`);
-            let data = Buffer.from(vehicle.toJSON(true));
+                .id}.json`);
+            let data = Buffer.from(JSON.stringify(vehicle.toJSON(true), null, 2));
             fs.writeFile(filepath, data)
-                .then( () => {resolve(vehicle)})
-                .catch( e => { reject(e)});
+                .then(() => { resolve(vehicle) })
+                .catch(e => { reject(e) });
 
         } else {
             reject(new Error("Malformed vehicle data"));
@@ -132,23 +132,23 @@ module.exports.storeNewVehicle = function(req, res) {
 
     let filepath = path.join(__dirname, DIR, `${req.params.id}.json`);
     fs.access(filepath, fsconstants.W_OK)
-        .then( () => {
-            if (req.query("overwrite")==="true") {
-                storeVehicle()
-                    .then( v => { res.json(v.toJSON())})
-                    .catch( e => { 
+        .then(() => {
+            if (req.query("overwrite") === "true") {
+                storeVehicle
+                    .then(v => { res.json(v.toJSON()) })
+                    .catch(e => {
                         console.error(e);
                         res.status(500).json("Error storing vehicle: " + e.message)
                     })
             } else {
-                res.status(409).json({"Error":"File already exists. Set ?overwrite=true to overwrite"});
+                res.status(409).json({ "Error": "File already exists. Set ?overwrite=true to overwrite" });
             }
         })
-        .catch( err => {
+        .catch(err => {
             // File does not exist
-            storeVehicle()
-                .then( v => { res.json(v.toJSON())})
-                .catch( e => {
+            storeVehicle
+                .then(v => { res.json(v.toJSON()) })
+                .catch(e => {
                     console.error(e);
                     res.status(500).json("Error storing vehicle: " + e.message)
                 })
@@ -156,9 +156,9 @@ module.exports.storeNewVehicle = function(req, res) {
 
 }
 
-module.exports.updateVehicle = function(req, res) {
+module.exports.updateVehicle = function (req, res) {
     getVehicleFromFile(req.params.id)
-        .then( vehicle => {
+        .then(vehicle => {
             let workingObject = null
             if (!req.params.part) {
                 workingObject = vehicle;
@@ -167,7 +167,7 @@ module.exports.updateVehicle = function(req, res) {
                 if (!part) {
                     //Can't update an unexisting part
                     throw new Error(`Vehicle does not have the ${req.params.part} defined`)
-                } 
+                }
                 if (!req.params.subpart) {
                     workingObject = part;
                 } else {
@@ -176,35 +176,36 @@ module.exports.updateVehicle = function(req, res) {
                         throw new Error(`${req.params.part} does not have the ${req.params.subpart} defined`);
                     }
                 }
-                let valueMap = new Map();
-                for (let key in req.query) {
-                    valueMap.set(key, req.query[key])
-                }
-                workingObject.updateValues(valueMap);
 
-                saveVehicleFile(vehicle)
-                    .then( vdata => {
-                        res.json(workingObject.toJSON())
-                    } )
-                    .catch( e => {
-                        console.error("Error saving vehicle file", e);
-                        res.status(500).json({"Error":"Error saving vehicle file: " + e.message})
-                    })
             }
-        }).catch( e => {
+            let valueMap = new Map();
+            for (let key in req.query) {
+                valueMap.set(key, req.query[key])
+            }
+            workingObject.updateValues(valueMap);
+
+            saveVehicleFile(vehicle)
+                .then(vdata => {
+                    res.json(workingObject.toJSON())
+                })
+                .catch(e => {
+                    console.error("Error saving vehicle file", e);
+                    res.status(500).json({ "Error": "Error saving vehicle file: " + e.message })
+                })
+        }).catch(e => {
             console.error("Error updating vehicle/part", e);
             if (e.code) {
-                res.status(500).json({"Error":"Failed to read vehicle: "+e.message})
+                res.status(500).json({ "Error": "Failed to read vehicle: " + e.message })
             } else {
-                res.status(412).json({"Error":e.message})
+                res.status(412).json({ "Error": e.message })
             }
         });
 
 }
 
-module.exports.createVehiclePart = function(req, res) {
+module.exports.createVehiclePart = function (req, res) {
     getVehicleFromFile(req.params.id)
-        .then( vehicle => {
+        .then(vehicle => {
             if (req.params.subpart) {
                 let part = vehicle.getPart(req.params.part)
                 if (!part) {
@@ -215,19 +216,19 @@ module.exports.createVehiclePart = function(req, res) {
             } else {
                 vehicle.addPart(req.params.part, req.body);
             }
-            saveVehicleFile(vehicle).then( vdata => {
+            saveVehicleFile(vehicle).then(vdata => {
                 res.json(vdata);
-            }).catch( e => {
+            }).catch(e => {
                 console.error("Error saving vehicle", e)
-                res.status(500).json({"Error":"Unable to save vehicle data: " + e.message})
+                res.status(500).json({ "Error": "Unable to save vehicle data: " + e.message })
             });
         })
-        .catch( e => {
+        .catch(e => {
             console.error("Error updating vehicle/part", e);
             if (e.code) {
-                res.status(500).json({"Error":"Failed to read vehicle: "+e.message})
+                res.status(500).json({ "Error": "Failed to read vehicle: " + e.message })
             } else {
-                res.status(412).json({"Error":e.message})
+                res.status(412).json({ "Error": e.message })
             }
         });
 }

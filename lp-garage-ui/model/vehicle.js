@@ -50,7 +50,7 @@ class Vehicle extends Part{
      * Permits updating a set of individual properties by its name
      * @param {Map<string,any>} valueMap A map with the properties and values to be updated
      */
-    updateValue(valueMap) {
+    updateValues(valueMap) {
         for (let [key, value] of valueMap) {
             switch (key) {
                 case "make": 

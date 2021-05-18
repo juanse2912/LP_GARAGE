@@ -1,98 +1,104 @@
-const math = require("mathjs")
+const math = require("./part").math;
 const Part = require("./part").Part;
 
 class EnginePower extends Part {
     constructor(engine, admissionAirPressure, admissionAirTemperature) {
-        super(engine.scope)
+        /**
+         * @type partProperties
+         */
+        let partProperties = {
+            "inputParameters": {
+                "admissionAirPressure": {
+                    "alias":"PA",
+                    "units":"kPa",
+                    "value": admissionAirPressure
+                },
+                "admissionAirTemperature":{
+                    "alias":"TA",
+                    "units":"K",
+                    "value":admissionAirTemperature
+                }
+            },
+            "formulas":{
+                "airDensity": {
+                    "alias":"pA",
+                    "formula":"PA/(CA*TA)"
+                },
+                "compressionPressure":{
+                    "alias":"PC",
+                    "formula":"(PA*(Vh+VC)^k)/VC^k"
+                },
+                "compressionTemperature":{
+                    "alias":"TC",
+                    "formula":"(TA*(Vh+VC)^(k-1))/VC^(k-1)"
+                },
+                "airMass":{
+                    "alias":"ma",
+                    "formula":"((nV*Vh*n*pA)/200)/60s"
+                },
+                "fuelMass":{
+                    "alias":"mc",
+                    "formula":"ma/afr"
+                },
+                "contributedHeat":{
+                    "alias":"Qap",
+                    "formula":"mc*LHV"
+                },
+                "combustionTemperature":{
+                    "alias":"Tz",
+                    "formula":"(1 K)*(Qap/(cev*ma)) + TC"
+                },
+                "combustionPressure":{
+                    "alias":"Pz",
+                    "formula":"(Tz*PC)/TC"
+                },
+                "pressureDifferential":{
+                    "alias":"l1",
+                    "formula":"Pz/PC"
+                }
+            }
+        }
+        super(engine.scope, partProperties)
         this.engine = engine;
         this.scope = engine.scope
-        
-        this.scope["PA"] = math.unit(admissionAirPressure).to("kPa");
-        this.scope["TA"] = math.unit(admissionAirTemperature).to("K");
-        this.calculate();
+        this.partProperties = partProperties;
     }
-    calculate() {
-        // pA: Air density
-        math.evaluate("pA = PA/(CA*TA)", this.scope);
-        
-        // PC: compression pressure
-        math.evaluate("PC = (PA*(Vh+VC)^k)/VC^k", this.scope);
-
-        //TC: compression temperature
-        math.evaluate("TC = (TA*(Vh+VC)^(k-1))/VC^(k-1)", this.scope);
-
-        // ma: Air mass
-        math.evaluate("ma = ((nV*Vh*n*pA)/200)/60s", this.scope);
-
-        // mc: fuel mass
-        math.evaluate("mc = ma/afr", this.scope);
-
-        // Qap: Contributed heat
-        math.evaluate("Qap = mc*LHV", this.scope);
-
-        // Tz: Combustion temperature
-        math.evaluate("Tz = (1 K)*(Qap/(cev*ma)) + TC", this.scope);
-
-        // Pz: Combustion pressure
-        math.evaluate("Pz = (Tz*PC)/TC", this.scope);
-
-        // l1: Pressure differential 
-        math.evaluate("l1 = Pz/PC", this.scope);        
-
-    }
-
-    /**
-     * Permits updating a set of individual properties by its name
-     * @param {Map<string,any>} valueMap A map with the properties and values to be updated
-     */
-     updateValues(valueMap) {
-         for (let [key, value] of valueMap) {
-            switch (key) {
-                case "admissionAirPressure":
-                    this.scope["PA"] = math.unit(value).to("kPa");
-                    break;
-                case "admissionAirTemperature":
-                    this.scope["TA"] = math.unit(value).to("K"); 
-                    break;
-                default:
-                    console.warn(`Property ${key} not available in this class`);
-            }
-         }
-         this.calculate()
-     }
 
     static fromJSON(engine, j) {
         return new EnginePower(engine, j.admissionAirPressure, j.admissionAirTemperature)
     }
-
-    toJSON() {
-        return {
-            'admissionAirPressure':this.returnValue("PA"),
-            'admissionAirTemperature':this.returnValue("TA"),
-            'unitaryDisplacement':this.returnValue("Vh"),
-            "combustionChamberVolume":this.returnValue("VC"),
-            "airDensity":this.returnValue("pA"),
-            "compressionPressure":this.returnValue("PC"),
-            "compressionTemperature":this.returnValue("TC"),
-            "airMass":this.returnValue("ma"),
-            "fuelMass":this.returnValue("mc"),
-            "contributedHeat":this.returnValue("Qap"),
-            "combustionTemperature":this.returnValue("Tz"),
-            "combustionPressure":this.returnValue("Pz"),
-            "pressureDifferential":this.returnValue("l1")
-        }
-    }
-
 }
 
 class EngineForces extends Part {
     constructor(eng, pistonDiameter, R, L) {
-        super(eng.scope);
+        /**
+         * @type partProperties
+         */
+        let partProperties = {
+            "inputParameters":{
+                "pistonDiameter":{
+                    "alias":"dp",
+                    "units":"mm",
+                    "value": pistonDiameter
+                },
+                "bore":{
+                    "alias":"R",
+                    "units":"mm",
+                    "value":R
+                },
+                "stroke":{
+                    "alias":"L",
+                    "units":"mm",
+                    "value":L
+                }
+            },
+            "formulas":{
+
+            }
+        }
+        super(eng.scope, partProperties);
         this.engine = eng;
         this.scope = eng.scope;       
-        this.scope['pd'] = math.unit(pistonDiameter).to("cm");
-        this.scope['R'] = math.unit(R).to("cm");
-        this.scope['L'] = math.unit(L).to("cm")
     }
 
     static fromJSON(engine, j) {
@@ -108,90 +114,84 @@ SUBPARTS.set("EngineForces", EngineForces)
 
 
 class Engine extends Part {
-    constructor(vehicle, displacement, cylinders, compressionRatio, maxPower, rpmMaxPower, intakeType){
-        super(vehicle.scope)
-        this.scope = vehicle.scope;
-        this.scope["VH"] = math.unit(displacement).to("m^3");
-        this.scope["NC"] = cylinders; //math.unit(cylinders);
-        this.scope["RC"] = compressionRatio; //math.unit(compressionRatio);
-        this.scope["MP"] = math.unit(maxPower).to("hp");
-        this.scope["n"] = rpmMaxPower; //math.unit(rpmMaxPower, "rpm");
-        this.scope.intakeType = intakeType
-        this.parts={};
-        // fuel volumetric performance
-        if(intakeType === "N") { // Athmospheric/Carburated
-            this.scope["nV"] = 95;
-        } else {
-            this.scope["nV"] = 100;
-        }
-        //ENGINE CONSTANTS
-        //================
-        // CA: Air constant
-        this.scope["CA"] = math.unit("0.287 kJ/(kg K)");
-        // k: Adiabatic constant
-        this.scope["k"] = 1.40;
-        // afr: Air-Fuel relation
-        this.scope["afr"] = 14.7;
-        // LHV: Fuel calorific power
-        this.scope["LHV"] = math.unit("44000 kJ/kg");
-        // cev: especific heat
-        this.scope["cev"] = math.unit("0.718 kJ/kg");
-        // n1: policompression coefficient
-        this.scope["n1"] = 1.3
-        // n2: poliexpanssion coefficient
-        this.scope["n2"] = 1.3
-        this.calculate()
-    }
-    
-    calculate() {
-        // ENGINE CALCULATIONS
-        // ===================
-        //Vh: unitary displacement
-        math.evaluate("Vh = VH/NC", this.scope);
 
-        //VC: combustion chamber volume
-        math.evaluate("VC = Vh/(RC - 1)", this.scope);
-        for (let partName in this.parts) {
-            this.parts[partName].calculate();
-        }
-    }
-    /**
-     * Permits updating a set of individual properties by its name
-     * @param {Map<string,any>} valueMap A map with the properties and values to be updated
-     */
-     updateValues(valueMap) {
-         console.debug("value map", valueMap);
-        for (let [key, value] of valueMap) {
-            switch (key) {
-                case "displacement": 
-                    this.scope["VH"] = math.unit(value).to("m^3"); 
-                    break;
-                case "cylinders": 
-                    this.scope["NC"] = value;
-                    break;
-                case "compressionRatio": 
-                    this.scope["RC"] = value;
-                    break;
-                case "maxPower": 
-                    this.scope["MP"] = math.unit(value).to("hp");
-                    break;
-                case "rpmMaxPower":
-                    this.scope["n"] = value;
-                    break;
-                case "intakeType":
-                    this.scope.intakeType = value;
-                    if(value === "N") { // Athmospheric/Carburated
-                        this.scope["nV"] = 95;
-                    } else {
-                        this.scope["nV"] = 100;
-                    }
-                    break;
-                default:
-                    console.warn(`Property ${key} not available in this class`);
+    constructor(vehicle, displacement, cylinders, compressionRatio, maxPower, rpmMaxPower, intakeType){
+        let engineProperties = {
+            "inputParameters": {
+                "displacement": {
+                    "value": displacement,
+                    "alias": "VH",
+                    "units": "m^3"
+                },
+                "cylinders": {
+                    "value":cylinders,
+                    "alias":"NC"
+                },
+                "compressionRatio":{
+                    "value":compressionRatio,
+                    "alias":"RC",
+                },
+                "maxPower":{
+                    "value":maxPower,
+                    "alias":"MP",
+                    "units":"hp"
+                },
+                "rpmMaxPower":{
+                    "alias":"n",
+                    "value":rpmMaxPower
+                }
+            },
+            "constants":{
+                "airConstant": {
+                    "alias":"CA",
+                    "value": math.unit("0.287 kJ/(kg K)")
+                },
+                "adiabaticConstant":{
+                    "alias":"k",
+                    "value": math.number(1.40)
+                },
+                "airFuelRelation": {
+                    "alias":"afr",
+                    "value":math.number(14.7)
+                },
+                "fuelCalorificPower":{
+                    "alias":"LHV",
+                    "value":math.unit("44000 kJ/kg")
+                },
+                "especificHeat":{
+                    "alias":"cev",
+                    "value":math.unit("0.718 kJ/kg")
+                },
+                "policompressionCoefficient":{
+                    "alias":"n1",
+                    "value":1.3
+                },
+                "poliexpanssionCoefficient":{
+                    "alias":"n2",
+                    "value":1.3
+                },
+                "fuelVolumetriPerformance": {
+                    "alias":"nV",
+                    "value": math.number(intakeType=="N" ? 95 : 100)
+                }
+            }, 
+            "formulas":{
+                "unitaryDisplacement":{
+                    "alias":"Vh",
+                    "formula":"VH/NC"
+                },
+                "combustionChamberVolume":{
+                    "alias":"VC",
+                    "formula":"Vh/(RC - 1)"
+                }
             }
         }
-        this.calculate();
+
+        super(vehicle.scope, engineProperties)
+        this.scope = vehicle.scope;
+        this.parts = {};
     }
+    
 
     static fromJSON(vehicle, j) {
         let engine = new Engine(vehicle, j.displacement, j.cylinders, j.compressionRatio, j.maxPower, j.rpmMaxPower, j.intakeType);
@@ -204,14 +204,7 @@ class Engine extends Part {
     }
 
     toJSON(includeSubparts) {
-        let result = {
-            'displacement': this.returnValue("VH"),
-            'cylinders': this.returnValue("NC"),
-            'compressionRatio': this.returnValue("RC"),
-            'maxPower':this.returnValue("MP"),
-            'rpmMaxPower':this.returnValue("n"),
-            'intakeType':this.scope.intakeType
-        }
+        let result = super.toJSON();
         if (includeSubparts) {
             for (let partName in this.parts) {
                 result[partName] = this.parts[partName].toJSON();

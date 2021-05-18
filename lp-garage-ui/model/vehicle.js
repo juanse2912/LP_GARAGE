@@ -1,4 +1,4 @@
-const math = require("mathjs");
+const math = require("./part").math;
 const Part = require("./part").Part;
 const Engine = require("./engine").Engine;
 const PARTS = new Map();
@@ -6,14 +6,22 @@ PARTS.set("Engine", Engine);
 
 class Vehicle extends Part{
     constructor(id, make, model, year, weight) {
+        let partProperties = {
+            "inputParameters":{
+                "weight":{
+                    "alias":"wt",
+                    "units":"kg",
+                    "value":weight
+                }
+            }
+        }
         let scope = {}
-        super(scope);
+        super(scope, partProperties);
         this.scope=scope;
         this.id = id;
         this.make = make;
         this.model = model;
         this.year = year;
-        this.scope['weight']= math.unit(weight).to("kg");
         this.parts = {};
         
     }
@@ -46,33 +54,7 @@ class Vehicle extends Part{
         }
         
     }
-    /**
-     * Permits updating a set of individual properties by its name
-     * @param {Map<string,any>} valueMap A map with the properties and values to be updated
-     */
-    updateValues(valueMap) {
-        for (let [key, value] of valueMap) {
-            switch (key) {
-                case "make": 
-                    this.make = value; 
-                    break;
-                case "model": 
-                    this.model = value; 
-                    break;
-                case "year": 
-                    this.year = value; 
-                    break;
-                case "weight": 
-                    this.scope['weight']= math.unit(value).to("kg");
-                    for (let partName in this.parts) {
-                        this.parts[partName].calculate();
-                    }
-                    break;
-                default:
-                    console.warn(`Property ${key} not available in this class`);
-            }    
-        }
-    }
+
 
 
     /**
@@ -81,13 +63,13 @@ class Vehicle extends Part{
      * @returns 
      */
     toJSON(includeParts) {
-        let res = {
-            "id":this.id,
-            "make":this.make,
-            "model":this.model,
-            "year":this.year,
-            "weight":this.scope['weight'].toString()
-        }
+        let res = super.toJSON()
+        
+        res["id"] = this.id;
+        res["make"] = this.make;
+        res["model"] = this.model;
+        res["year"] = this.year
+        
         if (includeParts) {
             for(let part in this.parts) {
                 res[part] = this.parts[part].toJSON(true)

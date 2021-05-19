@@ -2,9 +2,32 @@ var express = require('express');
 var router = express.Router();
 var vio = require('./vehicleIO');
 
+
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  vio.getAvailableVehicles()
+    .then( r => {
+      let pugVars = { "availableVehicles":r.vehicles.sort() }
+      if (req.query.vehicleId) {
+        pugVars["selectedVehicle"] = req.query.vehicleId
+      }
+      res.render('index', pugVars);
+    })
+    .catch( err => {
+      err.status=500
+      res.locals.message = err.message;
+      res.locals.error = req.app.get('env') === 'development' ? err : {};
+      // render the error page
+      res.status(err.status || 500);
+      res.render('error');
+    })
+  
+});
+
+router.get('/newVehicle', (req,res, next) => {
+  res.render('newVehicle', {"hideVehicleSelection":true})
 });
 
 router.get("/vehicles", vio.getVehicles);

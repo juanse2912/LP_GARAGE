@@ -63,6 +63,33 @@ module.exports.validateVehicleRequest = function (req, res, next) {
     }
 }
 
+/**
+ * List of available vehicles
+ * @typedef availableVehicles
+ * @property {string[]} vehicles
+ */
+
+/**
+ * Provides a list of vehicles that have been saved
+ * @returns {Promise<availableVehicles>} A list of the vehicles that have been saved
+ */
+async function getAvailableVehicles() {
+    return new Promise( (resolve, reject) => {
+        fs.readdir(path.join(__dirname, DIR))
+        .then(files => {
+            let r = { "vehicles": [] }
+            for (let f of files) {
+                r.vehicles.push(f.substr(0, f.lastIndexOf(".")));
+            }
+            resolve(r)
+        })
+        .catch(e => {
+            reject(e)
+        })
+    })
+}
+
+module.exports.getAvailableVehicles = getAvailableVehicles;
 
 /**
  * Gets a list of available vehicles and return it
@@ -70,15 +97,11 @@ module.exports.validateVehicleRequest = function (req, res, next) {
  * @param express.res res
  */
 module.exports.getVehicles = function (req, res) {
-    fs.readdir(path.join(__dirname, DIR))
-        .then(files => {
-            let r = { "vehicles": [] }
-            for (let f of files) {
-                r.vehicles.push(f.substr(0, f.lastIndexOf(".")));
-            }
+    getAvailableVehicles()
+        .then( r => {
             res.json(r);
         })
-        .catch(e => {
+        .catch( e => {
             console.error(e);
             res.status(500).json({ "Error": e.message });
         })

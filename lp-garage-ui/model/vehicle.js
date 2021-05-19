@@ -55,10 +55,29 @@ class Vehicle extends Part{
         
     }
 
+    /**
+     * Permits updating a set of properties
+     * @override
+     * @param {Map<string,any>} valueMap The values to be updated
+     */
+    updateValues(valueMap) {
+        let localProps = ["id", "make", "model", "year"];
+        for (let p of localProps) {
+            if (valueMap.has(p)) {
+                if(p!="id") { //ID can't be updated
+                    this[p] = valueMap.get(p);
+                }
+                valueMap.delete(p)
+            }
+        }
+        super.updateValues(valueMap);
+    }
+
 
 
     /**
      * Serializes object to JSON Structure
+     * @override
      * @param {boolean} includeParts Indicates if parts should be considered on the JSON result
      * @returns 
      */

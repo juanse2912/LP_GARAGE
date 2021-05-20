@@ -1,0 +1,17 @@
+extends layout 
+block content
+    -var vehicleId 
+    -var vehicleData
+    div(id="wrapper").d-flex
+        div(id="page-content-wrapper")
+                //- navbar
+                include navbar.pug 
+                .container-fluid
+                    - var page = "vehicleData"
+                    include vehicleNav
+                    h1 Datos del Vehículo
+                    .row 
+                        .col 
+                            include carData
+                        .col 
+                            br

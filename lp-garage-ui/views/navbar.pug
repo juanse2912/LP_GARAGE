@@ -17,7 +17,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.border-bottom
         ul.navbar-nav.ml-auto.mt-2.mt-lg-0
             if hideVehicleSelection 
                 li.nav-item.active 
-                    p.nav-link Nuevo vehículo 
+                    a.nav-link.active(href="#") Nuevo vehículo 
             else 
                 li.nav-item.dropdown
                     a(
@@ -39,7 +39,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.border-bottom
                             hr.dropdown-divider                    
                         each vid in availableVehicles 
                             li
-                                a(href="/?vehicleId="+vid).dropdown-item= vid                         
+                                a(href="?vehicleId="+vid).dropdown-item= vid                         
             li.nav-item 
                 a(
                     aria-current="page"

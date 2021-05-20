@@ -13,5 +13,40 @@ block content
             .row 
                 .col
                     include carData
-                .col
-                    br
+                .col            
+                    label(for="cardata_name").form-label Nombre único 
+                    input(id="cardata_name" type="text" required pattern="[\\w\\-. ]{3,255}$").form-control
+                    .d-grid.gap-2.d-md-flex.justify-content-md-end.mt-3
+                        button(type="submit" id="btn_save" value="submit").btn.btn-primary Guardar    
+                        button(type="button" id="btn-cancel").btn.btn-secondary Cancelar
+                    script.
+                        function generateName() {
+                            if (document.getElementById('cardata_name').value != "" ) {
+                                return
+                            }
+                            let make = document.getElementById('cardata_make').value
+                            let model = document.getElementById('cardata_model').value
+                            let disp = document.getElementById('cardata_displacement').value
+                            if ( make=="" || model=="" || disp=="") {
+                                return;
+                            }
+                            let pattern = /[^\w\-.]+/g;
+                            let name = make.replace(pattern, '') + "_" +
+                                model.replace(pattern, '') + "_" +
+                                disp.replace(pattern, '') + "_" +
+                                Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3);
+                            document.getElementById('cardata_name').value = name;
+                        }
+
+                        for (let f of ['cardata_name', 'cardata_make', 'cardata_model', 'cardata_displacement']) {
+                            document.getElementById(f).addEventListener('focusout', generateName)
+                        }
+                        document.getElementById('cardata_form').addEventListener("submit", (e)=>{
+                            form = document.getElementById("cardata_form");
+                            console.log("Form submitted")
+                            if (!form.checkValidity()){
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }
+                            form.classList.add('was-validated')
+                        })

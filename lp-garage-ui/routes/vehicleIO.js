@@ -54,6 +54,8 @@ async function getVehicleFromFile(id) {
     })
 }
 
+module.exports.getVehicleFromFile = getVehicleFromFile;
+
 module.exports.validateVehicleRequest = function (req, res, next) {
     if (!req.params.id) {
         res.status(412).json({ "Error": "Missing vehicle id" })
@@ -113,7 +115,6 @@ module.exports.getVehicles = function (req, res) {
  * @param {express.Response} res 
  */
 module.exports.getVehicle = function (req, res) {
-    console.debug("Getting vehicle ", req.params);
     getVehicleFromFile(req.params.id)
         .then(vehicle => {
             if (req.params.part) {
@@ -133,6 +134,7 @@ module.exports.getVehicle = function (req, res) {
             res.status(500).json("Error getting Vehicle data: " + e.message)
         })
 }
+
 
 module.exports.storeNewVehicle = function (req, res) {
     let storeVehicle = new Promise((resolve, reject) => {

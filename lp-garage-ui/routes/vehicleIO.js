@@ -184,6 +184,8 @@ module.exports.storeNewVehicle = function (req, res) {
 module.exports.updateVehicle = function (req, res) {
     getVehicleFromFile(req.params.id)
         .then(vehicle => {
+
+            // Find out which part/subpart is being updated form the URL params
             let workingObject = null
             if (!req.params.part) {
                 workingObject = vehicle;
@@ -203,15 +205,36 @@ module.exports.updateVehicle = function (req, res) {
                 }
 
             }
+
+            // To ease client side xhr requests we want to allow updates
+            // for both, a part and a subpart on a single request.
+            // For instance, the vehicle details form include some engine
+            // related fields. Thus, when an update request comes from this form
+            // the fields related to the engine, they will come labeled with 
+            // Engine.<field>
             let valueMap = new Map();
+            let subpartValueMap = new Map();
+            let subpartName = "";
             for (let key in req.query) {
-                valueMap.set(key, req.query[key])
+                if (key.indexOf(".")>0) {
+                    subpartName = key.split(".")[0];
+                    subpartValueMap.set(key.split(".")[1], req.query[key]);
+                } else  {
+                    valueMap.set(key, req.query[key])
+                }
             }
-            workingObject.updateValues(valueMap);
+
+            if (valueMap.size > 0) {
+                workingObject.updateValues(valueMap);
+            }
+            
+            if (subpartName!="") {
+                workingObject.getPart(subpartName).updateValues(subpartValueMap);
+            }
 
             saveVehicleFile(vehicle)
                 .then(vdata => {
-                    res.json(workingObject.toJSON())
+                    res.json(workingObject.toJSON(true))
                 })
                 .catch(e => {
                     console.error("Error saving vehicle file", e);

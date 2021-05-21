@@ -27,3 +27,7 @@
 input.align-right {
   text-align: right;
 }
+
+.updated {
+  background-color: #cce5ff;
+}

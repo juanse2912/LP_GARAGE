@@ -2,6 +2,8 @@ extends layout
 block content
     -var vehicleId 
     -var vehicleData
+    -var partName="Vehicle"
+    -var subPartName=""
     div(id="wrapper").d-flex
         div(id="page-content-wrapper")
                 //- navbar
@@ -15,3 +17,14 @@ block content
                             include carData
                         .col 
                             br
+    script(src="/javascripts/formControls.js")
+    script.
+        //Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        const partName="#{partName}";
+        const subpartName="#{subpartName}";        
+        document.addEventListener("DOMContentLoaded", ()=> {
+            setUnitSelectEventListener();
+            setInputEventListener();
+        })
+

@@ -5,9 +5,11 @@ mixin unitOption(unitValue, unitName, selectedVal)
 
 form(id="cardata_form" novalidate action="#" method="post").needs-validation
     label(for="cardata_make").form-label Marca
-    input(id="cardata_make" type="text" value= (vehicleData && vehicleData.make ? vehicleData.make : "") required).form-control
+    input(id="cardata_make" type="text" value= (vehicleData && vehicleData.make ? vehicleData.make : "") required data-bound="make").form-control
     label(for="cardata_model").form-label Modelo
-    input(id="cardata_model" type="text" value=(vehicleData && vehicleData.model ? vehicleData.model : "") required).form-control
+    input(id="cardata_model" type="text" value=(vehicleData && vehicleData.model ? vehicleData.model : "") required data-bound="model").form-control
+    label(for="cardata_year").form-label Año 
+    input(id="cardata_year" type="text" value=(vehicleData && vehicleData.year?vehicleData.year:"") data-bound="year").form-control
     label(for="cardata_displacement").form-label Cilindrada
     .input-group.mb-3
         if vehicleData && vehicleData.Engine && vehicleData.Engine.displacement 
@@ -18,11 +20,13 @@ form(id="cardata_form" novalidate action="#" method="post").needs-validation
             - var displacementUnit = "cm^3"
         input(
             id="cardata_displacement" 
-            type="number" 
+            type="number"
+            step="any"
             required 
             value=displacementValue
+            data-bound="Engine.displacement"
             ).form-control.align-right
-        select.form-select.input-group-text(id="cardata_displacement_units" aria-label="unidades cilindrada")
+        select.form-select.input-group-text.unit(id="cardata_displacement_units" aria-label="unidades cilindrada" data-from="cardata_displacement")
             +unitOption("cm^3", "cm³", displacementUnit)
             +unitOption("m^3", "m³", displacementUnit)
             +unitOption("ft^3", "ft³", displacementUnit)
@@ -32,7 +36,15 @@ form(id="cardata_form" novalidate action="#" method="post").needs-validation
         span.input-group-text.badge.bg-primary
             - var cylinders = (vehicleData && vehicleData.Engine && vehicleData.Engine.cylinders ? vehicleData.Engine.cylinders : 4)
             output(for="cardata_cylinders" id="cardata_cylinders_output")= cylinders 
-        input(id="cardata_cylinders" type="range" min=1 max=16 value=cylinders oninput="document.getElementById('cardata_cylinders_output').value = value").form-control.form-range
+        input(
+            id="cardata_cylinders" 
+            type="range" 
+            min=1 
+            max=16 
+            value=cylinders 
+            oninput="document.getElementById('cardata_cylinders_output').value = value"
+            data-bound="Engine.cylinders"
+        ).form-control.form-range
     label(for="cardata_weight").form-label Peso del vehículo
     .input-group.mb-3
         if vehicleData && vehicleData.weight 
@@ -43,13 +55,15 @@ form(id="cardata_form" novalidate action="#" method="post").needs-validation
             -var weightUnit = "kg"
         input(
             id="cardata_weight" 
-            type="number" 
+            type="number"
+            step="any"
             value=weightValue
             required
+            data-bound="weight"
             ).form-control.align-right
-        select.form-select.input-group-text(id="cardata_weight_units" aria-label="unidades peso vehículo") 
+        select.form-select.input-group-text.unit(id="cardata_weight_units" aria-label="unidades peso vehículo" data-from="cardata_weight") 
             +unitOption("kg", "Kg", weightUnit)
-            +unitOption("t", "Ton", weightUni)
+            +unitOption("t", "Ton", weightUnit)
             +unitOption("lb", "lb", weightUnit)
     label(for="cardata_compressionratio").form-label Relación de compresión
     .input-group.mb-3
@@ -57,7 +71,14 @@ form(id="cardata_form" novalidate action="#" method="post").needs-validation
             -var crValue = vehicleData.Engine.compressionRatio
         else 
             -var crValue = ""
-        input(id="cardata_compressionratio" type="number" required value=crValue).form-control.align-right
+        input(
+            id="cardata_compressionratio" 
+            type="number" 
+            step="any"
+            required 
+            value=crValue 
+            data-bound="Engine.compressionRatio"
+        ).form-control.align-right
         .input-group-text :1
     label(for="cardata_maxpower").form-label Potencia máxima (estándar)
     .input-group.mb-3
@@ -67,13 +88,20 @@ form(id="cardata_form" novalidate action="#" method="post").needs-validation
         else 
             -var maxPowerValue = ""
             -var maxPowerUnit = "hp"
-        input(id="cardata_maxpower" type="number" value=maxPowerValue required).form-control.align-right
-        select.form-select.input-group-text(id="cardata_maxpower_help" aria-label="unidades potencia máxima") 
+        input(
+            id="cardata_maxpower" 
+            type="number" 
+            step="any"
+            value=maxPowerValue 
+            required 
+            data-bound="Engine.maxPower"
+        ).form-control.align-right
+        select.form-select.input-group-text.unit(id="cardata_maxpower_help" aria-label="unidades potencia máxima" data-from="cardata_maxpower") 
             +unitOption("hp", "HP", maxPowerUnit)
-            +unitOption("kw", "KW", maxPowerUnit)
+            +unitOption("kW", "KW", maxPowerUnit)
     label(for="cardata_rpmmaxpower").form-label RPM a potencia máxima
         -var rpmMaxPowerValue = (vehicleData && vehicleData.Engine && vehicleData.Engine.rpmMaxPower ? vehicleData.Engine.rpmMaxPower : "")
-    input(id="cardata_rpmmaxpower" type="number" value=rpmMaxPowerValue required).form-control.align-right
+    input(id="cardata_rpmmaxpower" type="number" value=rpmMaxPowerValue required data-bound="Engine.rpmMaxPower").form-control.align-right
     label.form-label Tipo de admisión 
     .form-check
         if vehicleData && vehicleData.Engine && vehicleData.Engine.intakeType
@@ -86,6 +114,7 @@ form(id="cardata_form" novalidate action="#" method="post").needs-validation
             id="cardata_intakeType_N"
             value="N"
             checked=(intakeTypeValue=="N"?true:false)
+            data-bound="Engine.intakeType"
         ).form-check-input
         label(
             for="cardata_intakeType_N"
@@ -97,6 +126,7 @@ form(id="cardata_form" novalidate action="#" method="post").needs-validation
             id="cardata_intakeType_T"
             value="T"
             checked=(intakeTypeValue=="T"?true:false)
+            data-bound="Engine.intakeType"
         ).form-check-input
         label(
             for="cardata_intakeType_T"
@@ -108,6 +138,7 @@ form(id="cardata_form" novalidate action="#" method="post").needs-validation
             id="cardata_intakeType_S"
             value="S"
             checked=(intakeTypeValue=="S"?true:false)
+            data-bound="Engine.intakeType"
         ).form-check-input
         label(
             for="cardata_intakeType_S"

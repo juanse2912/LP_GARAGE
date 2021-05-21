@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var vio = require('./vehicleIO');
-
-
+var unitConverter = require("../model/util").unitConverter
 
 
 /* GET home page. */
@@ -65,4 +64,15 @@ router.put("/vehicle/:id", vio.validateVehicleRequest, vio.updateVehicle);
 router.put("/vehicle/:id/:part", vio.validateVehicleRequest, vio.updateVehicle);
 router.put("/vehicle/:id/:part/:subpart", vio.validateVehicleRequest, vio.updateVehicle);
 
+router.get("/unitConversion", (req, res)=>{
+  let value=req.query.value;
+  let unit=req.query.unit;
+  try {
+    let result = unitConverter(value, unit);
+    res.json({"result":result.toString()})
+  } catch (e) {
+    console.error(`Error converting from ${value} to ${unit}`, e)
+    res.status(500).json({"Error":e.message})
+  }
+})
 module.exports = router;

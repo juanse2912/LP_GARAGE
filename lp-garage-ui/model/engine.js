@@ -189,9 +189,17 @@ class Engine extends Part {
 
         super(vehicle.scope, engineProperties)
         this.scope = vehicle.scope;
+        this.intakeType = intakeType;
         this.parts = {};
     }
     
+    updateValues(valueMap) {
+        if (valueMap.has("intakeType")) {
+            this.intakeType = valueMap.get("intakeType")
+            valueMap.delete("intakeType")
+        }
+        super.updateValues(valueMap);
+    }
 
     static fromJSON(vehicle, j) {
         let engine = new Engine(vehicle, j.displacement, j.cylinders, j.compressionRatio, j.maxPower, j.rpmMaxPower, j.intakeType);
@@ -205,6 +213,7 @@ class Engine extends Part {
 
     toJSON(includeSubparts) {
         let result = super.toJSON();
+        result["intakeType"] = this.intakeType;
         if (includeSubparts) {
             for (let partName in this.parts) {
                 result[partName] = this.parts[partName].toJSON();

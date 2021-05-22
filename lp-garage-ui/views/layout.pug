@@ -20,8 +20,25 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
     //- End bootstrap
 
-
+    script(src="/javascripts/util.js")
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/sidebar.css')
   body
+    //-General purpose confirmation modal
+    div#confirmDialog(tabindex="-1" aria-labelledby="confirmDialogTitle" aria-hidden="true").modal.fade
+      .modal-dialog 
+          .modal-content 
+              .modal-header 
+                h5#confirmDialogTitle.modal-title=""
+              .modal-body=""
+              .modal-footer 
+                button(
+                    id="confirmDialogBtnCancel"
+                    type="button"
+                    data-bs-dismiss="modal"
+                ).btn.btn-secondary Cancelar 
+                button(
+                  type="button" 
+                  id="confirmDialogBtnAccept"
+                ).btn.btn-primary Continuar
     block content

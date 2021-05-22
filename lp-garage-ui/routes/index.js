@@ -43,7 +43,7 @@ router.get('/vehicleData', (req, res, next) => {
       .catch(e => {
         throw e;
       })
-    }).catch( e => {
+    }).catch( err => {
       err.status=500
       res.locals.message = err.message;
       res.locals.error = req.app.get('env') === 'development' ? err : {};

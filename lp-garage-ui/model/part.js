@@ -40,6 +40,7 @@ class Part {
     /**
      * 
      * @param {object} scope A JSON structure that is common for the vehicle parts and subparts
+     *                       to store values and formula results
      * @param {partProperties} partProperties 
      */
     constructor(scope, partProperties) {
@@ -81,6 +82,7 @@ class Part {
      * @param {Map<string,any>} valueMap A map with the properties and values to be updated
      */
      updateValues(valueMap) {
+        
         for (let [key, value] of valueMap) {
             if(this.partProperties.inputParameters.hasOwnProperty(key)) {
                 let alias = this.partProperties.inputParameters[key].alias;
@@ -95,6 +97,7 @@ class Part {
                 console.warn("Invalid value for this part: " + key)
             }
         }
+        this.calculate();
      }
     /**
      * Serializes ths part to JSON including input parameters and formula results

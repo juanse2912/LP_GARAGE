@@ -12,11 +12,13 @@ block content
                     - var page = "vehicleData"
                     include vehicleNav
                     h1 Datos del Vehículo
-                    .row 
-                        .col 
-                            include carData
-                        .col 
-                            br
+                    form(id="cardata_form" novalidate action="/" method="post").needs-validation
+                        .row 
+                            .col 
+                                include carData
+                            .col 
+                                h3 Cilindrada unitaria:
+                                div(data-bound="Engine.unitaryDisplacement")= vehicleData.Engine.unitaryDisplacement||""
     script(src="/javascripts/formControls.js")
     script.
         //Scripts

@@ -10,43 +10,99 @@ block content
         include navbar.pug 
         .container-fluid
             h1 Nuevo Vehículo
-            .row 
-                .col
-                    include carData
-                .col            
-                    label(for="cardata_name").form-label Nombre único 
-                    input(id="cardata_name" type="text" required pattern="[\\w\\-. ]{3,255}$").form-control
-                    .d-grid.gap-2.d-md-flex.justify-content-md-end.mt-3
-                        button(type="submit" id="btn_save" value="submit").btn.btn-primary Guardar    
-                        button(type="button" id="btn-cancel").btn.btn-secondary Cancelar
-                    script.
-                        function generateName() {
-                            if (document.getElementById('cardata_name').value != "" ) {
-                                return
-                            }
-                            let make = document.getElementById('cardata_make').value
-                            let model = document.getElementById('cardata_model').value
-                            let disp = document.getElementById('cardata_displacement').value
-                            if ( make=="" || model=="" || disp=="") {
-                                return;
-                            }
-                            let pattern = /[^\w\-.]+/g;
-                            let name = make.replace(pattern, '') + "_" +
-                                model.replace(pattern, '') + "_" +
-                                disp.replace(pattern, '') + "_" +
-                                Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3);
-                            document.getElementById('cardata_name').value = name;
+            form(id="cardata_form" novalidate action="#" method="post").needs-validation
+                .row 
+                    .col
+                        include carData
+                    .col
+                        label(for="cardata_name").form-label Nombre único 
+                        input(id="cardata_name" type="text" required pattern="[\\w\\-. ]{3,255}$").form-control
+                        .d-grid.gap-2.d-md-flex.justify-content-md-end.mt-3
+                            button(type="submit" id="btn_save" value="submit").btn.btn-primary Guardar    
+                            button(type="button" id="btn-cancel").btn.btn-secondary Cancelar                                              
+                script.
+                    function generateName() {
+                        if (document.getElementById('cardata_name').value != "" ) {
+                            return
                         }
+                        let make = document.getElementById('cardata_make').value
+                        let model = document.getElementById('cardata_model').value
+                        let disp = document.getElementById('cardata_displacement').value
+                        if ( make=="" || model=="" || disp=="") {
+                            return;
+                        }
+                        let pattern = /[^\w\-.]+/g;
+                        let name = make.replace(pattern, '') + "_" +
+                            model.replace(pattern, '') + "_" +
+                            disp.replace(pattern, '') + "_" +
+                            Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 3);
+                        document.getElementById('cardata_name').value = name;
+                    }
 
-                        for (let f of ['cardata_name', 'cardata_make', 'cardata_model', 'cardata_displacement']) {
-                            document.getElementById(f).addEventListener('focusout', generateName)
-                        }
-                        document.getElementById('cardata_form').addEventListener("submit", (e)=>{
-                            form = document.getElementById("cardata_form");
-                            console.log("Form submitted")
-                            if (!form.checkValidity()){
-                                e.preventDefault();
-                                e.stopPropagation();
+                    for (let f of ['cardata_name', 'cardata_make', 'cardata_model', 'cardata_displacement']) {
+                        document.getElementById(f).addEventListener('focusout', generateName)
+                    }
+                    function saveChanges() {
+                        let payload = {"Engine":{}}
+                        payload["id"] = document.querySelector("#cardata_name").value;
+                        payload["make"] = document.querySelector("#cardata_make").value;
+                        payload["model"] = document.querySelector("#cardata_model").value;
+                        payload["year"] = document.querySelector("#cardata_year").value;
+                        payload.Engine["displacement"]  = document.querySelector("#cardata_displacement").value + " " +
+                            document.querySelector("#cardata_displacement_units").value;
+                        payload.Engine["cylinders"]  = document.querySelector("#cardata_cylinders").value;
+                        payload["weight"] = document.querySelector("#cardata_weight").value + " " +
+                            document.querySelector("#cardata_weight_units").value;
+                        payload.Engine["compressionRatio"] = document.querySelector("#cardata_compressionratio").value;
+                        payload.Engine["maxPower"] = document.querySelector("#cardata_maxpower").value + " " +
+                            document.querySelector("#cardata_maxpower_units").value;
+                        payload.Engine["rpmMaxPower"] = document.querySelector("#cardata_rpmmaxpower").value;
+                        payload.Engine["intakeType"] = document.querySelector("[name='cardata_intakeType'][checked]").value;
+                        fetch(`/vehicle/${payload.id}`, {
+                            "method":"post",
+                            "body":JSON.stringify(payload),
+                            "headers":{
+                                "Content-Type":"application/json"
                             }
-                            form.classList.add('was-validated')
                         })
+                            .then( res => {
+                                if (res.status==200) {
+                                    window.location.replace("/vehicleData?vehicleId=" + payload.id)
+                                } else {
+                                    alert("Ocurrió un error guardando el documento")
+                                    console.error("Error grabando", res)
+                                }
+                            }).catch ( e=> {
+                                console.error(e);
+                                alert("Ocurrió un error guardando el documento")
+                            })
+                    }
+                    document.getElementById('cardata_form').addEventListener("submit", (e)=>{
+                        form = document.getElementById("cardata_form");
+                        console.log("Form submitted")
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (form.checkValidity()){
+                            let vehicleId = document.querySelector("#cardata_name").value;
+                            fetch("/vehicles", {"method":"get"})
+                                .then( res => res.json())
+                                .then( jsonData => {
+                                    if (jsonData.vehicles.includes(vehicleId)) {
+                                        let dialog=new ConfirmDialog(
+                                            "Guardar nuevo vehículo", 
+                                            "Ya existe un vehículo con ese nombre.\n¿Desea reemplazarlo?",
+                                            () => { document.querySelector("#cardata_name").focus() },
+                                            saveChanges
+                                        )
+                                        dialog.show()
+                                    } else {
+                                        saveChanges()
+                                    }
+                                })
+                                .catch( e => {
+                                    console.error(e);
+                                    //TODO: show error to user
+                                })
+                        }
+                        form.classList.add('was-validated')
+                    })

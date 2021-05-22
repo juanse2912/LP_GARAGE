@@ -11,7 +11,11 @@ var timeoutHandler=null;
  */
 function getDataElement(name) {
     let tags = name.split(".")
-    let result = vehicleData
+    let result = vehicleData;
+    if (partName!="Vehicle") {
+      result = vehicleData[partName];
+    }
+    
     for (let tag of tags) {
         if(result[tag]) {
             result = result[tag]
@@ -57,39 +61,88 @@ function setUnitSelectEventListener() {
  * Finds modified items on the form and places update requests to the backend
  */
 function saveChanges() {
-    let inputCollection = document.querySelectorAll("input[data-bound].updated");
-    let queryParameters = []
-    for (let input of inputCollection) {
-        input.classList.remove("updated")
-        let inputId = input.getAttribute("id")
-        let inputValue = input.value
-        let dataElement = input.getAttribute("data-bound")
-        let unitSelect = document.querySelector(`select.unit[data-from=${inputId}]`)
-        if (unitSelect) {
-            inputValue += " " + unitSelect.value
+  let inputCollection = document.querySelectorAll("input[data-bound].updated");
+  let queryParameters = []
+  for (let input of inputCollection) {
+    input.classList.remove("updated")
+    let inputId = input.getAttribute("id")
+    let inputValue = input.value
+    let dataElement = input.getAttribute("data-bound")
+    let unitSelect = document.querySelector(`select.unit[data-from=${inputId}]`)
+    if (unitSelect) {
+        inputValue += " " + unitSelect.value
+    }
+    queryParameters.push( `${dataElement}=${encodeURI(inputValue)}`)
+  }       
+  let queryString = queryParameters.join("&");
+  let url = "/vehicle/" + vehicleData.id;
+  if (partName!="Vehicle") {
+    url += "/"+part
+  }
+  if (subpartName!="") {
+    url += "/" + subpartName
+  }
+  console.log("updating changes...")
+  fetch(`${url}?${queryString}`, {"method":"put"})
+    .then( res => res.json())
+    .then( jsonData => {
+      console.log("update done");
+      vehicleData = jsonData;
+      updateDataBoundElements();
+    })
+    .catch(e => {
+        console.error("Error updating vehicle", e)
+    });    
+}
+
+function separateValueAndUnits(s) {
+  let result = {};
+  if (s.indexOf(" ")<=0) {
+    result["value"] = s;
+  } else {
+    result["value"] = s.substr(0, s.indexOf(" "))
+    result["units"] = s.substr(s.indexOf(" "), s.length - s.indexOf(" ")).trim()  
+  }
+  return result;
+}
+
+function updateDataBoundElements() {
+  let elementCollection = document.querySelectorAll("[data-bound]")
+  for (let element of elementCollection){
+    let dataElement = getDataElement(element.getAttribute("data-bound"));
+    switch (element.nodeName) {
+      case "DIV":
+      case "SPAN":
+      case "P":
+      case "TD":
+        element.innerText = dataElement;
+        break;
+      case "INPUT":
+        if (["text","number","range"].includes(element.type.toLowerCase())){
+          let vu = separateValueAndUnits(dataElement);
+          if (vu.units) {
+            let valueSelect = document.querySelector(`[data-from='${element.id}']`);
+            if (valueSelect && valueSelect.value!=vu.units) {
+              valueSelect.value = vu.units;
+            } else if(!valueSelect){
+              console.warn("Can't find units for "+ `[data-from="${element.id}"]`)
+            }
+            
+          }
+          if(element.value != vu.value) {
+            element.value = vu.value;
+            element.classList.remove("is-invalid");
+          }
+        } else if(["radio,checkbox"].includes(element.type.toLowerCase()) ) {
+          if(element.value == dataElement) {
+            element.addAttribute("checked",true);
+          } else {
+            element.removeAttribute("checked");
+          }
         }
-        queryParameters.push( `${dataElement}=${encodeURI(inputValue)}`)
-    }       
-    let queryString = queryParameters.join("&");
-    let url = "/vehicle/" + vehicleData.id;
-    if (partName!="Vehicle") {
-        url += "/"+part
+        break;
     }
-    if (subpartName!="") {
-        url += "/" + subpartName
-    }
-    console.log("updating changes...")
-    fetch(`${url}?${queryString}`, {"method":"put"})
-        .then( res => res.json())
-        .then( jsonData => {
-            console.log("update done");
-            vehicleData = jsonData;
-            //TODO: update all data-bound elements
-        })
-        .catch(e => {
-            console.error("Error updating vehicle", e)
-        })
-    
+  }
 
 }
 
@@ -108,7 +161,7 @@ function setInputEventListener(){
                 if (timeoutHandler) {
                     clearTimeout(timeoutHandler)
                 }
-                timeoutHandler = setTimeout(saveChanges, 3000)
+                timeoutHandler = setTimeout(saveChanges, 500)
             } else {
                 event.target.classList.add("is-invalid")
             }

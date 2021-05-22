@@ -140,16 +140,16 @@ module.exports.storeNewVehicle = function (req, res) {
     let storeVehicle = new Promise((resolve, reject) => {
         //TODO: validate JSON schema
         let vehicleData = req.body;
-        if (vehicleData.id && vehicleData.make && vehicleData.model && vehicleData.year) {
+        if (vehicleData.id && vehicleData.make && vehicleData.model ) {
             let vehicle = Vehicle.fromJSON(vehicleData);
-            let filepath = path.join(__dirname, DIR, `${req.params
-                .id}.json`);
+            let filepath = path.join(__dirname, DIR, `${req.params.id}.json`);
             let data = Buffer.from(JSON.stringify(vehicle.toJSON(true), null, 2));
             fs.writeFile(filepath, data)
                 .then(() => { resolve(vehicle) })
                 .catch(e => { reject(e) });
 
         } else {
+            console.error("Malformed vehicle data", req.body);
             reject(new Error("Malformed vehicle data"));
         }
     });
@@ -234,7 +234,7 @@ module.exports.updateVehicle = function (req, res) {
 
             saveVehicleFile(vehicle)
                 .then(vdata => {
-                    res.json(workingObject.toJSON(true))
+                    res.json(vdata)
                 })
                 .catch(e => {
                     console.error("Error saving vehicle file", e);

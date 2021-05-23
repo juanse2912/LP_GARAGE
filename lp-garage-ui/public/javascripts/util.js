@@ -49,3 +49,52 @@ class ConfirmDialog{
 
     }
 }
+
+function alertContainerFade() {
+    let alertContainer = document.querySelector("#alertContainer");
+    if (!alertContainer.hasChildNodes()) {
+        alertContainer.classList.remove("show");
+        alertContainer.classList.add("fade");
+    }
+}
+
+
+function showAlert(message, level) {
+    let alertContainer = document.querySelector("#alertContainer")
+    let alertElement=document.createElement("div");
+    let alertClasses = ["alert", "alert-dismissible", "show"]
+    switch (level) {
+        case "ERROR":
+            alertClasses.push("alert-danger")
+            break;
+        case "WARN":
+            alertClasses.push("alert-warning")
+            break;
+        default:
+            alertClasses.push("alert-primary")
+            break;
+    }
+    for (let cl in alertClasses) {
+        alertElement.classList.add(alertClasses[cl])
+    }
+    alertElement.setAttribute("role", "alert")
+    alertElement.appendChild(document.createTextNode(message))
+    let button = document.createElement("button")
+    button.classList.add("btn-close")
+    button.setAttribute("type", "button")
+    button.setAttribute("data-bs-dismiss", "alert")
+    button.setAttribute("aria-label", "close")
+    alertElement.appendChild(button)
+    alertContainer.appendChild(alertElement)
+    alertBody=document.querySelector("#alertBody")
+    bsAlert = new bootstrap.Alert(alertElement)
+    alertElement.addEventListener("closed.bs.alert", alertContainerFade)
+    setTimeout((alert)=>{
+        alert.close();
+        alert.dispose();
+    }, 5*1000, bsAlert)
+    alertContainer.classList.remove("fade");
+    alertContainer.classList.add("show")
+
+}
+

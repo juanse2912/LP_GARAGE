@@ -46,10 +46,12 @@ function setUnitSelectEventListener() {
                         let event=new Event("change", {bubbles:true});
                         targetInput.dispatchEvent(event);
                     } else {
+                        showAlert("Error en la conversión de unidades: " + jsonData.Error)
                         console.error("Error converting units: " + JSON.stringify(jsonData))
                     }
                 })
                 .catch(e=>{
+                    showAlert("Error en la conversión de unidades: " + e.message)
                     console.error("Error converting units", e)
                 })
 
@@ -91,6 +93,7 @@ function saveChanges() {
       updateDataBoundElements();
     })
     .catch(e => {
+        showAlert("Error actualizando datos del vehículo. " + e.messaage)
         console.error("Error updating vehicle", e)
     });    
 }

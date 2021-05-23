@@ -19,7 +19,7 @@ block content
                         input(id="cardata_name" type="text" required pattern="[\\w\\-. ]{3,255}$").form-control
                         .d-grid.gap-2.d-md-flex.justify-content-md-end.mt-3
                             button(type="submit" id="btn_save" value="submit").btn.btn-primary Guardar    
-                            button(type="button" id="btn-cancel").btn.btn-secondary Cancelar                                              
+                            button(type="button" id="btn-cancel" click="window.location.replace('/')").btn.btn-secondary Cancelar                                              
                 script.
                     function generateName() {
                         if (document.getElementById('cardata_name').value != "" ) {
@@ -69,12 +69,12 @@ block content
                                 if (res.status==200) {
                                     window.location.replace("/vehicleData?vehicleId=" + payload.id)
                                 } else {
-                                    alert("Ocurrió un error guardando el documento")
+                                    showAlert("Ocurrió un error guardando el documento")
                                     console.error("Error grabando", res)
                                 }
                             }).catch ( e=> {
                                 console.error(e);
-                                alert("Ocurrió un error guardando el documento")
+                                showAlert("Ocurrió un error guardando el documento: " + e.message)
                             })
                     }
                     document.getElementById('cardata_form').addEventListener("submit", (e)=>{
@@ -101,7 +101,7 @@ block content
                                 })
                                 .catch( e => {
                                     console.error(e);
-                                    //TODO: show error to user
+                                    showAlert("Error obteniendo lista de vehículos existentes. "+e.message)
                                 })
                         }
                         form.classList.add('was-validated')

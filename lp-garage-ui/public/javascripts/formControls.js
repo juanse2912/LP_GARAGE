@@ -44,7 +44,7 @@ function setUnitSelectEventListener() {
             let targetInputId = srcSelect.getAttribute("data-from")
             let targetInput = document.querySelector(`input#${targetInputId}`)
             let dataElement = getDataElement(targetInput.getAttribute("data-bound"))
-            fetch(`unitConversion?value=${encodeURI(dataElement)}&unit=${srcSelect.value}`, {"method":"get"})
+            fetch(`/unitConversion?value=${encodeURI(dataElement)}&unit=${srcSelect.value}`, {"method":"get"})
                 .then(res=>res.json())
                 .then(jsonData=>{
                     if(jsonData.result) {

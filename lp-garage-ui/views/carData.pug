@@ -1,7 +1,8 @@
 -var vehicleData
--var unitRE = /^([\d\.]*)\s(.*)$/
-mixin unitOption(unitValue, unitName, selectedVal)
-    option(value=unitValue selected=(unitValue==selectedVal?true:false))= unitName
+//-
+    -var unitRE = /^([\d\.]*)\s(.*)$/
+    mixin unitOption(unitValue, unitName, selectedVal)
+        option(value=unitValue selected=(unitValue==selectedVal?true:false))= unitName
 
 
 label(for="cardata_make").form-label Marca
@@ -12,7 +13,7 @@ label(for="cardata_year").form-label Año
 input(id="cardata_year" type="text" value=(vehicleData && vehicleData.year?vehicleData.year:"") data-bound="year").form-control
 label(for="cardata_displacement").form-label Cilindrada
 .input-group.mb-3
-    if vehicleData && vehicleData.Engine && vehicleData.Engine.displacement 
+    if getProperty(vehicleData, "Engine.displacement") 
         - var displacementValue = unitRE.test(vehicleData.Engine.displacement) ? unitRE.exec(vehicleData.Engine.displacement)[1] : ""
         - var displacementUnit = unitRE.test(vehicleData.Engine.displacement) ? unitRE.exec(vehicleData.Engine.displacement)[2] : ""
     else 
@@ -29,7 +30,7 @@ label(for="cardata_displacement").form-label Cilindrada
     select.form-select.input-group-text.unit(id="cardata_displacement_units" aria-label="unidades cilindrada" data-from="cardata_displacement")
         +unitOption("cm^3", "cm³", displacementUnit)
         +unitOption("m^3", "m³", displacementUnit)
-        +unitOption("ft^3", "ft³", displacementUnit)
+        +unitOption("in^3", "in³", displacementUnit)
         +unitOption("l", "lt", displacementUnit)
 label(for="cardata_cylinders").form-label Número de cilindros
 .input-group.mb-3

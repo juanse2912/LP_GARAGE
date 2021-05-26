@@ -13,13 +13,13 @@ block content
             include vehicleNav
             h1 Motor
             .row 
-                .col-2 
-                    ul.nav.flex-column 
+                .col-1
+                    ul.nav.flex-column.nav-pills
                         li.nav-item 
                             a(
                                 class="nav-link "+(subpartName=="EnginePower"?"active":"") 
                                 href=(subpartName=="EnginePower"?"#":"/Engine/EnginePower?vehicleId="+vehicleData.id) 
-                            ) Modelo de potencia
+                            ) Potencia
                         li.nav-item 
                             a(
                                 class="nav-link "+(subpartName=="EngineForce"?"active":"") 
@@ -34,7 +34,7 @@ block content
                             a(
                                 class="nav-link "+(subpartName=="Exhaust"?"active":"") 
                                 href=(subpartName=="Exhaust"?"#":"/Engine/Exhaust?vehicleId="+vehicleData.id)
-                            ) Fuerzas
+                            ) Toberas
                 .col 
                     case subpartName 
                         when "EnginePower"

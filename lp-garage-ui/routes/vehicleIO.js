@@ -185,51 +185,46 @@ module.exports.updateVehicle = function (req, res) {
     getVehicleFromFile(req.params.id)
         .then(vehicle => {
 
-            // Find out which part/subpart is being updated form the URL params
-            let workingObject = null
-            if (!req.params.part) {
-                workingObject = vehicle;
-            } else {
-                let part = vehicle.getPart(req.params.part);
-                if (!part) {
-                    //Can't update an unexisting part
-                    throw new Error(`Vehicle does not have the ${req.params.part} defined`)
-                }
-                if (!req.params.subpart) {
-                    workingObject = part;
-                } else {
-                    workingObject = part.getPart(req.params.subpart);
-                    if (!workingObject) {
-                        throw new Error(`${req.params.part} does not have the ${req.params.subpart} defined`);
-                    }
-                }
-
-            }
-
             // To ease client side xhr requests we want to allow updates
-            // for both, a part and a subpart on a single request.
+            // for all: vehicle, a part and a subpart, on a single request.
             // For instance, the vehicle details form include some engine
             // related fields. Thus, when an update request comes from this form
             // the fields related to the engine, they will come labeled with 
-            // Engine.<field>
-            let valueMap = new Map();
-            let subpartValueMap = new Map();
-            let subpartName = "";
+            // Engine.<field>    
+            let dataMaps = {
+                vehicle:new Map()
+            }
+
             for (let key in req.query) {
-                if (key.indexOf(".")>0) {
-                    subpartName = key.split(".")[0];
-                    subpartValueMap.set(key.split(".")[1], req.query[key]);
-                } else  {
-                    valueMap.set(key, req.query[key])
+                let value = req.query[key];
+                if(key.indexOf(".")>0) {
+                    let partName = key.substr(0, key.lastIndexOf("."))
+                    let realKey = key.substr(key.lastIndexOf(".")+1)
+                    if(!dataMaps[partName]) {
+                        dataMaps[partName] = new Map()
+                    } 
+                    dataMaps[partName].set(realKey, value)
+                } else {
+                    dataMaps.vehicle.set(key, value)
                 }
             }
 
-            if (valueMap.size > 0) {
-                workingObject.updateValues(valueMap);
-            }
-            
-            if (subpartName!="") {
-                workingObject.getPart(subpartName).updateValues(subpartValueMap);
+            for (let k in dataMaps) {
+                if(k=="vehicle") {
+                    if (dataMaps.vehicle.size>0) {
+                        vehicle.updateValues(dataMaps.vehicle)
+                    }
+                } else {
+                    if(k.indexOf(".") > 0) {
+                        let subpart = vehicle
+                            .getPart(k.split(".")[0])
+                            .getPart(k.split(".")[1]);
+                        subpart.updateValues(dataMaps[k]);
+                    } else {
+                        let part = vehicle.getPart(k);
+                        part.updateValues(dataMaps[k]);
+                    }
+                }
             }
 
             saveVehicleFile(vehicle)

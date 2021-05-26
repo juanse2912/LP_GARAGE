@@ -7,10 +7,10 @@ ul.nav.nav-tabs.nav-fill
         else
             a.nav-link(href="/vehicleData?vehicleId="+vehicleId) Datos del vehículo
     li.nav-item
-        if page=="engineData"
+        if page=="Engine"
             a.nav-link.active(aria-current="page" href="#") Motor
         else
-            a.nav-link(href="/engineData?vehicleId="+vehicleId) Motor
+            a.nav-link(href="/Engine/EnginePower?vehicleId="+vehicleId) Motor
     li.nav-item
         if page=="suspenssionData"
             a.nav-link.active(aria-current="page" href="#") Suspensión

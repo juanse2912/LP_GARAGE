@@ -10,6 +10,11 @@ var timeoutHandler=null;
  * @returns {object} The node in vehicleData referenced by name
  */
 function getDataElement(name) {
+    let p = name.split(".")
+    return p.reduce( (obj,node) => {
+      return (obj||{})[node]
+    }, vehicleData)
+    /*
     let tags = name.split(".")
     let result = vehicleData;
     if (partName!="Vehicle") {
@@ -25,6 +30,7 @@ function getDataElement(name) {
         }
     }
     return result;
+    */
 }
 
 /**
@@ -77,15 +83,10 @@ function saveChanges() {
     queryParameters.push( `${dataElement}=${encodeURI(inputValue)}`)
   }       
   let queryString = queryParameters.join("&");
-  let url = "/vehicle/" + vehicleData.id;
-  if (partName!="Vehicle") {
-    url += "/"+part
-  }
-  if (subpartName!="") {
-    url += "/" + subpartName
-  }
+  
+ 
   console.log("updating changes...")
-  fetch(`${url}?${queryString}`, {"method":"put"})
+  fetch(`/vehicle/${vehicleData.id}?${queryString}`, {"method":"put"})
     .then( res => res.json())
     .then( jsonData => {
       console.log("update done");
@@ -118,7 +119,8 @@ function updateDataBoundElements() {
       case "SPAN":
       case "P":
       case "TD":
-        element.innerText = dataElement;
+        //element.innerText = dataElement;
+        updateCalculatedDataElement(dataElement,element.getAttribute("data-bound"))
         break;
       case "INPUT":
         if (["text","number","range"].includes(element.type.toLowerCase())){
@@ -171,5 +173,58 @@ function setInputEventListener(){
         })
     }
 }
+/**
+ * Sets an event listener on units drop-downs beside calculated values.
+ */
+function setUnitButtonListener() {
+  let lnkColl = document.querySelectorAll("a.unit")
+  for (let lnk of lnkColl) {
+    lnk.addEventListener("click", e=>{
+      let dataElementName = e.target.getAttribute("data-from")
+      let dataElement = getDataElement(dataElementName);
+      let unit = e.target.getAttribute("data-unit")
+      fetch(
+        `/unitConversion?value=${encodeURI(dataElement)}&unit=${unit}`,
+        {"method":"get"}
+      )
+        .then( response => response.json())
+        .then( jsonData => {
+          if(jsonData.result) {
+            updateCalculatedDataElement(jsonData.result, dataElementName)
+          } else {
+            showAlert("Error transformando unidades", "ERROR")
+          }
+          
+        })
+        .catch(e => {
+          console.error(e);
+          showAlert("Error transformando unidades: " +  e.message)
+        })
+    })
+  }
+}
+
+/**
+ * Updates a calculated field and the units drop-down besides it (if present)
+ * @param {string} value The value to be set on the page
+ * @param {string} elementName The name of the data-bound element
+ */
+function updateCalculatedDataElement(value, elementName) {
+  let vu=separateValueAndUnits(value);
+  let el = document.querySelector(`span[data-bound='${elementName}']`)
+  el.firstChild.textContent = vu.value;
+  if(vu.units) {
+    let unitDisplay = vu.units;
+    let unitOptions = el.querySelectorAll("a.unit");
+    for(let opt of unitOptions) {
+      if (opt.getAttribute("data-unit")==vu.units) {
+        unitDisplay = opt.innerText
+      }
+    }
+    el.querySelector(".btn-group .btn").innerText = unitDisplay
+  }
+
+}
+
 
 

@@ -1,0 +1,49 @@
+extends layout
+
+block content 
+  -var vehicleData 
+  -var partName 
+  -var subpartName = subpartName||"EnginePower"
+  div(id="wrapper").d-flex
+    //- Page Content
+    div(id="page-content-wrapper")
+        //- navbar
+        include navbar.pug 
+        .container-fluid
+            include vehicleNav
+            h1 Motor
+            .row 
+                .col-2 
+                    ul.nav.flex-column 
+                        li.nav-item 
+                            a(
+                                class="nav-link "+(subpartName=="EnginePower"?"active":"") 
+                                href=(subpartName=="EnginePower"?"#":"/Engine/EnginePower?vehicleId="+vehicleData.id) 
+                            ) Modelo de potencia
+                        li.nav-item 
+                            a(
+                                class="nav-link "+(subpartName=="EngineForce"?"active":"") 
+                                href=(subpartName=="EngineForce"?"#":"/Engine/EngineForce?vehicleId="+vehicleData.id)
+                            ) Fuerzas
+                        li.nav-item 
+                            a(
+                                class="nav-link "+(subpartName=="Overbore"?"active":"") 
+                                href=(subpartName=="Overbore"?"#":"/Engine/Overbore?vehicleId="+vehicleData.id)
+                            ) Rectificación
+                        li.nav-item 
+                            a(
+                                class="nav-link "+(subpartName=="Exhaust"?"active":"") 
+                                href=(subpartName=="Exhaust"?"#":"/Engine/Exhaust?vehicleId="+vehicleData.id)
+                            ) Fuerzas
+                .col 
+                    case subpartName 
+                        when "EnginePower"
+                            include enginePower 
+                        when "EngineForce"
+                            //-include engineForce 
+                        when "Overbore"
+                            //-include overbore 
+                        when "Exhaust"
+                            //-include exhaust
+
+            

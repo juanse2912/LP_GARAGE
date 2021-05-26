@@ -17,8 +17,30 @@ block content
                             .col 
                                 include carData
                             .col 
-                                h3 Cilindrada unitaria:
-                                div(data-bound="Engine.unitaryDisplacement")= vehicleData.Engine.unitaryDisplacement||""
+                                h3 Cálculos básicos del motor
+                                .row
+                                    strong Cilindrada unitaria: 
+                                    - var unitaryDisplacementVal=unitRE.exec(getProperty(vehicleData, "Engine.unitaryDisplacement")||"0 m^3")[1]
+                                    - var unitaryDisplacementUnits=unitRE.exec(getProperty(vehicleData, "Engine.unitaryDisplacement")||"0 m^3")[2]
+                                    span(data-bound="Engine.unitaryDisplacement")=unitaryDisplacementVal   
+                                        +unitButton(unitaryDisplacementUnits, {
+                                            "m^3":"m³",
+                                            "cm^3":"cm³",
+                                            "in^3":"in³",
+                                            "l":"lt"
+                                        },"Engine.unitaryDisplacement")
+                                .row
+                                    strong Volumen cámara de combustión: 
+                                    -var combustionChamberVol=unitRE.exec(getProperty(vehicleData, "Engine.combustionChamberVolume")||"0 m^3")[1]
+                                    -var combuistionChamberVolUnits=unitRE.exec(getProperty(vehicleData, "Engine.unitaryDisplacement")||"0 m^3")[2]
+                                    span(data-bound="Engine.combustionChamberVolume")=combustionChamberVol 
+                                        +unitButton(combuistionChamberVolUnits, {
+                                            "m^3":"m³",
+                                            "cm^3":"cm³",
+                                            "in^3":"in³",
+                                            "l":"lt"
+                                        },"Engine.combustionChamberVolume")
+                                
     script(src="/javascripts/formControls.js")
     script.
         //Scripts
@@ -28,5 +50,6 @@ block content
         document.addEventListener("DOMContentLoaded", ()=> {
             setUnitSelectEventListener();
             setInputEventListener();
+            setUnitButtonListener();
         })
 

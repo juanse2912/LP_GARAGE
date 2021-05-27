@@ -1,48 +1,54 @@
 - var availableVehicles
 - var selectedVehicle
 - var hideVehicleSelection
-nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.border-bottom
-    a.navbar-brand(href="#") LP Garage
-    button(
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Abrir barra de navegación"
-    )
-        span.nav-bar-toggler-icon 
-    div(id="nabvarSupportedContent").collapse.navbar-collapse
-        ul.navbar-nav.ml-auto.mt-2.mt-lg-0
-            if hideVehicleSelection 
-                li.nav-item.active 
-                    a.nav-link.active(href="#") Nuevo vehículo 
-            else 
-                li.nav-item.dropdown
+nav.navbar.navbar-expand.navbar-dark.bg-dark.border-bottom
+    .container-fluid
+        a.navbar-brand(href="#") LP Garage
+        //-
+            button(
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Abrir barra de navegación"
+            )
+                span.nav-bar-toggler-icon 
+        div.navbar-collapse(id="nabvarSupportedContent")
+            //-.collapse.navbar-collapse
+            ul.navbar-nav
+                //-.ml-auto.mt-2.mt-lg-0
+                if hideVehicleSelection 
+                    li.nav-item.active 
+                        a.nav-link.active(href="#") Nuevo vehículo 
+                else 
+                    li.nav-item
+                        span.nav-link.active Vehículo:
+                    li.nav-item.dropdown
+                        a(
+                            aria-current="page"
+                            href="#"
+                            id="vehicleSelection"
+                            role="button"
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false"
+                        ).nav-link.active.dropdown-toggle 
+                            if selectedVehicle
+                                =selectedVehicle 
+                            else 
+                                | Seleccione un vehículo...
+                        ul(aria-labelledby="vehicleSelection").dropdown-menu
+                            li
+                                a(href="/newVehicle").dropdown-item Crear uno nuevo... 
+                            li 
+                                hr.dropdown-divider                    
+                            each vid in availableVehicles 
+                                li
+                                    a(href="?vehicleId="+vid).dropdown-item= vid                         
+                li.nav-item 
                     a(
                         aria-current="page"
                         href="#"
-                        id="vehicleSelection"
-                        role="button"
-                        data-bs-toggle="dropdown" 
-                        aria-expanded="false"
-                    ).nav-link.dropdown-toggle 
-                        if selectedVehicle
-                            =selectedVehicle 
-                        else 
-                            | Seleccione un vehículo...
-                    ul(aria-labelledby="vehicleSelection").dropdown-menu
-                        li
-                            a(href="/newVehicle").dropdown-item Crear uno nuevo... 
-                        li 
-                            hr.dropdown-divider                    
-                        each vid in availableVehicles 
-                            li
-                                a(href="?vehicleId="+vid).dropdown-item= vid                         
-            li.nav-item 
-                a(
-                    aria-current="page"
-                    href="#"
-                ).nav-link.active Documentación
+                    ).nav-link Documentación
 

@@ -1,170 +1,146 @@
-form#enginePower.needs-validation(novalidate action="#" method="post")
-    .row
-        .col
-            label.form-label(for="enginepower_admissionpressure") Presión de admisión 
-            .input-group.mb-3
-                if getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure")
-                    -var admissionPressure = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure"))[1] || "";
-                    -var admissionPressureUnits = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure"))[2] || "kPa";
-                else 
-                    -var admissionPressure=""
-                    -var admissionPressureUnits="kPa"
-                input.form-control.align-right(
-                    id="enginepower_admissionpressure"
-                    type="number"
-                    step="any"
-                    value= admissionPressure
-                    data-bound="Engine.EnginePower.admissionAirPressure"
-                    required
-                )
-                select.form-select.input-group-text.unit(
-                    id="enginepower_admissionpressure_units"
-                    aria-label="unidades presion de admisión"
-                    data-from="enginepower_admissionpressure"
-                )
-                    +unitOption("kPa", "KPA", admissionPressureUnits)
-                    +unitOption("psi", "PSI", admissionPressureUnits)
-                    +unitOption("bar", "bar", admissionPressureUnits)
-            label.form-label(for="enginepower_admissiontemperature") Temperatura de admisión 
-            .input-group.mb-3 
-                if getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature") 
-                    -var admissionTemperature = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature"))[1] || "";
-                    -var admissionTemperatureUnits = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature"))[2] || ""
-                else 
-                    -var admissionTemperature = "";
-                    -var admissionTemperatureUnits = "K";
-                input.form-control.align-right(
-                    id="enginepower_admissiontemperature"
-                    type="number"
-                    step="any"
-                    value= admissionTemperature 
-                    data-bound="Engine.EnginePower.admissionAirTemperature"
-                    required
-                )
-                select.form-select.input-group-text.unit(
-                    id="enginepower_admissiontemperature_units"
-                    aria-label="unidades temperatura de admisión"
-                    data-from="enginepower_admissiontemperature"
-                )
-                    +unitOption("K", "°K", admissionTemperatureUnits)
-                    +unitOption("degC", "°C", admissionTemperatureUnits)
-                    +unitOption("degF", "°F", admissionTemperatureUnits)
-        .col
-            if getProperty(vehicleData, "Engine.EnginePower")
-                h3 Cálculos de Potencia
-                .row 
-                    .col
-                        .row
-                            strong Cilindrada: 
-                            - var displacementVal=unitRE.exec(getProperty(vehicleData, "Engine.displacement")||"0 m^3")[1]
-                            - var displacementUnits=unitRE.exec(getProperty(vehicleData, "Engine.displacement")||"0 m^3")[2]
-                            span(data-bound="Engine.displacement")=displacementVal   
-                                +unitButton(displacementUnits, {
-                                    "m^3":"m³",
-                                    "cm^3":"cm³",
-                                    "in^3":"in³",
-                                    "l":"lt"
-                                },"Engine.displacement")
-                        .row
-                            //- unitary displacement
-                            strong Cilindada unitaria: 
-                            - var unitaryDisplacementVal=unitRE.exec(getProperty(vehicleData, "Engine.unitaryDisplacement")||"0 m^3")[1]
-                            - var unitaryDisplacementUnits=unitRE.exec(getProperty(vehicleData, "Engine.unitaryDisplacement")||"0 m^3")[2]
-                            span(data-bound="Engine.unitaryDisplacement")=unitaryDisplacementVal   
-                                +unitButton(unitaryDisplacementUnits, {
-                                    "m^3":"m³",
-                                    "cm^3":"cm³",
-                                    "in^3":"in³",
-                                    "l":"lt"
-                                },"Engine.unitaryDisplacement")
-                        .row
-                            //- combustion chamber volume
-                            strong Volumen de cámara de combustión: 
-                            - var combustionChamberVolumeVal=unitRE.exec(getProperty(vehicleData, "Engine.combustionChamberVolume")||"0 m^3")[1]
-                            - var combustionChamberVolumeUnits=unitRE.exec(getProperty(vehicleData, "Engine.combustionChamberVolume")||"0 m^3")[2]
-                            span(data-bound="Engine.combustionChamberVolume")=combustionChamberVolumeVal   
-                                +unitButton(combustionChamberVolumeUnits, {
-                                    "m^3":"m³",
-                                    "cm^3":"cm³",
-                                    "in^3":"in³",
-                                    "l":"lt"
-                                },"Engine.combustionChamberVolume")
-                        .row
-                            //- Air density
-                            strong Densidad del aire: 
-                            - var airDensityVal=unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.airDensity")||"0 kg / m^3")[1]
-                            - var airDensityUnits=unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.airDensity")||"0 kg / m^3")[2]
-                            span(data-bound="Engine.EnginePower.airDensity")=airDensityVal   
-                                +unitButton(airDensityUnits, {
-                                    "kg / m^3":"kg/m³",
-                                    "g / cm^3":"g/cm³",
-                                    "lb / in^3":"lb/in³"
-                                },"Engine.EnginePower.airDensity")
-                            
+.col-lg-5
+    form#enginePower.needs-validation(novalidate action="#" method="post")
+        label.form-label(for="enginepower_admissionpressure") Presión de admisión 
+        .input-group.mb-3
+            if getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure")
+                -var admissionPressure = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure"))[1] || "";
+                -var admissionPressureUnits = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure"))[2] || "kPa";
             else 
-                .d-grid
-                    button.btn.btn-primary(
-                        type="submit"
-                        id="btn-save"
-                        value="submit"
-                    ) Guardar
-
+                -var admissionPressure=""
+                -var admissionPressureUnits="kPa"
+            input.form-control.align-right(
+                id="enginepower_admissionpressure"
+                type="number"
+                step="any"
+                value= admissionPressure
+                data-bound="Engine.EnginePower.admissionAirPressure"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginepower_admissionpressure_units"
+                aria-label="unidades presion de admisión"
+                data-from="enginepower_admissionpressure"
+            )
+                +unitOption("kPa", "KPA", admissionPressureUnits)
+                +unitOption("psi", "PSI", admissionPressureUnits)
+                +unitOption("bar", "bar", admissionPressureUnits)
+        label.form-label(for="enginepower_admissiontemperature") Temperatura de admisión 
+        .input-group.mb-3 
+            if getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature") 
+                -var admissionTemperature = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature"))[1] || "";
+                -var admissionTemperatureUnits = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature"))[2] || ""
+            else 
+                -var admissionTemperature = "";
+                -var admissionTemperatureUnits = "K";
+            input.form-control.align-right(
+                id="enginepower_admissiontemperature"
+                type="number"
+                step="any"
+                value= admissionTemperature 
+                data-bound="Engine.EnginePower.admissionAirTemperature"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginepower_admissiontemperature_units"
+                aria-label="unidades temperatura de admisión"
+                data-from="enginepower_admissiontemperature"
+            )
+                +unitOption("K", "°K", admissionTemperatureUnits)
+                +unitOption("degC", "°C", admissionTemperatureUnits)
+                +unitOption("degF", "°F", admissionTemperatureUnits)
+        if !getProperty(vehicleData, "Engine.EnginePower")
+            .d-grid
+                button.btn.btn-primary(
+                    type="submit"
+                    id="btn-save"
+                    value="submit"
+                ) Guardar                
+.col-lg-6
     if getProperty(vehicleData, "Engine.EnginePower")
-        script(src="/javascripts/formControls.js")
-        script.
-            //Scripts
-            var vehicleData= !{JSON.stringify(vehicleData)};
-            const partName="#{partName}";
-            const subpartName="#{subpartName}";        
-            document.addEventListener("DOMContentLoaded", ()=> {
-                setUnitSelectEventListener();
-                setInputEventListener();
-                setUnitButtonListener();
+        h3 Cálculos de Potencia
+        ul.list-group
+            +calculatedValue("Cilindrada:", "Engine.displacement", volumeUnits)
+            +calculatedValue("Cilindrada unitaria:", "Engine.unitaryDisplacement", volumeUnits)
+            +calculatedValue("Volumen de cámara de combustión:", "Engine.combustionChamberVolume", volumeUnits)
+            +calculatedValue("Densidad del aire:", "Engine.EnginePower.airDensity", {
+                "kg / m^3":"kg/m³",
+                "g / cm^3":"g/cm³",
+                "lb / in^3":"lb/in³"
             })
-    else 
-        script.
-            // Scripts
-            var vehicleData= !{JSON.stringify(vehicleData)};
-            function savePart() {
-                let payload={};
-                payload['admissionAirPressure'] = document.querySelector("#enginepower_admissionpressure").value + " "+
-                    document.querySelector("#enginepower_admissionpressure_units").value
-                payload['admissionAirTemperature'] = document.querySelector("#enginepower_admissiontemperature").value + " "+
-                    document.querySelector("#enginepower_admissiontemperature_units").value
-                fetch(
-                    `/vehicle/${vehicleData.id}/Engine/EnginePower`,
-                    {
-                        "method":"post",
-                        "body":JSON.stringify(payload),
-                        "headers":{
-                            "Content-Type":"application/json"
-                        }
-                    }
-                )
-                    .then(res=>res.json())
-                    .then(jsonData => {
-                        if(!jsonData.Error) {
-                            window.location.reload()
-                        } else {
-                            showAlert("Error creando sección de potencia de motor", "ERROR")
-                            console.error("Error creating EnginePower", jsonData)
-                        }
-                    })
-                    .catch(e=>{
-                        console.error("Error creating EnginePower", e)
-                        showAlert("Error creando sección de potencia del motor", "ERROR")
-                    })
-            }
-            document.querySelector("form#enginePower").addEventListener(
-                "submit",
-                e => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    let form=document.getElementById("enginePower")
-                    if (form.checkValidity()) {
-                        savePart();
-                    } else {
-                        form.classList.add('was-validated');
+            +calculatedValue("Presión de compresión:", "Engine.EnginePower.compressionPressure", pressureUnits)
+            +calculatedValue("Temperatura de compresión:", "Engine.EnginePower.compressionTemperature", temperatureUnits)
+            +calculatedValue("Masa de aire:", "Engine.EnginePower.airMass", {
+                "kg / s":"kg/s",
+                "g / s":"g/s",
+                "lb / s":"lb/s"
+            })
+            +calculatedValue("Masa de combustible:", "Engine.EnginePower.fuelMass", {
+                "kg / s":"kg/s",
+                "g / s":"g/s",
+                "lb / s":"lb/s"
+            })
+            +calculatedValue("Calor aportado:", "Engine.EnginePower.contributedHeat", powerUnits)
+            +calculatedValue("Presión de combustión:", "Engine.EnginePower.combustionPressure", pressureUnits)
+            +calculatedValue("Temperatura de combustión:", "Engine.EnginePower.combustionTemperature",temperatureUnits)
+            +calculatedValue("Diferencial de presión:", "Engine.EnginePower.pressureDifferential")
+
+//- Script
+if getProperty(vehicleData, "Engine.EnginePower")
+    script(src="/javascripts/formControls.js")
+    script.
+        //Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        const partName="#{partName}";
+        const subpartName="#{subpartName}";        
+        document.addEventListener("DOMContentLoaded", ()=> {
+            setUnitSelectEventListener();
+            setInputEventListener();
+            setUnitButtonListener();
+        })
+else 
+    script.
+        // Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        function savePart() {
+            let payload={};
+            payload['admissionAirPressure'] = document.querySelector("#enginepower_admissionpressure").value + " "+
+                document.querySelector("#enginepower_admissionpressure_units").value
+            payload['admissionAirTemperature'] = document.querySelector("#enginepower_admissiontemperature").value + " "+
+                document.querySelector("#enginepower_admissiontemperature_units").value
+            fetch(
+                `/vehicle/${vehicleData.id}/Engine/EnginePower`,
+                {
+                    "method":"post",
+                    "body":JSON.stringify(payload),
+                    "headers":{
+                        "Content-Type":"application/json"
                     }
                 }
             )
+                .then(res=>res.json())
+                .then(jsonData => {
+                    if(!jsonData.Error) {
+                        window.location.reload()
+                    } else {
+                        showAlert("Error creando sección de potencia de motor", "ERROR")
+                        console.error("Error creating EnginePower", jsonData)
+                    }
+                })
+                .catch(e=>{
+                    console.error("Error creating EnginePower", e)
+                    showAlert("Error creando sección de potencia del motor", "ERROR")
+                })
+        }
+        document.querySelector("form#enginePower").addEventListener(
+            "submit",
+            e => {
+                e.preventDefault();
+                e.stopPropagation();
+                let form=document.getElementById("enginePower")
+                if (form.checkValidity()) {
+                    savePart();
+                } else {
+                    form.classList.add('was-validated');
+                }
+            }
+        )

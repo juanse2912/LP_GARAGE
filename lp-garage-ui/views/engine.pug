@@ -12,8 +12,8 @@ block content
         .container-fluid
             include vehicleNav
             h1 Motor
-            .row 
-                .col-1
+            .row.row-cols-auto
+                .col-lg-1
                     ul.nav.flex-column.nav-pills
                         li.nav-item 
                             a(
@@ -35,15 +35,14 @@ block content
                                 class="nav-link "+(subpartName=="Exhaust"?"active":"") 
                                 href=(subpartName=="Exhaust"?"#":"/Engine/Exhaust?vehicleId="+vehicleData.id)
                             ) Toberas
-                .col 
-                    case subpartName 
-                        when "EnginePower"
-                            include enginePower 
-                        when "EngineForce"
-                            //-include engineForce 
-                        when "Overbore"
-                            //-include overbore 
-                        when "Exhaust"
-                            //-include exhaust
+                case subpartName 
+                    when "EnginePower"
+                        include enginePower 
+                    when "EngineForce"
+                        //-include engineForce 
+                    when "Overbore"
+                        //-include overbore 
+                    when "Exhaust"
+                        //-include exhaust
 
             

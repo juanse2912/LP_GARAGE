@@ -1,29 +1,31 @@
 -var page
 -var vehicleId
-ul.nav.nav-tabs.nav-fill
-    li.nav-item
-        if page=="vehicleData"
-            a.nav-link.active(aria-current="page" href="#") Datos del vehículo
-        else
-            a.nav-link(href="/vehicleData?vehicleId="+vehicleId) Datos del vehículo
-    li.nav-item
-        if page=="Engine"
-            a.nav-link.active(aria-current="page" href="#") Motor
-        else
-            a.nav-link(href="/Engine/EnginePower?vehicleId="+vehicleId) Motor
-    li.nav-item
-        if page=="suspenssionData"
-            a.nav-link.active(aria-current="page" href="#") Suspensión
-        else
-            a.nav-link(href="/suspenssionData?vehicleId="+vehicleId) Suspensión
-    li.nav-item
-        if page=="gearboxData"
-            a.nav-link.active(aria-current="page" href="#") Caja de cambios
-        else
-            a.nav-link(href="/gearboxData?vehicleId="+vehicleId) Caja de cambios
-    li.nav-item
-        if page=="brakesData"
-            a.nav-link.active(aria-current="page" href="#") Frenos
-        else
-            a.nav-link(href="/brakesData?vehicleId="+vehicleId) Frenos
+.container-fluid 
+    #vehicleNavContent 
+        ul.nav.nav-tabs.nav-fill
+            li.nav-item
+                if page=="vehicleData"
+                    a.nav-link.active(aria-current="page" href="#") Datos del vehículo
+                else
+                    a.nav-link(href="/vehicleData?vehicleId="+vehicleId) Datos del vehículo
+            li.nav-item
+                if page=="Engine"
+                    a.nav-link.active(aria-current="page" href="#") Motor
+                else
+                    a.nav-link(href="/Engine/EnginePower?vehicleId="+vehicleId) Motor
+            li.nav-item
+                if page=="suspenssionData"
+                    a.nav-link.active(aria-current="page" href="#") Suspensión
+                else
+                    a.nav-link(href="/suspenssionData?vehicleId="+vehicleId) Suspensión
+            li.nav-item
+                if page=="gearboxData"
+                    a.nav-link.active(aria-current="page" href="#") Caja de cambios
+                else
+                    a.nav-link(href="/gearboxData?vehicleId="+vehicleId) Caja de cambios
+            li.nav-item
+                if page=="brakesData"
+                    a.nav-link.active(aria-current="page" href="#") Frenos
+                else
+                    a.nav-link(href="/brakesData?vehicleId="+vehicleId) Frenos
     

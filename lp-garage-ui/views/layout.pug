@@ -23,30 +23,7 @@ html
     script(src="/javascripts/util.js")
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/sidebar.css')
-  -var getProperty = function(vd, property) { let p=property.split("."); return p.reduce( (obj, node) => { return (obj || {})[node]}, vd) }
-  //- unit handling
-  -var unitRE = /^([\d\.e-]*)\s(.*)$/
-  //- unit change for input fields
-  mixin unitOption(unitValue, unitName, selectedVal)
-    option(value=unitValue selected=(unitValue==selectedVal?true:false))= unitName
-  //- unit change for calculated values
-  mixin unitButton(value, options, dataElement)
-    .btn-group.ml-2 
-      button.btn.btn-secondary.btn-sm(type="button")=options[value]
-        button.btn.btn-sm.btn-secondary.dropdown-toggle.drop-down-toggle-split(
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-
-        )
-          span.visually-hidden unit toggle   
-      ul.dropdown-menu 
-        each l, v in options 
-          li  
-            a.dropdown-item.unit(
-              href="#"
-              data-from=dataElement 
-              data-unit=v
-            )=l
+  include commonsLib
   body
     //-General purpose alert container
     div#alertContainer(tabindex=-1).fixed-bottom.fade

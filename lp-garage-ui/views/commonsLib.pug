@@ -1,0 +1,48 @@
+-
+    var getProperty = function(vd, property) { 
+      let p=property.split("."); 
+      return p.reduce( (obj, node) => { 
+        return (obj || {})[node]
+      }, vd) 
+    }
+//- unit handling
+-var unitRE = /^([\d\.e-]*)\s(.*)$/
+-var volumeUnits = {"m^3":"m³","cm^3":"cm³","in^3":"in³","l":"lt"}
+-var areaUnits = {"m^2":"m²","cm^2":"cm²","in^2":"in²"}
+-var pressureUnits = {"kPa":"KPA","psi":"PSI","bar":"bar"}
+-var temperatureUnits = {"K":"°K","degC":"°C","degF":"°F"}
+-var massUnits={"kg":"kg","t":"Ton","l":"lb"}
+-var powerUnits={"hp":"hp","kW":"KW"}
+//- unit change for input fields
+mixin unitOption(unitValue, unitName, selectedVal)
+    option(value=unitValue selected=(unitValue==selectedVal?true:false))= unitName
+    //- unit change for calculated values
+mixin unitButton(value, options, dataElement)
+    .btn-group.ml-2 
+        button.btn.btn-secondary.btn-sm(type="button")=options[value]
+        button.btn.btn-sm.btn-secondary.dropdown-toggle.drop-down-toggle-split(
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+
+        )
+            span.visually-hidden unit toggle   
+        ul.dropdown-menu 
+            each l, v in options 
+                li  
+                    a.dropdown-item.unit(
+                        href="#"
+                        data-from=dataElement 
+                        data-unit=v
+                    )=l
+//- Template for calculated values
+mixin calculatedValue(title, dataElement, unitOptions)
+    li.list-group-item 
+        strong=title+" "
+        if unitOptions
+            -var dataVal=unitRE.exec(getProperty(vehicleData, dataElement)||"0 _")[1]
+            -var dataUnit=unitRE.exec(getProperty(vehicleData, dataElement)||"0 _")[2]
+        else 
+            -var dataVal=getProperty(vehicleData, dataElement)||""
+        span(data-bound=dataElement)=dataVal 
+            if unitOptions
+                +unitButton(dataUnit,unitOptions,dataElement)

@@ -8,5 +8,6 @@
 ### Ejecución
 1. Desde la interfaz de comandos, ubicarse en el directorio `<directorio de trabajo>\LP_GARAGE\lp-garage-ui\`
 2. Ejecutar el comando `npm start`
+3. En el navegador acceder al url (https://localhost:3000)
 
 

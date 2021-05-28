@@ -1,0 +1,18 @@
+extends layout
+
+block content 
+  -var vehicleData 
+  -var partName 
+  -var subpartName = subpartName||""
+  div(id="wrapper").d-flex
+    div(id="page-content-wrapper")
+        -var page="Gearbox"
+        include navbar.pug 
+        .container-fluid
+            .row.flex-nowrap
+                include vehicleNav
+                .col.py-3
+                    h1 Caja de cambios
+                    p Página en construcción
+
+            

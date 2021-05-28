@@ -25,37 +25,87 @@ router.get('/', function(req, res, next) {
   
 });
 
-router.get('/Engine/:subpart', (req,res) => {
-  vio.getVehicleFromFile(req.query.vehicleId)
+partRenderVars = async function(vehicleId, part, subpart){
+  return new Promise( (resolve, reject) => {
+    vio.getVehicleFromFile(vehicleId)
     .then( vehicle => {
       vio.getAvailableVehicles()
         .then(r=> {
-          res.render(
-            "engine",
-            {
+          resolve({
               vehicleId:vehicle.id,
               vehicleData:vehicle.toJSON(true),
-              part:"Engine",
-              page:"Engine",
-              subpart:req.params.subpart,
               availableVehicles:r.vehicles.sort(),
-              selectedVehicle:vehicle.id
-            }
-          )
+              selectedVehicle:vehicle.id,
+              part:part,
+              subpart:subpart
+            })
         })
         .catch(e=>{
-          throw e
+          reject(e)
         })
     })
-    .catch(err => {
-      err.status=500
-      res.locals.message = err.message;
-      res.locals.error = req.app.get('env') === 'development' ? err : {};
-      // render the error page
-      res.status(err.status || 500);
-      res.render('error');
+    .catch(err => {reject(err)})
+
+  })
+}
+
+renderError = function(err, res) {
+  err.status=500
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');    
+}
+
+router.get('/Engine/:subpart', (req,res) => {
+  partRenderVars(req.query.vehicleId, "Engine", req.params.subpart)
+    .then( r => {
+      r["page"] = "Engine";
+      res.render("engine", r)
     })
+    .catch(err => {
+      renderError(err, res)
+    })
+
 })
+
+router.get('/Suspenssion', (req,res) => {
+  partRenderVars(req.query.vehicleId, "Suspenssion", req.params.subpart)
+    .then( r => {
+      r["page"] = "Suspenssion";
+      res.render("suspenssion", r)
+    })
+    .catch(err => {
+      renderError(err, res)
+    })
+
+})
+
+router.get('/Gearbox', (req,res) => {
+  partRenderVars(req.query.vehicleId, "Gearbox", req.params.subpart)
+    .then( r => {
+      r["page"] = "Gearbox";
+      res.render("gearbox", r)
+    })
+    .catch(err => {
+      renderError(err, res)
+    })
+
+})
+
+router.get('/Brakes', (req,res) => {
+  partRenderVars(req.query.vehicleId, "Brakes", req.params.subpart)
+    .then( r => {
+      r["page"] = "Brakes";
+      res.render("brakes", r)
+    })
+    .catch(err => {
+      renderError(err, res)
+    })
+
+})
+
 
 router.get('/newVehicle', (req,res, next) => {
   res.render('newVehicle', {"hideVehicleSelection":true})

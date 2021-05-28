@@ -1,0 +1,16 @@
+extends layout
+
+block content 
+  -var vehicleData 
+  -var partName 
+  -var subpartName = subpartName||""
+  div(id="wrapper").d-flex
+    div(id="page-content-wrapper")
+        -var page="Suspenssion"
+        include navbar.pug 
+        .container-fluid
+            .row.flex-nowrap
+                include vehicleNav
+                .col.py-3
+                    h1 Suspensión
+                    p Página en construcción

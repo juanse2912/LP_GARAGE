@@ -9,13 +9,22 @@ block content
         //- navbar
         include navbar.pug 
         .container-fluid
-          block content
-          br
-          br
-          br
-          br
-          br
-          br
-          br
+          .row
+            .col
+              h1 Sitio en construcción 
+              span Para comenzar, seleccione un vehículo o cree uno nuevo:
+              .dropdown 
+                button#vsDropdown.btn.btn-primary.dropdown-toggle(type="button" data-bs-toggle="dropdown" aria-expanded="false") Listado...
+                ul.dropdown-menu(aria-labelledby="vsDropdown")
+                  li
+                    a.dropdown-item(href="/newVehicle") Crear nuevo vehículo 
+                  li 
+                    hr.dropdown-divider                    
+                  each vid in availableVehicles 
+                      li
+                          a(href="/vehicleData?vehicleId="+vid).dropdown-item= vid
+          .row 
+            svg(width=1 height=800 style="z-index:1")
+              use(href="#nothinghere")
           
 

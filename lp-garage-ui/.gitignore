@@ -1,5 +1,5 @@
 node_modules
-vehicles
+vehicles/*.json
 nodemon.json
 launch.json
 dist

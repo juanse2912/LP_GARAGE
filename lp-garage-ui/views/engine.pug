@@ -7,14 +7,15 @@ block content
   div(id="wrapper").d-flex
     //- Page Content
     div(id="page-content-wrapper")
-        //- navbar
+        -var page="Engine"
         include navbar.pug 
         .container-fluid
-            include vehicleNav
-            h1 Motor
-            .row.row-cols-auto
-                .col-lg-1
-                    ul.nav.flex-column.nav-pills
+            .row.flex-nowrap
+                include vehicleNav
+                .col.py-3
+                    h1 Motor
+
+                    ul.nav.nav-pills
                         li.nav-item 
                             a(
                                 class="nav-link "+(subpartName=="EnginePower"?"active":"") 
@@ -35,14 +36,15 @@ block content
                                 class="nav-link "+(subpartName=="Exhaust"?"active":"") 
                                 href=(subpartName=="Exhaust"?"#":"/Engine/Exhaust?vehicleId="+vehicleData.id)
                             ) Toberas
-                case subpartName 
-                    when "EnginePower"
-                        include enginePower 
-                    when "EngineForce"
-                        //-include engineForce 
-                    when "Overbore"
-                        //-include overbore 
-                    when "Exhaust"
-                        //-include exhaust
+                    .row
+                        case subpartName 
+                            when "EnginePower"
+                                include enginePower 
+                            when "EngineForce"
+                                //-include engineForce 
+                            when "Overbore"
+                                //-include overbore 
+                            when "Exhaust"
+                                //-include exhaust
 
             

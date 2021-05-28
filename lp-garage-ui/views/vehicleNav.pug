@@ -1,6 +1,29 @@
+mixin menuItem(pageName, url, icon, title)
+    li.nav-item.w-100
+        a(
+            href= (page==pageName?"#":url+"?vehicleId="+vehicleId)
+            class="nav-link align-middle px-0"+(page==pageName?" bg-light shadow-sm p-3 rounded":"")
+        )
+            img(
+                class="bi me-2"
+                src="/images/"+icon 
+                width=32 
+                heigth=32 
+                alt=title
+            )
+            span.ms-1.d-none.d-sm-inline=title
 -var page
 -var vehicleId
-.container-fluid 
+
+.col-auto.col-md-3.col-xl-2.px-sm-2.px-0.border-end 
+    .d-flex.flex-column.align-items-center.align-items-sm-start.px-3.pt-2.text-primary.min-vh-100
+        ul#menu.nav.flex-column.mb-sm-auto.mb-0.align-items-center.align-items-sm-start
+            +menuItem("vehicleData", "/vehicleData", "car-icon.svg", "Datos del vehículo")
+            +menuItem("Engine", "/Engine/EnginePower", "engine-icon.svg", "Motor")
+            +menuItem("Suspenssion", "/Suspenssion", "suspenssion-icon.svg", "Suspensión")
+            +menuItem("Gearbox", "/Gearbox", "shift-icon.svg", "Caja de cambios")
+            +menuItem("Brakes", "Brakes", "brakedisk-icon.svg", "Frenos")
+//--
     #vehicleNavContent 
         ul.nav.nav-tabs.nav-fill
             li.nav-item

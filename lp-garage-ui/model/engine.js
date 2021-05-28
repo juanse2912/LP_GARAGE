@@ -2,21 +2,21 @@ const math = require("./part").math;
 const Part = require("./part").Part;
 
 class EnginePower extends Part {
-    constructor(engine, admissionAirPressure, admissionAirTemperature) {
+    constructor(engine, intakeAirPressure, intakeAirTemperature) {
         /**
          * @type partProperties
          */
         let partProperties = {
             "inputParameters": {
-                "admissionAirPressure": {
+                "intakeAirPressure": {
                     "alias":"PA",
                     "units":"kPa",
-                    "value": admissionAirPressure
+                    "value": intakeAirPressure
                 },
-                "admissionAirTemperature":{
+                "intakeAirTemperature":{
                     "alias":"TA",
                     "units":"K",
-                    "value":admissionAirTemperature
+                    "value":intakeAirTemperature
                 }
             },
             "formulas":{
@@ -65,7 +65,7 @@ class EnginePower extends Part {
     }
 
     static fromJSON(engine, j) {
-        return new EnginePower(engine, j.admissionAirPressure, j.admissionAirTemperature)
+        return new EnginePower(engine, j.intakeAirPressure, j.intakeAirTemperature)
     }
 }
 

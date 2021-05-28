@@ -1,53 +1,53 @@
 .col-lg-5
     form#enginePower.needs-validation(novalidate action="#" method="post")
-        label.form-label(for="enginepower_admissionpressure") Presión de admisión 
+        label.form-label(for="enginepower_intakepressure") Presión de admisión 
         .input-group.mb-3
-            if getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure")
-                -var admissionPressure = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure"))[1] || "";
-                -var admissionPressureUnits = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirPressure"))[2] || "kPa";
+            if getProperty(vehicleData, "Engine.EnginePower.intakeAirPressure")
+                -var intakePressure = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.intakeAirPressure"))[1] || "";
+                -var intakePressureUnits = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.intakeAirPressure"))[2] || "kPa";
             else 
-                -var admissionPressure=""
-                -var admissionPressureUnits="kPa"
+                -var intakePressure=""
+                -var intakePressureUnits="kPa"
             input.form-control.align-right(
-                id="enginepower_admissionpressure"
+                id="enginepower_intakepressure"
                 type="number"
                 step="any"
-                value= admissionPressure
-                data-bound="Engine.EnginePower.admissionAirPressure"
+                value= intakePressure
+                data-bound="Engine.EnginePower.intakeAirPressure"
                 required
             )
             select.form-select.input-group-text.unit(
-                id="enginepower_admissionpressure_units"
+                id="enginepower_intakepressure_units"
                 aria-label="unidades presion de admisión"
-                data-from="enginepower_admissionpressure"
+                data-from="enginepower_intakepressure"
             )
-                +unitOption("kPa", "KPA", admissionPressureUnits)
-                +unitOption("psi", "PSI", admissionPressureUnits)
-                +unitOption("bar", "bar", admissionPressureUnits)
-        label.form-label(for="enginepower_admissiontemperature") Temperatura de admisión 
+                +unitOption("kPa", "KPA", intakePressureUnits)
+                +unitOption("psi", "PSI", intakePressureUnits)
+                +unitOption("bar", "bar", intakePressureUnits)
+        label.form-label(for="enginepower_intaketemperature") Temperatura de admisión 
         .input-group.mb-3 
-            if getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature") 
-                -var admissionTemperature = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature"))[1] || "";
-                -var admissionTemperatureUnits = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.admissionAirTemperature"))[2] || ""
+            if getProperty(vehicleData, "Engine.EnginePower.intakeAirTemperature") 
+                -var intakeTemperature = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.intakeAirTemperature"))[1] || "";
+                -var intakeTemperatureUnits = unitRE.exec(getProperty(vehicleData, "Engine.EnginePower.intakeAirTemperature"))[2] || ""
             else 
-                -var admissionTemperature = "";
-                -var admissionTemperatureUnits = "K";
+                -var intakeTemperature = "";
+                -var intakeTemperatureUnits = "K";
             input.form-control.align-right(
-                id="enginepower_admissiontemperature"
+                id="enginepower_intaketemperature"
                 type="number"
                 step="any"
-                value= admissionTemperature 
-                data-bound="Engine.EnginePower.admissionAirTemperature"
+                value= intakeTemperature 
+                data-bound="Engine.EnginePower.intakeAirTemperature"
                 required
             )
             select.form-select.input-group-text.unit(
-                id="enginepower_admissiontemperature_units"
+                id="enginepower_intaketemperature_units"
                 aria-label="unidades temperatura de admisión"
-                data-from="enginepower_admissiontemperature"
+                data-from="enginepower_intaketemperature"
             )
-                +unitOption("K", "°K", admissionTemperatureUnits)
-                +unitOption("degC", "°C", admissionTemperatureUnits)
-                +unitOption("degF", "°F", admissionTemperatureUnits)
+                +unitOption("K", "°K", intakeTemperatureUnits)
+                +unitOption("degC", "°C", intakeTemperatureUnits)
+                +unitOption("degF", "°F", intakeTemperatureUnits)
         if !getProperty(vehicleData, "Engine.EnginePower")
             .d-grid
                 button.btn.btn-primary(
@@ -103,10 +103,10 @@ else
         var vehicleData= !{JSON.stringify(vehicleData)};
         function savePart() {
             let payload={};
-            payload['admissionAirPressure'] = document.querySelector("#enginepower_admissionpressure").value + " "+
-                document.querySelector("#enginepower_admissionpressure_units").value
-            payload['admissionAirTemperature'] = document.querySelector("#enginepower_admissiontemperature").value + " "+
-                document.querySelector("#enginepower_admissiontemperature_units").value
+            payload['intakeAirPressure'] = document.querySelector("#enginepower_intakepressure").value + " "+
+                document.querySelector("#enginepower_intakepressure_units").value
+            payload['intakeAirTemperature'] = document.querySelector("#enginepower_intaketemperature").value + " "+
+                document.querySelector("#enginepower_intaketemperature_units").value
             fetch(
                 `/vehicle/${vehicleData.id}/Engine/EnginePower`,
                 {

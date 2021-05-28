@@ -36,8 +36,8 @@ mixin unitButton(value, options, dataElement)
                     )=l
 //- Template for calculated values
 mixin calculatedValue(title, dataElement, unitOptions)
-    li.list-group-item 
-        strong=title+" "
+    li.list-group-item.fs-6
+        strong.d-block=title+" "
         if unitOptions
             -var dataVal=unitRE.exec(getProperty(vehicleData, dataElement)||"0 _")[1]
             -var dataUnit=unitRE.exec(getProperty(vehicleData, dataElement)||"0 _")[2]

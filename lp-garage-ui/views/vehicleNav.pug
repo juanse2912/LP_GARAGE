@@ -1,54 +1,22 @@
+include icons
 mixin menuItem(pageName, url, icon, title)
     li.nav-item.w-100
         a(
             href= (page==pageName?"#":url+"?vehicleId="+vehicleId)
-            class="nav-link align-middle px-0"+(page==pageName?" bg-light shadow-sm p-3 rounded":"")
+            class="nav-link align-middle px-2 pb-2"+(page==pageName?" active":"") 
         )
-            img(
-                class="bi me-2"
-                src="/images/"+icon 
-                width=32 
-                heigth=32 
-                alt=title
-            )
+            svg(width="32" height=32 alt=title)
+                use(xlink:href="#"+icon)
             span.ms-1.d-none.d-sm-inline=title
 -var page
 -var vehicleId
 
-.col-auto.col-md-3.col-xl-2.px-sm-2.px-0.border-end 
+.col-auto.col-md-3.col-xl-2.px-sm-2.px-0.bg-light.border-end 
     .d-flex.flex-column.align-items-center.align-items-sm-start.px-3.pt-2.text-primary.min-vh-100
-        ul#menu.nav.flex-column.mb-sm-auto.mb-0.align-items-center.align-items-sm-start
-            +menuItem("vehicleData", "/vehicleData", "car-icon.svg", "Datos del vehículo")
-            +menuItem("Engine", "/Engine/EnginePower", "engine-icon.svg", "Motor")
-            +menuItem("Suspenssion", "/Suspenssion", "suspenssion-icon.svg", "Suspensión")
-            +menuItem("Gearbox", "/Gearbox", "shift-icon.svg", "Caja de cambios")
-            +menuItem("Brakes", "Brakes", "brakedisk-icon.svg", "Frenos")
-//--
-    #vehicleNavContent 
-        ul.nav.nav-tabs.nav-fill
-            li.nav-item
-                if page=="vehicleData"
-                    a.nav-link.active(aria-current="page" href="#") Datos del vehículo
-                else
-                    a.nav-link(href="/vehicleData?vehicleId="+vehicleId) Datos del vehículo
-            li.nav-item
-                if page=="Engine"
-                    a.nav-link.active(aria-current="page" href="#") Motor
-                else
-                    a.nav-link(href="/Engine/EnginePower?vehicleId="+vehicleId) Motor
-            li.nav-item
-                if page=="suspenssionData"
-                    a.nav-link.active(aria-current="page" href="#") Suspensión
-                else
-                    a.nav-link(href="/suspenssionData?vehicleId="+vehicleId) Suspensión
-            li.nav-item
-                if page=="gearboxData"
-                    a.nav-link.active(aria-current="page" href="#") Caja de cambios
-                else
-                    a.nav-link(href="/gearboxData?vehicleId="+vehicleId) Caja de cambios
-            li.nav-item
-                if page=="brakesData"
-                    a.nav-link.active(aria-current="page" href="#") Frenos
-                else
-                    a.nav-link(href="/brakesData?vehicleId="+vehicleId) Frenos
+        ul#menu.nav.nav-pills.flex-column.mb-sm-auto.mb-0.align-items-center.align-items-sm-start
+            +menuItem("vehicleData", "/vehicleData", "vehicle-icon", "Datos del vehículo")
+            +menuItem("Engine", "/Engine/EnginePower", "engine-icon", "Motor")
+            +menuItem("Suspenssion", "/Suspenssion", "suspenssion-icon", "Suspensión")
+            +menuItem("Gearbox", "/Gearbox", "gearbox-icon", "Caja de cambios")
+            +menuItem("Brakes", "Brakes", "brakes-icon", "Frenos")
     

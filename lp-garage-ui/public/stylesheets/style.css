@@ -31,3 +31,13 @@ input.align-right {
 .updated {
   background-color: #cce5ff;
 }
+
+.nav-link svg {
+  stroke:#0d6efd;
+  fill:#0d6efd
+}
+
+.nav-link.active svg {
+  stroke:#ffffff;
+  fill:#ffffff;
+}

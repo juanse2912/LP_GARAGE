@@ -14,23 +14,6 @@ function getDataElement(name) {
     return p.reduce( (obj,node) => {
       return (obj||{})[node]
     }, vehicleData)
-    /*
-    let tags = name.split(".")
-    let result = vehicleData;
-    if (partName!="Vehicle") {
-      result = vehicleData[partName];
-    }
-    
-    for (let tag of tags) {
-        if(result[tag]) {
-            result = result[tag]
-        } else {
-            console.error(`Invalid vehicle data element ${name}`);
-            return null
-        }
-    }
-    return result;
-    */
 }
 
 /**
@@ -190,7 +173,7 @@ function setUnitButtonListener() {
         .then( response => response.json())
         .then( jsonData => {
           if(jsonData.result) {
-            updateCalculatedDataElement(jsonData.result, dataElementName)
+            updateCalculatedDataElement(jsonData.result, dataElementName, true)
           } else {
             showAlert("Error transformando unidades", "ERROR")
           }
@@ -208,20 +191,27 @@ function setUnitButtonListener() {
  * Updates a calculated field and the units drop-down besides it (if present)
  * @param {string} value The value to be set on the page
  * @param {string} elementName The name of the data-bound element
+ * @param {boolean=} dontShowUpdate If true, prevents the text to be highlighted on update
  */
-function updateCalculatedDataElement(value, elementName) {
+function updateCalculatedDataElement(value, elementName, dontShowUpdate) {
   let vu=separateValueAndUnits(value);
   let el = document.querySelector(`span[data-bound='${elementName}']`)
-  el.firstChild.textContent = vu.value;
-  if(vu.units) {
-    let unitDisplay = vu.units;
-    let unitOptions = el.querySelectorAll("a.unit");
-    for(let opt of unitOptions) {
-      if (opt.getAttribute("data-unit")==vu.units) {
-        unitDisplay = opt.innerText
+  if(el.firstChild.textContent!=vu.value) {
+    el.firstChild.textContent = vu.value;
+    if(vu.units) {
+      let unitDisplay = vu.units;
+      let unitOptions = el.querySelectorAll("a.unit");
+      for(let opt of unitOptions) {
+        if (opt.getAttribute("data-unit")==vu.units) {
+          unitDisplay = opt.innerText
+        }
+      }
+      el.querySelector(".btn-group .btn").innerText = unitDisplay
+      if(!dontShowUpdate) {
+        el.classList.add("updated")     
+        setTimeout( (element)=> { element.classList.remove("updated")}, 1000, el)  
       }
     }
-    el.querySelector(".btn-group .btn").innerText = unitDisplay
   }
 
 }

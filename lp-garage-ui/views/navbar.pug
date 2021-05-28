@@ -39,13 +39,14 @@ nav.navbar.navbar-expand.navbar-dark.bg-dark.border-bottom
                             else 
                                 | Seleccione un vehículo...
                         ul(aria-labelledby="vehicleSelection").dropdown-menu
-                            li
-                                a(href="/newVehicle").dropdown-item Crear uno nuevo... 
-                            li 
-                                hr.dropdown-divider                    
-                            each vid in availableVehicles 
+                            .overflow-auto
                                 li
-                                    a(href="?vehicleId="+vid).dropdown-item= vid                         
+                                    a(href="/newVehicle").dropdown-item Crear uno nuevo... 
+                                li 
+                                    hr.dropdown-divider                    
+                                each vid in availableVehicles 
+                                    li
+                                        a(href="?vehicleId="+vid).dropdown-item= vid                         
                 li.nav-item 
                     a(
                         aria-current="page"

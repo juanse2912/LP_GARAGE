@@ -61,7 +61,9 @@ class Part {
         //Add constants to the scope
         for (let c in partProperties.constants) {
             let alias = partProperties.constants[c].alias;
-            this.scope[alias] = partProperties.constants[c].value;
+            let val = partProperties.constants[c].value
+            console.log(`${alias} = ${val} - ${this._hasUnits(val)}`)
+            this.scope[alias] = this._hasUnits(val) ? math.unit(val) : math.number(val) ;
         }
         this.calculate()
     }
@@ -128,6 +130,10 @@ class Part {
             return this.scope[vn];
         }
         
-    }    
+    }
+    
+    _hasUnits(value) {
+        return /^([\d\.e-]*)\s(.*)$/.test(value)
+    }
 }
 module.exports.Part = Part;

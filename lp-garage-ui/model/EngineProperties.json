@@ -1,0 +1,70 @@
+{
+    "inputParameters": {
+        "displacement": {
+            "value": null,
+            "alias": "VH",
+            "units": "m^3"
+        },
+        "cylinders": {
+            "value":null,
+            "alias":"NC"
+        },
+        "compressionRatio":{
+            "value":null,
+            "alias":"RC"
+        },
+        "maxPower":{
+            "value":null,
+            "alias":"MP",
+            "units":"hp"
+        },
+        "rpmMaxPower":{
+            "alias":"n",
+            "value":null
+        }
+    },
+    "constants":{
+        "airConstant": {
+            "alias":"CA",
+            "value": "0.287 kJ/(kg K)"
+        },
+        "adiabaticConstant":{
+            "alias":"k",
+            "value": 1.40
+        },
+        "airFuelRelation": {
+            "alias":"afr",
+            "value": 14.7
+        },
+        "fuelCalorificPower":{
+            "alias":"LHV",
+            "value":"44000 kJ/kg"
+        },
+        "especificHeat":{
+            "alias":"cev",
+            "value":"0.718 kJ/kg"
+        },
+        "policompressionCoefficient":{
+            "alias":"n1",
+            "value":1.3
+        },
+        "poliexpanssionCoefficient":{
+            "alias":"n2",
+            "value":1.3
+        },
+        "fuelVolumetricPerformance": {
+            "alias":"nV",
+            "value": null
+        }
+    }, 
+    "formulas":{
+        "unitaryDisplacement":{
+            "alias":"Vh",
+            "formula":"VH/NC"
+        },
+        "combustionChamberVolume":{
+            "alias":"VC",
+            "formula":"Vh/(RC - 1)"
+        }
+    }
+}

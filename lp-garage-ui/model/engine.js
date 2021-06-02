@@ -6,58 +6,9 @@ class EnginePower extends Part {
         /**
          * @type partProperties
          */
-        let partProperties = {
-            "inputParameters": {
-                "intakeAirPressure": {
-                    "alias":"PA",
-                    "units":"kPa",
-                    "value": intakeAirPressure
-                },
-                "intakeAirTemperature":{
-                    "alias":"TA",
-                    "units":"K",
-                    "value":intakeAirTemperature
-                }
-            },
-            "formulas":{
-                "airDensity": {
-                    "alias":"pA",
-                    "formula":"PA/(CA*TA)"
-                },
-                "compressionPressure":{
-                    "alias":"PC",
-                    "formula":"(PA*(Vh+VC)^k)/VC^k"
-                },
-                "compressionTemperature":{
-                    "alias":"TC",
-                    "formula":"(TA*(Vh+VC)^(k-1))/VC^(k-1)"
-                },
-                "airMass":{
-                    "alias":"ma",
-                    "formula":"((nV*Vh*n*pA)/200)/60s"
-                },
-                "fuelMass":{
-                    "alias":"mc",
-                    "formula":"ma/afr"
-                },
-                "contributedHeat":{
-                    "alias":"Qap",
-                    "formula":"mc*LHV"
-                },
-                "combustionTemperature":{
-                    "alias":"Tz",
-                    "formula":"(1 K)*(Qap/(cev*ma)) + TC"
-                },
-                "combustionPressure":{
-                    "alias":"Pz",
-                    "formula":"(Tz*PC)/TC"
-                },
-                "pressureDifferential":{
-                    "alias":"l1",
-                    "formula":"Pz/PC"
-                }
-            }
-        }
+        let partProperties = require("./EnginePowerProperties.json")
+        partProperties.inputParameters.intakeAirPressure.value = intakeAirPressure;
+        partProperties.inputParameters.intakeAirTemperature.value = intakeAirTemperature;
         super(engine.scope, partProperties)
         this.engine = engine;
         this.scope = engine.scope
@@ -74,28 +25,10 @@ class EngineForces extends Part {
         /**
          * @type partProperties
          */
-        let partProperties = {
-            "inputParameters":{
-                "pistonDiameter":{
-                    "alias":"dp",
-                    "units":"mm",
-                    "value": pistonDiameter
-                },
-                "bore":{
-                    "alias":"R",
-                    "units":"mm",
-                    "value":R
-                },
-                "stroke":{
-                    "alias":"L",
-                    "units":"mm",
-                    "value":L
-                }
-            },
-            "formulas":{
-
-            }
-        }
+        let partProperties = require("./EngineForcesProperties.json")
+        partProperties.inputParameters.pistonDiameter.value = pistonDiameter;
+        partProperties.inputParameters.bore.value = R;
+        partProperties.inputParameters.stroke.value = L;
         super(eng.scope, partProperties);
         this.engine = eng;
         this.scope = eng.scope;       
@@ -116,76 +49,13 @@ SUBPARTS.set("EngineForces", EngineForces)
 class Engine extends Part {
 
     constructor(vehicle, displacement, cylinders, compressionRatio, maxPower, rpmMaxPower, intakeType){
-        let engineProperties = {
-            "inputParameters": {
-                "displacement": {
-                    "value": displacement,
-                    "alias": "VH",
-                    "units": "m^3"
-                },
-                "cylinders": {
-                    "value":cylinders,
-                    "alias":"NC"
-                },
-                "compressionRatio":{
-                    "value":compressionRatio,
-                    "alias":"RC",
-                },
-                "maxPower":{
-                    "value":maxPower,
-                    "alias":"MP",
-                    "units":"hp"
-                },
-                "rpmMaxPower":{
-                    "alias":"n",
-                    "value":rpmMaxPower
-                }
-            },
-            "constants":{
-                "airConstant": {
-                    "alias":"CA",
-                    "value": math.unit("0.287 kJ/(kg K)")
-                },
-                "adiabaticConstant":{
-                    "alias":"k",
-                    "value": math.number(1.40)
-                },
-                "airFuelRelation": {
-                    "alias":"afr",
-                    "value":math.number(14.7)
-                },
-                "fuelCalorificPower":{
-                    "alias":"LHV",
-                    "value":math.unit("44000 kJ/kg")
-                },
-                "especificHeat":{
-                    "alias":"cev",
-                    "value":math.unit("0.718 kJ/kg")
-                },
-                "policompressionCoefficient":{
-                    "alias":"n1",
-                    "value":1.3
-                },
-                "poliexpanssionCoefficient":{
-                    "alias":"n2",
-                    "value":1.3
-                },
-                "fuelVolumetriPerformance": {
-                    "alias":"nV",
-                    "value": math.number(intakeType=="N" ? 95 : 100)
-                }
-            }, 
-            "formulas":{
-                "unitaryDisplacement":{
-                    "alias":"Vh",
-                    "formula":"VH/NC"
-                },
-                "combustionChamberVolume":{
-                    "alias":"VC",
-                    "formula":"Vh/(RC - 1)"
-                }
-            }
-        }
+        let engineProperties = require("./EngineProperties.json")
+        engineProperties.inputParameters.displacement.value = displacement;
+        engineProperties.inputParameters.cylinders.value = cylinders
+        engineProperties.inputParameters.compressionRatio.value = compressionRatio
+        engineProperties.inputParameters.maxPower.value = maxPower
+        engineProperties.inputParameters.rpmMaxPower.value = rpmMaxPower
+        engineProperties.constants.fuelVolumetricPerformance.value = math.number(intakeType=="N" ? 95 : 100)
 
         super(vehicle.scope, engineProperties)
         this.scope = vehicle.scope;

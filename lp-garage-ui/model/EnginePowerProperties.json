@@ -1,0 +1,52 @@
+{
+    "inputParameters": {
+        "intakeAirPressure": {
+            "alias":"PA",
+            "units":"kPa",
+            "value": null
+        },
+        "intakeAirTemperature":{
+            "alias":"TA",
+            "units":"K",
+            "value":null
+        }
+    },
+    "formulas":{
+        "airDensity": {
+            "alias":"pA",
+            "formula":"PA/(CA*TA)"
+        },
+        "compressionPressure":{
+            "alias":"PC",
+            "formula":"(PA*(Vh+VC)^k)/VC^k"
+        },
+        "compressionTemperature":{
+            "alias":"TC",
+            "formula":"(TA*(Vh+VC)^(k-1))/VC^(k-1)"
+        },
+        "airMass":{
+            "alias":"ma",
+            "formula":"((nV*Vh*n*pA)/200)/60s"
+        },
+        "fuelMass":{
+            "alias":"mc",
+            "formula":"ma/afr"
+        },
+        "contributedHeat":{
+            "alias":"Qap",
+            "formula":"mc*LHV"
+        },
+        "combustionTemperature":{
+            "alias":"Tz",
+            "formula":"(1 K)*(Qap/(cev*ma)) + TC"
+        },
+        "combustionPressure":{
+            "alias":"Pz",
+            "formula":"(Tz*PC)/TC"
+        },
+        "pressureDifferential":{
+            "alias":"l1",
+            "formula":"Pz/PC"
+        }
+    }
+}

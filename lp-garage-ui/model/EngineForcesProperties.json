@@ -1,0 +1,22 @@
+{
+    "inputParameters":{
+        "pistonDiameter":{
+            "alias":"dp",
+            "units":"mm",
+            "value": null
+        },
+        "bore":{
+            "alias":"R",
+            "units":"mm",
+            "value":null
+        },
+        "stroke":{
+            "alias":"L",
+            "units":"mm",
+            "value":null
+        }
+    },
+    "formulas":{
+
+    }
+}

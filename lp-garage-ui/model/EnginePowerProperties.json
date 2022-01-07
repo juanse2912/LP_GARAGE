@@ -47,6 +47,30 @@
         "pressureDifferential":{
             "alias":"l1",
             "formula":"Pz/PC"
+        },
+        "indicatedmediumpressure":{
+            "alias":"pmi",
+            "formula":"PA*(RC^n1/RC-1)*((l1/n2-1)*(1-(1/RC^(n2-1)))-(1/n1-1)*(1-(1/RC^(n2-2))))"
+        },
+        "indicatedpower":{
+            "alias":"pi",
+            "formula":"((pmi in kg/m^2)*(VH in m^3)*n)/((75kg*m)*60*2)*(1 in CV)"
+        },
+        "expansionpressure":{
+            "alias":"Pb",
+            "formula":"(Pz*RC^k)/(Vh+VC)^k" 
+        },
+        "pressureDifferential2":{
+            "alias":"l2",
+            "formula":"Pz/Pb" 
+        },
+        "effectivemediumpressure":{
+            "alias":"pme",
+            "formula":"PA*(((RC^k-1)*(l2-1))/((RC-1)*(k-1)))*N"                               
+        },
+        "efectivePower":{
+            "alias":"pe",
+            "formula":"((pme in kg/m^2)*(VH in m^3)*n)/((75kg*m)*60*2)*(1 in CV)"
         }
     }
 }

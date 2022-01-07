@@ -1,0 +1,128 @@
+{
+    "Inputparameters":{
+        "pretendedgasspeedinadmissionvalve":{
+            "alias":"pgsav",
+            "units":"m/s",
+            "value":null
+        },
+        "admissionvalvestemdiameter":{
+            "alias":"avD",
+            "units":"mm",
+            "value": null
+        },
+        "camshaftadmissionopen":{
+            "alias":"cAO",
+            "units":"deg",
+            "value":null
+        },
+        "camshaftadmissionclose":{
+            "alias":"cAC",
+            "units":"deg",
+            "value":null
+        },
+        "camshaftescapeopen":{
+            "alias":"cEO",
+            "units":"deg",
+            "value":null
+        },
+        "camshaftescapeclose":{
+            "alias":"cEC",
+            "units":"deg",
+            "value":null
+        }
+    },
+    "formulas":{
+        "admissionvalvediameter":{
+            "alias":"Dv",
+            "formula":"((SQRT((((VH in m^3)/NC)*n)/(pi*pgsav*750)))*10)/(1 in m/s)*(1 in mm)"
+        },
+        "admissiblediameter":{
+            "alias":"addm",
+            "formula":"IF(Dv<=(0.57*dp), ADMISIBLE, INADMISIBLE)"
+        },
+        "avaragepistonspeed":{
+            "alias":"avps",
+            "formula":"((L in m)*n)/30s"
+        },
+        "firstductdiameter":{
+            "alias":"fdd",
+            "formula":"Dv"
+        },
+        "firstductsection":{
+            "alias":"fds",
+            "formula":"((fdd^2)*pi)/4"
+        },
+        "gasspeedinfirstduct":{
+            "alias":"gsfd",
+            "formula":"=avps*(AP/fds)"
+        },
+        "secondductdiameter":{
+            "alias":"sdd",
+            "formula":"Dv*0.8"
+        },
+        "seconductsection":{
+            "alias":"sds",
+            "formula":"((sdd^2)*pi)/4"
+        },
+        "gasspeedinsecondduct":{
+            "alias":"gssd",
+            "formula":"=avps*(AP/sds)"
+        },
+        "valveductdiameter":{
+            "alias":"vdd",
+            "formula":"Dv*0.9"
+        },
+        "valveductsection":{
+            "alias":"vds",
+            "formula":"((vdd^2)*pi)/4"
+        },
+        "valvesection":{
+            "alias":"vs",
+            "formula":"((avD^2)*pi)/4"
+        },
+        "gasspeedinvalveduct":{
+            "alias":"gsvd",
+            "formula":"avps*(AP/(vds-vs))"
+        },
+        "admissionvalvehigh":{
+            "alias":"avh",
+            "formula":"(avps*AP)/(pgsav*PI*D16*(COS 30 in rad))"
+        },
+        "admissionopenedsection":{
+            "alias":"aos",
+            "formula":"PI*Dv*avh*(COS 30 in rad)"
+        },
+        "gasspeedinvalve":{
+            "alias":"gsv",
+            "formula":"avps*(AP/aos)"
+        },
+        "admissionductlongwithrunners":{
+            "alias":"adl",
+            "formula": "(2*(fds/100)*(RC-1))/(((n*2)/(955*343))^2)*((VH in mm3)/4)*(RC+1)) in cm"
+        },
+        "exhaustvalvediameter":{
+            "alias":"evd",
+            "formula": "Dv*0.9"
+        },
+        "exhaustfirstsectioncolectorlong":{
+            "alias":"efcl",
+            "formula":"=(13000*(cEO+cEC+180)/(1 in deg)/(n*6)*(1 in cm)"
+        },
+        "exhaustfirstsectiondiameter":{
+            "alias":"efd",
+            "formula":"=2*SQRT(((VH/4)*2)/(efcl*pi)) in cm"
+        },
+        "exhaustfirstsectiondiametercurvecorrection":{
+            "alias":"efdC",
+            "formula":"efd+(efd*0.1)"
+        },
+        "exhaustsecondarysectiondiameter":{
+            "alias":"esd",
+            "formula":"=2*SQRT(VH/(efcl*pi))"
+        },
+        "exhaustsecondarysectiondiametercurvecorrection":{
+            "alias":"esdC",
+            "formula":"esd+(esd*0.1)"
+        }
+    }
+}

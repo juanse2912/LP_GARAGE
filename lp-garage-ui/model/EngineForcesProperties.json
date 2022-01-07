@@ -17,6 +17,73 @@
         }
     },
     "formulas":{
-
+        "pistonarea": {
+            "alias":"AP",
+            "formula":"(pi*(dp^2))/4*"
+        },
+        "pistonpressure":{
+            "alias":"PE",
+            "formula":"pme*(AP in m^2)"
+        },
+        "RLratio":{
+            "alias":"RLR",
+            "formula":"R/L"
+        },
+        "stroke":{
+            "alias":"SK",
+            "formula":"Vh/(AP in m^2)"
+        },
+        "crankradius":{
+            "alias":"R",
+            "formula":"SK/2"
+        },
+        "angularcrankspeed":{
+            "alias":"ACS",
+            "formula":"((2*n*pi)/60)*(1 in rad/s)"
+        },
+        "alpadegrees":{
+            "alias":"alphadeg",
+            "formula": "math.range(1, 360, 1 [, includeEnd])in deg"
+        },
+        "aplharadians":{
+            "alias":"alpharad",
+            "formula": "alphadeg in rad"
+        },
+        "betadegrees":{
+            "alias":"betadeg",
+            "formula":"(ASIN((SIN(alpharad))*RLR)) in deg"
+        },
+        "betaradians":{
+            "alias":"betarad",
+            "formula": "betadeg in rad"
+        },
+        "NE":{
+            "alias":"NE",
+            "formula":"PE*TAN(betarad)"
+        },
+        "KE":{
+            "alias":"KE",
+            "formula":"PE/(COS(betarad))"
+        },
+        "TE":{
+            "alias":"TE", 
+            "formula":"=(PE*SIN(alpharad+betarad))/COS(betarad)"
+        },
+        "ZE":{
+            "alias":"ZE",
+            "formula":"=(PE*COS(alpharad+betarad))/COS(betarad)"
+        },
+        "VE":{
+            "alias":"VE",
+            "formula":"=R*ACS*(SIN(alpharad)+(RLR/2)*SIN(2*alpharad))"
+        },
+        "WE":{
+            "alias":"WE",
+            "formula":"=R*(ACS^2)*(COS(alpharad)+(RLR*COS(2*alpharad)))"
+        },
+        "SE":{
+            "alias":"SE",
+            "formula":"=R*(1+(RLR/4))-(R*COS(alpharad))-(R*((RLR/4)*COS(2*alpharad)))"
+        }
     }
 }

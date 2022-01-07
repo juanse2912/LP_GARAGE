@@ -54,7 +54,7 @@
         },
         "indicatedpower":{
             "alias":"pi",
-            "formula":"((pmi/ 9.81 in N)*Vh*n)/(2*60s*75kg) * (1 in hp)"
+            "formula":"((pmi)*Vh*n)/(2*60*75)"
         },
         "expansionpressure":{
             "alias":"Pb",

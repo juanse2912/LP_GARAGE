@@ -1,6 +1,6 @@
 const create = require("mathjs").create;
 const all = require("mathjs").all;
-const math = create(all, {number:'BigNumber',precision:14});
+const math = create(all, {number:'BigNumber',precision:15});
 module.exports.math = math;
 /**
  * Input parameter that is used to instanciate a part subclass
@@ -62,8 +62,8 @@ class Part {
         for (let c in partProperties.constants) {
             let alias = partProperties.constants[c].alias;
             let val = partProperties.constants[c].value
-            console.log(`${alias} = ${val} - ${this._hasUnits(val)}`)
-            this.scope[alias] = this._hasUnits(val) ? math.unit(val) : math.number(val) ;
+            //console.log(`${alias} = ${val} - ${this._hasUnits(val)}`)
+            this.scope[alias] = this._hasUnits(val) ? math.unit(val) : math.bignumber(val) ;
         }
         this.calculate()
     }
@@ -74,8 +74,9 @@ class Part {
         for (let f in this.partProperties.formulas) {
             let alias = this.partProperties.formulas[f].alias;
             let formula = this.partProperties.formulas[f].formula;
-            //console.debug("formula", this.partProperties.formulas[f])
+            console.debug("formula", this.partProperties.formulas[f])
             math.evaluate( `${alias} = ${formula}`, this.scope)
+            console.debug("value", this.scope[alias].toString())
         }
     }
 

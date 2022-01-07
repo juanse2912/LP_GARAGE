@@ -1,0 +1,103 @@
+
+{
+    "inputParameters": {
+        "intendedcompressionratio": {
+            "alias":"ic",
+            "value": null
+        },
+        "cylindertopwear":{
+            "alias":"cw",
+            "units":"in",
+            "value":null
+
+        },
+        "standardcrankjornaldiameter": {
+            "alias":"cd",
+            "units":"in",
+            "value": null
+        },
+        "cranktopwear":{
+            "alias":"cp",
+            "units":"in",
+            "value":null
+        }
+    },
+    "formulas":{
+
+        "tabla" :{
+            "alias":"",
+        "formula":""
+        },
+
+
+        "thicknesstobedevastated": {
+            "alias":"td",
+            "formula":"(stoke/(compratio-1))-(stroke/(ic-1))"
+        },
+        "cylindertopwearmm":{
+            "alias":"CW",
+            "formula":"(cw*25.4)*(1 in mm)"
+
+        },
+        "standardcrankjornaldiametermm":{
+            "alias":"CD",
+            "formula":"(cd*25.4)*(1 in mm)"
+
+        },
+        "cranktopwearmm":{
+            "alias":"CW",
+            "formula":"(cw*25.4)*(1 in mm)"
+
+        },
+        "FORMULA EN FUNCION DE TABLA":{
+            "alias":"",
+            "formula":""
+
+        },
+        "cylinderrectification":{
+            "alias":"cr",
+            "formula":""
+
+        },
+        "diameterrectifiedcylinder":{
+            "alias":"drc",
+            "formula":""
+
+        },
+        "cylinderdiameterbeforehoning":{
+            "alias":"dbh",
+            "formula":"(drc-0.002)*(1 in in)"
+
+        },
+        "pistoncylindergap":{
+            "alias":"pcg",
+            "formula":"(0.001*(drc-1))*(1 in in)"
+
+        },
+        "newpistondiameter":{
+            "alias":"npd",
+            "formula":"(drc-pcg)*(1 in in)"
+        },
+        "crankbearingrectification":{
+            "alias":"cbr",
+            "formula":""
+
+        },
+        "crankbearingrectificationdiameter":{
+            "alias":"crd",
+            "formula":""
+
+        },
+        "bearingjournalgap":{
+            "alias":"bjg",
+            "formula":"(CD*0.001)*(1 in in)" 
+
+        },
+        "bearinginternaldiameter":{
+            "alias":"bid",
+            "formula":"(crd+bjg)*(1 in in)"
+        
+
+        }
+    }
+}

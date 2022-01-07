@@ -50,7 +50,7 @@
         },
         "indicatedmediumpressure":{
             "alias":"pmi",
-            "formula":"RC*((PA^n1)/(PA-1))*((l1/(n2-1))*(1-(1/(PA^(n2-1))))-(1/(n1-1))*(1-(1/(PA^(n1-1)))))"
+            "formula":"PA*((RC^n1)/(RC-1))*((l1/(n2-1))*(1-(1/(RC^(n2-1))))-(1/(n1-1))*(1-(1/(RC^(n1-1)))))"
         },
         "indicatedpower":{
             "alias":"pi",

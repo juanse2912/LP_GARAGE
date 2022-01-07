@@ -83,7 +83,12 @@
             +calculatedValue("Presión de combustión:", "Engine.EnginePower.combustionPressure", pressureUnits)
             +calculatedValue("Temperatura de combustión:", "Engine.EnginePower.combustionTemperature",temperatureUnits)
             +calculatedValue("Diferencial de presión:", "Engine.EnginePower.pressureDifferential")
-
+            +calculatedValue("Presión media indicada:", "Engine.EnginePower.indicatedmediumpressure", pressureUnits)
+            +calculatedValue("Potencia indicada:", "Engine.EnginePower.indicatedpower")
+            +calculatedValue("Presión de expansión:", "Engine.EnginePower.expansionpressure", pressureUnits)
+            +calculatedValue("Diferencial de presión 2:", "Engine.EnginePower.pressureDifferential2")
+            +calculatedValue("Presión media efectiva:", "Engine.EnginePower.effectivemediumpressure", pressureUnits)
+            +calculatedValue("Potencia efectiva:", "Engine.EnginePower.efectivePower")
 //- Script
 if getProperty(vehicleData, "Engine.EnginePower")
     script(src="/javascripts/formControls.js")

@@ -1,0 +1,143 @@
+{
+    "inputParameters": {
+        "AxleWeight": {
+            "alias":"AW",
+            "units":"kg",
+            "value": null
+       
+        },
+        "ArmShockDistance": {
+            "alias":"D1",
+            "units":"mm",
+            "value": null
+        },
+        "lowerControlArmLenght":{
+            "alias":"D2",
+            "units":"kg/mm",
+            "value":null
+        },
+
+        "shockAngle": {
+            "alias":"SA",
+            "units":"rad",
+            "value": null
+        },
+        "suspendedWeights":{
+            "alias":"SW",
+            "units":"kg",
+            "value":null
+
+        },
+        "WireSpringDiameter": {
+            "alias":"d",
+            "units":"mm",
+            "value": null
+        },
+        "outerSpringDiameter":{
+            "alias":"D.Outer",
+            "units":"mm",
+            "value":null
+        },
+
+        "mediumSpringDiameter": {
+            "alias":"D",
+            "units":"mm",
+            "value": null
+        },
+        "elasticityCoefficient":{
+            "alias":"G",
+            "units":"kg/mm^2",
+            "value":null
+
+        },
+        "coilsNumber": {
+            "alias":"n",
+            "value": null
+        },
+        "pitchSpring":{
+            "alias":"a",
+            "units":"mm",
+            "value":null
+
+        },
+        "radialDeformation":{
+            "alias":"rD",
+            "units":"mm",
+            "value":null
+
+        }
+
+
+
+    
+    },
+    "formulas":{
+        "MotionRatio": {
+            "alias":"MR",
+            "formula":"D1/D2"
+        },
+        "CorrectionAngle":{
+            "alias":"ACF",
+            "formula":"cos (SA)"
+
+        },
+        "SpringConstant":{
+            "alias":"K",
+            "formula":"(d^4*G)/(8*n*D^3)"
+
+        },
+        "WheelRate":{
+            "alias":"WR",
+            "formula":"MR^2*K*ACF"
+
+        },
+        "RequiredForce":{
+            "alias":"FR",
+            "formula":"(AW/2)/MR"
+
+        },
+        "AdjustedForce":{
+            "alias":"ASF",
+            "formula":"FR/ACF"
+
+        },
+        "SuspensionStiffness":{
+            "alias":"Tf",
+            "formula":"(TT*WR)/(WR+TT)"
+
+        },
+        "Deformationunderload":{
+            "alias":"dF",
+            "formula":"(n*ASF*((D/2)^3)*64)/(G*(d^4))"
+
+        },
+        "Freelenght":{
+            "alias":"L",
+            "formula":"(n*(d+n)+dF)"
+
+        },
+        "tireStifness":{
+            "alias":"kn",
+            "formula":"((SW/2)*9,81 in m/s^2)/(rD)"
+
+        },
+        "NoSuspendedWeightFrequency":{
+            "alias":"Wm1",
+            "formual":"(1/(2*pi))*sqrt((K+kn)/(SW))"
+
+        },
+        "SuspendenWeightFrequency":{
+            "alias":"Wm2",
+            "Formula":"(1/(2*pi))*sqrt((K*kn)/((K+kn)*((AW/2)-SW))"
+
+
+        }
+    }
+}
+
+
+
+
+
+    
+

@@ -101,6 +101,12 @@
             "formula":"FR/ACF"
 
         },
+
+        "tireStifness":{
+            "alias":"kn",
+            "formula":"((AW/2)*9,81 in m/s^2)/(rD)"
+
+        },
         "SuspensionStiffness":{
             "alias":"Tf",
             "formula":"(kn*WR)/(WR+kn)"
@@ -116,11 +122,7 @@
             "formula":"(n*(d+n)+dF)"
 
         },
-        "tireStifness":{
-            "alias":"kn",
-            "formula":"((AW/2)*9,81 in m/s^2)/(rD)"
 
-        },
         "NoSuspendedWeightFrequency":{
             "alias":"Wm1",
             "formual":"(1/(2*pi))*sqrt(((K*9,81 kg*m/s^2 +kn)/(SW))"

@@ -13,7 +13,7 @@
         },
         "lowerControlArmLenght":{
             "alias":"D2",
-            "units":"kg/mm",
+            "units":"mm",
             "value":null
         },
 
@@ -22,7 +22,7 @@
             "units":"rad",
             "value": null
         },
-        "suspendedWeights":{
+        "NosuspendedWeights":{
             "alias":"SW",
             "units":"kg",
             "value":null
@@ -62,7 +62,7 @@
         },
         "radialDeformation":{
             "alias":"rD",
-            "units":"mm",
+            "units":"m",
             "value":null
 
         }
@@ -118,17 +118,17 @@
         },
         "tireStifness":{
             "alias":"kn",
-            "formula":"((SW/2)*9,81 in m/s^2)/(rD)"
+            "formula":"((AW/2)*9,81 in m/s^2)/(rD)"
 
         },
         "NoSuspendedWeightFrequency":{
             "alias":"Wm1",
-            "formual":"(1/(2*pi))*sqrt((K+kn)/(SW))"
+            "formual":"(1/(2*pi))*sqrt(((K*9,81 kg*m/s^2 +kn)/(SW))"
 
         },
         "SuspendenWeightFrequency":{
             "alias":"Wm2",
-            "Formula":"(1/(2*pi))*sqrt((K*kn)/((K+kn)*((AW/2)-SW))"
+            "Formula":"(1/(2*pi))*sqrt((K*9,81 kg*m/s^2 *kn)/((K*9,81 kg*m/s^2 +kn)*((AW/2)-SW))"
 
 
         }

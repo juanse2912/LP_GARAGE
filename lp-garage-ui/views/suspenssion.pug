@@ -13,4 +13,386 @@ block content
                 include vehicleNav
                 .col.py-3
                     h1 Suspensión
-                    p Página en construcción
+                    .col-lg-5
+                      form#form-suspenssion.needs-validation(novalidate action="#" method="post")
+                        label.form-label(for="suspenssion_AxleWeight") Peso en el corner
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.AxleWeight")
+                            -var AxleWeight = unitRE.exec(getProperty(vehicleData, "Suspenssion.AxleWeight"))[1] || "";
+                            -var AxleWeightUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.AxleWeight"))[2] || "";
+                          else
+                            -var AxleWeight=""
+                            -var AxleWeightUnits="kg"
+                          input.form-control.align-right(
+                            id="suspenssion_AxleWeight"
+                            type="number"
+                            step="any"
+                            value= AxleWeight 
+                            data-bound="Suspenssion.AxleWeight"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_AxleWeight_units"
+                            aria-label="Unidades de peso en el corner"
+                            data-from="suspenssion_AxleWeight"
+                          )
+                            +unitOption("kg", "Kg", AxleWeightUnits)
+                            +unitOption("lb", "lb", AxleWeightUnits)
+                        label.form-label(for="suspenssion_suspendedWeights") Pesos suspendidos
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.suspendedWeights")
+                            -var suspendedWeights = unitRE.exec(getProperty(vehicleData, "Suspenssion.suspendedWeights"))[1] || "";
+                            -var suspendedWeightsUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.suspendedWeights"))[2] || "";
+                          else
+                            -var suspendedWeights=""
+                            -var suspendedWeightsUnits="kg"
+                          input.form-control.align-right(
+                            id="suspenssion_suspendedWeights"
+                            type="number"
+                            step="any"
+                            value= suspendedWeights 
+                            data-bound="Suspenssion.suspendedWeights"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_suspendedWeights_units"
+                            aria-label="Unidades de pesos suspendidos"
+                            data-from="suspenssion_suspendedWeights"
+                          )
+                            +unitOption("kg", "Kg", suspendedWeightsUnits)
+                            +unitOption("lb", "lb", suspendedWeightsUnits)
+                        h3 Medidas McPherson
+                        label.form-label(for="suspenssion_shockArmDistance") Longitud del brazo amortiguador
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.ArmShockDistance")
+                            -var ArmShockDistance = unitRE.exec(getProperty(vehicleData, "Suspenssion.ArmShockDistance"))[1] || "";
+                            -var ArmShockDistanceUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.ArmShockDistance"))[2] || "";
+                          else
+                            -var ArmShockDistance=""
+                            -var ArmShockDistanceUnits="mm"
+                          input.form-control.align-right(
+                            id="suspenssion_ArmShockDistance"
+                            type="number"
+                            step="any"
+                            value= ArmShockDistance 
+                            data-bound="Suspenssion.ArmShockDistance"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_ArmShockDistance_units"
+                            aria-label="Unidades Longitud del brazo amortiguador"
+                            data-from="suspenssion_ArmShockDistance"
+                          )
+                            +unitOption("mm", "mm", ArmShockDistance)
+                            +unitOption("in", "pulg", ArmShockDistance)
+                            +unitOption("cm", "cm", ArmShockDistance)
+                        label.form-label(for="suspenssion_lowerControlArmLenght") Longitud del brazo inferior
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.lowerControlArmLenght")
+                            -var lowerControlArmLenght = unitRE.exec(getProperty(vehicleData, "Suspenssion.lowerControlArmLenght"))[1] || "";
+                            -var lowerControlArmLenghtUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.lowerControlArmLenght"))[2] || "";
+                          else
+                            -var lowerControlArmLenght=""
+                            -var lowerControlArmLenghtUnits="mm"
+                          input.form-control.align-right(
+                            id="suspenssion_lowerControlArmLenght"
+                            type="number"
+                            step="any"
+                            value= lowerControlArmLenght 
+                            data-bound="Suspenssion.lowerControlArmLenght"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_lowerControlArmLenght_units"
+                            aria-label="Unidades Longitud del brazo inferior"
+                            data-from="suspenssion_lowerControlArmLenght"
+                          )
+                            +unitOption("mm", "mm", lowerControlArmLenght)
+                            +unitOption("in", "pulg", lowerControlArmLenght)
+                            +unitOption("cm", "cm", lowerControlArmLenght)
+                        label.form-label(for="suspenssion_shockAngle") Ángulo del amortiguador
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.shockAngle")
+                            -var shockAngle = unitRE.exec(getProperty(vehicleData, "Suspenssion.shockAngle"))[1] || "";
+                            -var shockAngleUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.shockAngle"))[2] || "";
+                          else
+                            -var shockAngle=""
+                            -var shockAngleUnits="rad"
+                          input.form-control.align-right(
+                            id="suspenssion_shockAngle"
+                            type="number"
+                            step="any"
+                            value= shockAngle 
+                            data-bound="Suspenssion.shockAngle"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_shockAngle_units"
+                            aria-label="Unidades ángulo del amortiguador"
+                            data-from="suspenssion_shockAngle"
+                          )
+                            +unitOption("rad", "rad", shockAngle)
+                            +unitOption("deg", "°", shockAngle)
+                        h3 Medidas del Resorte
+                        label.form-label(for="suspenssion_WireSpringDiameter") Diametro del alambre
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.WireSpringDiameter")
+                            -var WireSpringDiameter = unitRE.exec(getProperty(vehicleData, "Suspenssion.WireSpringDiameter"))[1] || "";
+                            -var WireSpringDiameterUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.WireSpringDiameter"))[2] || "";
+                          else
+                            -var WireSpringDiameter=""
+                            -var WireSpringDiameterUnits="mm"
+                          input.form-control.align-right(
+                            id="suspenssion_WireSpringDiameter"
+                            type="number"
+                            step="any"
+                            value= WireSpringDiameter 
+                            data-bound="Suspenssion.WireSpringDiameter"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_WireSpringDiameter_units"
+                            aria-label="Unidades Diametro del alambre"
+                            data-from="suspenssion_WireSpringDiameter"
+                          )
+                            +unitOption("mm", "mm", WireSpringDiameter)
+                            +unitOption("in", "pulg", WireSpringDiameter)
+                            +unitOption("cm", "cm", WireSpringDiameter)
+                        label.form-label(for="suspenssion_outerSpringDiameter") Diámetro externo del resorte
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.outerSpringDiameter")
+                            -var outerSpringDiameter = unitRE.exec(getProperty(vehicleData, "Suspenssion.outerSpringDiameter"))[1] || "";
+                            -var outerSpringDiameterUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.outerSpringDiameter"))[2] || "";
+                          else
+                            -var outerSpringDiameter=""
+                            -var outerSpringDiameterUnits="mm"
+                          input.form-control.align-right(
+                            id="suspenssion_outerSpringDiameter"
+                            type="number"
+                            step="any"
+                            value= outerSpringDiameter 
+                            data-bound="Suspenssion.outerSpringDiameter"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_outerSpringDiameter_units"
+                            aria-label="Unidades Diámetro externo del resorte"
+                            data-from="suspenssion_outerSpringDiameter"
+                          )
+                            +unitOption("mm", "mm", outerSpringDiameter)
+                            +unitOption("in", "pulg", outerSpringDiameter)
+                            +unitOption("cm", "cm", outerSpringDiameter)
+                        label.form-label(for="suspenssion_mediumSpringDiameter") Diámetro medio del resorte
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.mediumSpringDiameter")
+                            -var mediumSpringDiameter = unitRE.exec(getProperty(vehicleData, "Suspenssion.mediumSpringDiameter"))[1] || "";
+                            -var mediumSpringDiameterUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.mediumSpringDiameter"))[2] || "";
+                          else
+                            -var mediumSpringDiameter=""
+                            -var mediumSpringDiameterUnits="mm"
+                          input.form-control.align-right(
+                            id="suspenssion_mediumSpringDiameter"
+                            type="number"
+                            step="any"
+                            value= mediumSpringDiameter 
+                            data-bound="Suspenssion.mediumSpringDiameter"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_mediumSpringDiameter_units"
+                            aria-label="Unidades Diámetro medio del resorte"
+                            data-from="suspenssion_mediumSpringDiameter"
+                          )
+                            +unitOption("mm", "mm", mediumSpringDiameter)
+                            +unitOption("in", "pulg", mediumSpringDiameter)
+                            +unitOption("cm", "cm", mediumSpringDiameter)
+                        label.form-label(for="suspenssion_elasticityCoefficient") Coeficiente de elasticidad
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.elasticityCoefficient")
+                            -var elasticityCoefficient = unitRE.exec(getProperty(vehicleData, "Suspenssion.elasticityCoefficient"))[1] || "";
+                            -var elasticityCoefficientUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.elasticityCoefficient"))[2] || "";
+                          else
+                            -var elasticityCoefficient=""
+                            -var elasticityCoefficientUnits="kg / mm^2"
+                          input.form-control.align-right(
+                            id="suspenssion_elasticityCoefficient"
+                            type="number"
+                            step="any"
+                            value= elasticityCoefficient 
+                            data-bound="Suspenssion.elasticityCoefficient"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_elasticityCoefficient_units"
+                            aria-label="Unidades Coeficiente de elasticidad"
+                            data-from="suspenssion_elasticityCoefficient"
+                          )
+                            +unitOption("kg / mm^2", "Kg/mm²", elasticityCoefficient)
+                            +unitOption("l / in^2", "lb/pulg²", elasticityCoefficient)
+                        label.form-label(for="suspenssion_coilsNumber") Número de espirales
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.coilsNumber")
+                            -var coilsNumber = getProperty(vehicleData, "Suspenssion.coilsNumber") || "";
+                          else
+                            -var coilsNumber=""
+                          input.form-control.align-right(
+                            id="suspenssion_coilsNumber"
+                            type="number"
+                            step="1"
+                            value= coilsNumber 
+                            data-bound="Suspenssion.coilsNumber"
+                            required
+                          )
+                        label.form-label(for="suspenssion_pitchSpring") Paso del resorte
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.pitchSpring")
+                            -var pitchSpring = unitRE.exec(getProperty(vehicleData, "Suspenssion.pitchSpring"))[1] || "";
+                            -var pitchSpringUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.pitchSpring"))[2] || "";
+                          else
+                            -var pitchSpring=""
+                            -var pitchSpringUnits="mm"
+                          input.form-control.align-right(
+                            id="suspenssion_pitchSpring"
+                            type="number"
+                            step="any"
+                            value= pitchSpring 
+                            data-bound="Suspenssion.pitchSpring"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_pitchSpring_units"
+                            aria-label="Unidades Paso del resorte"
+                            data-from="suspenssion_pitchSpring"
+                          )
+                            +unitOption("mm", "mm", pitchSpring)
+                            +unitOption("in", "pulg", pitchSpring)
+                            +unitOption("cm", "cm", pitchSpring)
+                        label.form-label(for="suspenssion_radialDeformation") Deformación radial
+                        .input-group.mb-3 
+                          if getProperty(vehicleData, "Suspenssion.radialDeformation")
+                            -var radialDeformation = unitRE.exec(getProperty(vehicleData, "Suspenssion.radialDeformation"))[1] || "";
+                            -var radialDeformationUnits = unitRE.exec(getProperty(vehicleData, "Suspenssion.radialDeformation"))[2] || "";
+                          else
+                            -var radialDeformation=""
+                            -var radialDeformationUnits="mm"
+                          input.form-control.align-right(
+                            id="suspenssion_radialDeformation"
+                            type="number"
+                            step="any"
+                            value= radialDeformation 
+                            data-bound="Suspenssion.radialDeformation"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="suspenssion_radialDeformation_units"
+                            aria-label="Unidades deformación radial"
+                            data-from="suspenssion_radialDeformation"
+                          )
+                            +unitOption("mm", "mm", radialDeformation)
+                            +unitOption("in", "pulg", radialDeformation)
+                            +unitOption("cm", "cm", radialDeformation)
+                        if !getProperty(vehicleData, "Suspenssion")
+                          .d-grid
+                            button.btn.btn-primary( 
+                              type="submit"
+                              id="btn-save"
+                              value="submit"
+                            ) Guardar
+                .col-lg-6 
+                  if getProperty(vehicleData, "Suspenssion")
+                    h3 Cálculos de Suspensión 
+                    ul.list-group
+                      +calculatedValue("Ratio de movimiento:", "Suspenssion.MotionRatio")
+                      +calculatedValue("Ángulo de corrección:", "Suspenssion.CorrectionAngle")
+                      +calculatedValue("Constante del resorte:", "Suspenssion.SpringConstant", {
+                        "kg / mm":"Kg/mm",
+                        "l / in" : "lb/pulg",
+                        "kg / cm":"Kg/cm"
+                      })
+                      +calculatedValue("Fuerza requerida:", "Suspenssion.RequiredForce", massUnits)
+                      +calculatedValue("Fuerza ajustada:", "Suspenssion.AdjustedForce", massUnits)
+                      +calculatedValue("Tensión del neumático:", "Suspenssion.tireStifness")
+                      +calculatedValue("Rigidez de suspensión:","Suspenssion.SuspensionStiffness")
+                      +calculatedValue("Deformación bajo carga:", "Suspenssion.Deformationunderload")
+                      +calculatedValue("Longitud libre:", "Suspenssion.Freelenght")
+                      +calculatedValue("Frecuencia de pesos no suspendidos:", "Suspenssion.NoSuspendedWeightFrequency")
+                      +calculatedValue("Frecuencia de pesos suspendidos", "Suspenssion.SuspendenWeightFrequency")
+                //- Script
+                if getProperty(vehicleData, "Suspenssion")
+                    script(src="/javascripts/formControls.js")
+                    script.
+                        //Scripts
+                        var vehicleData= !{JSON.stringify(vehicleData)};
+                        const partName="#{partName}";
+                        const subpartName="#{subpartName}";        
+                        document.addEventListener("DOMContentLoaded", ()=> {
+                            setUnitSelectEventListener();
+                            setInputEventListener();
+                            setUnitButtonListener();
+                        })
+                else 
+                    script.
+                        // Scripts
+                        var vehicleData= !{JSON.stringify(vehicleData)};
+                        function savePart() {
+                            let payload={};
+                            payload['AxleWeight'] = document.querySelector("#suspenssion_AxleWeight").value + " "+
+                                document.querySelector("#suspenssion_AxleWeight_units").value
+                            payload['ArmShockDistance'] = document.querySelector("#suspenssion_ArmShockDistance").value + " "+
+                                document.querySelector("#suspenssion_ArmShockDistance_units").value
+                            payload['lowerControlArmLenght'] = document.querySelector("#suspenssion_lowerControlArmLenght").value + " "+
+                                document.querySelector("#suspenssion_lowerControlArmLenght_units").value
+                            payload['shockAngle'] = document.querySelector("#suspenssion_shockAngle").value + " "+
+                                document.querySelector("#suspenssion_shockAngle_units").value
+                            payload['suspendedWeights'] = document.querySelector("#suspenssion_suspendedWeights").value + " "+
+                                document.querySelector("#suspenssion_suspendedWeights_units").value
+                            payload['WireSpringDiameter'] = document.querySelector("#suspenssion_WireSpringDiameter").value + " "+
+                                document.querySelector("#suspenssion_WireSpringDiameter_units").value
+                            payload['outerSpringDiameter'] = document.querySelector("#suspenssion_outerSpringDiameter").value + " "+
+                                document.querySelector("#suspenssion_outerSpringDiameter_units").value
+                            payload['mediumSpringDiameter'] = document.querySelector("#suspenssion_mediumSpringDiameter").value + " "+
+                                document.querySelector("#suspenssion_mediumSpringDiameter_units").value
+                            payload['elasticityCoefficient'] = document.querySelector("#suspenssion_elasticityCoefficient").value + " "+
+                                document.querySelector("#suspenssion_elasticityCoefficient_units").value
+                            payload['coilsNumber'] = document.querySelector("#suspenssion_coilsNumber").value
+                            payload['pitchSpring'] = document.querySelector("#suspenssion_pitchSpring").value + " "+
+                                document.querySelector("#suspenssion_pitchSpring_units").value
+                            payload['radialDeformation'] = document.querySelector("#suspenssion_radialDeformation").value + " "+
+                                document.querySelector("#suspenssion_radialDeformation_units").value
+                            fetch(
+                                `/vehicle/${vehicleData.id}/Suspenssion`,
+                                {
+                                    "method":"post",
+                                    "body":JSON.stringify(payload),
+                                    "headers":{
+                                        "Content-Type":"application/json"
+                                    }
+                                }
+                            )
+                                .then(res=>res.json())
+                                .then(jsonData => {
+                                    if(!jsonData.Error) {
+                                        window.location.reload()
+                                    } else {
+                                        showAlert("Error creando sección de suspensión", "ERROR")
+                                        console.error("Error creating Suspenssion", jsonData)
+                                    }
+                                })
+                                .catch(e=>{
+                                    console.error("Error creating Susspenssion", e)
+                                    showAlert("Error creando sección de suspensiónr", "ERROR")
+                                })
+                        }
+                        document.querySelector("form#form-suspenssion").addEventListener(
+                            "submit",
+                            e => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                let form=document.getElementById("form-suspenssion")
+                                if (form.checkValidity()) {
+                                    savePart();
+                                } else {
+                                    form.classList.add('was-validated');
+                                }
+                            }
+                        )

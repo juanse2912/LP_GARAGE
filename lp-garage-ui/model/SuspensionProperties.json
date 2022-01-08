@@ -104,12 +104,12 @@
 
         "tireStifness":{
             "alias":"kn",
-            "formula":"((AW/2)*9.81 in m/s^2)/(rD)/ (1 in m)"
+            "formula":"((AW/2)*9.81 in m/s^2)/(rD in m)"
 
         },
         "SuspensionStiffness":{
             "alias":"Tf",
-            "formula":"(kn*WR)/(WR+kn)"
+            "formula":"(kn*(WR*9.81 in m/s^2))/((WR*9.81 in m/s^2)+kn)"
 
         },
         "Deformationunderload":{

@@ -119,7 +119,7 @@
         },
         "Freelenght":{
             "alias":"L",
-            "formula":"(n*(d+n)+dF)"
+            "formula":"(n*(d+(n*1 in mm))+dF)"
 
         },
 

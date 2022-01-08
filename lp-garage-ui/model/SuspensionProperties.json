@@ -22,7 +22,7 @@
             "units":"rad",
             "value": null
         },
-        "NosuspendedWeights":{
+        "suspendedWeights":{
             "alias":"SW",
             "units":"kg",
             "value":null
@@ -103,7 +103,7 @@
         },
         "SuspensionStiffness":{
             "alias":"Tf",
-            "formula":"(TT*WR)/(WR+TT)"
+            "formula":"(kn*WR)/(WR+kn)"
 
         },
         "Deformationunderload":{

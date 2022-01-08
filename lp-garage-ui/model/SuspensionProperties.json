@@ -125,7 +125,7 @@
 
         "NoSuspendedWeightFrequency":{
             "alias":"Wm1",
-            "formula":"(1/(2*pi))*sqrt(((K*9.81 kg*m/s^2 +kn)/(SW))"
+            "formula":"(1/(2*pi))*sqrt(((K*9.81 kg*m/s^2 +kn)/(SW)))"
 
         },
         "SuspendenWeightFrequency":{

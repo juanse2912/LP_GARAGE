@@ -1,8 +1,11 @@
 const math = require("./part").math;
 const Part = require("./part").Part;
 const Engine = require("./engine").Engine;
+const Suspenssion = require("./suspenssion").Suspenssion;
+
 const PARTS = new Map();
 PARTS.set("Engine", Engine);
+PARTS.set("Suspenssion", Suspenssion)
 
 class Vehicle extends Part{
     constructor(id, make, model, year, weight) {
@@ -34,8 +37,8 @@ class Vehicle extends Part{
      * @throws {Error} When the name of the part is not present on the PARTS constant
      */
     addPart(partName, json) {
-        if (PARTS[partName]) {
-            this.parts[partName] = PARTS[partName].fromJSON(json)
+        if (PARTS.has(partName)) {
+            this.parts[partName] = PARTS.get(partName).fromJSON(this, json)
             return this.parts[partName].toJSON(false);
         } else {
             throw new Error(`Invalid part name: ${partName}`);

@@ -104,12 +104,12 @@
 
         "tireStifness":{
             "alias":"kn",
-            "formula":"((AW/2)*9.81 in m/s^2)/((rD in m)*1m)"
+            "formula":"((AW/2))/(rD in m)"
 
         },
         "SuspensionStiffness":{
             "alias":"Tf",
-            "formula":"(kn*(WR*9.81 in m/s^2))/((WR*9.81 in m/s^2)+kn)"
+            "formula":"(kn*(WR*9.81 in m/s^2)WR)/(WR+kn)"
 
         },
         "Deformationunderload":{
@@ -125,12 +125,12 @@
 
         "NoSuspendedWeightFrequency":{
             "alias":"Wm1",
-            "formula":"(1/(2*pi))*sqrt(((K*9.81 m/s^2) +kn)/(SW))"
+            "formula":"(1/(2*pi))*sqrt((K +kn)/(SW))"
 
         },
         "SuspendenWeightFrequency":{
             "alias":"Wm2",
-            "formula":"(1/(2*pi))*sqrt(((K*9.81 m/s^2)*kn)/(((K*9.81 m/s^2)+kn)*((AW/2)-SW))"
+            "formula":"(1/(2*pi))*sqrt((K*kn)/((K+kn)*((AW/2)-SW))"
 
 
         }

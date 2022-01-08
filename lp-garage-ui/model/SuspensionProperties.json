@@ -104,7 +104,7 @@
 
         "tireStifness":{
             "alias":"kn",
-            "formula":"((AW/2)*9,81 in m/s^2)/(rD)"
+            "formula":"((AW/2)*9.81 in m/s^2)/(rD)"
 
         },
         "SuspensionStiffness":{

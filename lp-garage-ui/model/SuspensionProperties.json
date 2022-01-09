@@ -104,12 +104,12 @@
 
         "tireStifness":{
             "alias":"kn",
-            "formula":"(((AW/2*9.81 m/s^2))/(rD in m))"
+            "formula":"(((AW/2*9.81 m/s^2))/(rD))"
 
         },
         "SuspensionStiffness":{
             "alias":"Tf",
-            "formula":"(kn*(WR*9.81 in m/s^2)WR)/((WR*9.81 m/s^2)+kn)"
+            "formula":"((kn*1s^2/kg)*WR/1000)/(((kn*1s^2/kg)*1kg/m)+WR/1000) * 1kg/mm"
 
         },
         "Deformationunderload":{
@@ -119,18 +119,18 @@
         },
         "Freelenght":{
             "alias":"L",
-            "formula":"(n*(d+(n*1mm))+dF in mm)"
+            "formula":"(n*(d+a)+dF in mm)"
 
         },
 
         "NoSuspendedWeightFrequency":{
             "alias":"Wm1",
-            "formula":"(1/(2*pi))*sqrt(((K*9.81 m/s^2) +kn)/(SW))"
+            "formula":"(1/(2*pi))*sqrt(((kn*s^2/kg)+((K in kg/mm) *1mm/kg*9810))/((AW/2kg)-SW/1kg))*1Hz"
 
         },
         "SuspendenWeightFrequency":{
             "alias":"Wm2",
-            "formula":"(1/(2*pi))*sqrt(((K*9.81 m/s^2)*kn)/(((K*9.81 m/s^2)+kn)*((AW/2)-SW)))"
+            "formula":"(1/(2*pi))*sqrt(((K*9810m/s^2)*kn)/((kn+(K*9810m/s^2))*(SW/1kg)))*(1s/kg^0.5)*1Hz"
 
 
         }

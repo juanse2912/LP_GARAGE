@@ -1,46 +1,6 @@
 const math = require("./part").math;
 const Part = require("./part").Part;
 
-class EnginePower extends Part {
-    constructor(engine, intakeAirPressure, intakeAirTemperature) {
-        /**
-         * @type partProperties
-         */
-        let partProperties = require("./EnginePowerProperties.json")
-        partProperties.inputParameters.intakeAirPressure.value = intakeAirPressure;
-        partProperties.inputParameters.intakeAirTemperature.value = intakeAirTemperature;
-        super(engine.scope, partProperties)
-        this.engine = engine;
-        this.scope = engine.scope
-        this.partProperties = partProperties;
-    }
-
-    static fromJSON(engine, j) {
-        return new EnginePower(engine, j.intakeAirPressure, j.intakeAirTemperature)
-    }
-}
-
-class EngineForces extends Part {
-    constructor(eng, pistonDiameter, R, L) {
-        /**
-         * @type partProperties
-         */
-        let partProperties = require("./EngineForcesProperties.json")
-        partProperties.inputParameters.pistonDiameter.value = pistonDiameter;
-        partProperties.inputParameters.bore.value = R;
-        partProperties.inputParameters.stroke.value = L;
-        super(eng.scope, partProperties);
-        this.engine = eng;
-        this.scope = eng.scope;       
-    }
-
-    static fromJSON(engine, j) {
-        return new EngineForces(engine, j.pistonDiameter, j.R, j.L);
-    }
-
-}
-
-
 const SUBPARTS = new Map();
 SUBPARTS.set("BrakesAxles",BrakesAxles);
 

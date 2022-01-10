@@ -1,0 +1,164 @@
+{
+    "inputParameters": {
+        "wheelbase": {
+            "value": null,
+            "alias":"WB",
+            "units":"cm"        
+        },
+        "trackWidth": {
+            "value": null,
+            "alias":"TW",
+            "units":"cm"
+        },
+        "frontAxleWeightLeveled": {
+            "value": null,
+            "alias":"FAWL",
+            "units":"kg"
+        },
+        "rearAxleElevationHeight": {
+            "value": null,
+            "alias":"RAEH",
+            "units":"cm"
+        },
+        "frontAxleWeightWithRearAxleElevated": {
+            "value": null,
+            "alias":"FAWRAE",
+            "units":"kg"
+        },
+        "frontAxleWeigh": {
+            "value": null,
+            "alias":"FAW",
+            "units":"kg"
+        },
+        "rearAxleWeight": {
+            "value": null,
+            "alias":"RAW",
+            "units":"kg"
+        },
+        "brakePumpPistonDiameter": {
+            "value": null,
+            "alias":"BPPD",
+            "units":"m"
+        },
+        "numberOfCaliperPiston": {
+            "value": null,
+            "alias":"NCP"
+        },
+        "caliperPistonDiameter": {
+            "value": null,
+            "alias":"CPD",
+            "units":"m"
+        },
+        "padFrictionCoefficient": {
+            "value": null,
+            "alias":"PFC"
+        },
+        "padWidth": {
+            "value": null,
+            "alias":"PW",
+            "units":"m"
+        },
+        "speedBeforeBraking": {
+            "value": null,
+            "alias":"SBB",
+            "units":"km/h"
+        },
+        "actualDistanceOfBraking": {        //For brake distance comparison graphic
+            "value": null,
+            "alias":"ADB",
+            "units":"m"
+        }
+    },
+    "constants":{
+        "appliedForceInBrakePedal":{
+            "alias":"AFBP",
+            "value": "10 kgf"
+        },
+        "tireFrictionCoefficient":{
+            "alias":"TFC",
+            "value": 0.8
+        }
+    },
+    "formulas":{
+        "tireRadius":{
+            "alias":"TR",
+            "formula":"(((2*(AR/100)*TW)+((R*(25.4 in mm)))/(1 in in))/2)/((10 in mm)* (1 in cm))"  //Call tire specs from vehicle. AR=Aspect Ratio. TW=Tire Width. R=Tire diameter
+        },
+        "heightOfCenterOfGravity":{
+            "alias":"HCG",
+            "formula":"(WB*(FAWRAE-FAWL))/(wt*(RAEH/SQRT((WB^2)-(RAEH^2))))+TR" 
+        },
+        "longitudinalWeightTransfer":{
+            "alias":"LWT",
+            "formula":"((0.8*9.8 in m*/s^2) *wt*((HCG*(1 in m))/(100 in cm)))/((WB*(1 in m))/(100 in cm))"
+        },
+        "crossWeightTransfer":{
+            "alias":"CWT",
+            "formula":"((0.8*9.8 in m*/s^2)*wt*((HCG*(1 in m))/(100 in cm)))/((TW*(1 in m))/(100 in cm))"
+        },
+        "totalBrakeForce":{
+            "alias":"TBF",
+            "formula":"FBF+RBF"
+        },
+        "totalBrakeTorque":{
+            "alias":"TBT",
+            "formula":"FBT+RBT"
+        },
+        "optimumBrakeBalance":{   //Check formula
+            "alias":"OBB",
+            "formula":"if(FOBB === ROBB) { 
+                this.engineData["OBB"] = "IDEAL";
+            } else {
+                this.engineData["OBB"] = "NO IDEAL";
+            }"
+        },
+        "discBrakeSize":{
+            "alias":"DBS",
+            "formula":"TBT/TBF"
+        },
+        "brakePedalForce":{
+            "alias":"BPF",
+            "formula":"AFBP*(FAHD/RAHD)"
+        },
+        "totalPumpCircuitInputForce":{
+            "alias":"TPCIF",
+            "formula":"FPCOF+RPCOF"
+        },
+        "pumpPistonArea":{
+            "alias":"PPA",
+            "formula":"((BPPD^2)*pi)/4"
+        },
+        "totalPressureDistributionGeneratedByBrakePump":{
+            "alias":"TPDGBP",
+            "formula":"FPDGBP+RPDGBP"
+        },
+        "caliperPistonArea":{
+            "alias":"CPA",
+            "formula":"((CPD^2)*pi)/4" 
+        },
+        "effectiveRadiusOfDisc":{
+            "alias":"ERD",
+            "formula":"(DBS+(DBS-PW)/2"
+        },
+        "totalBrakeTorqueByDiscPadContact":{
+            "alias":"TBTDPC",
+            "formula":"FBTDPC+RBTDPC"
+        },
+        "totalBrakeForceOverTires":{
+            "alias":"TBFOT",
+            "formula":"2*(FBFOT+RBFOT)"
+        },
+        "vehicleMass":{
+            "alias":"VM",
+            "formula":"wt/(9.81 in m/s^2)"
+        },
+        "vehicleDeceleration":{
+            "alias":"VD",
+            "formula":"((TBFOT*9.81)/VM)"
+        },
+        "estimatedBrakeDistance":{          //For answer and brake distance comparison graphic
+            "alias":"EBD",
+            "formula":"((((SBB*(1000 in m)/(1km))*(1 in h))/(3600 in s))^2)/(2*VD)"
+        }
+    }
+}

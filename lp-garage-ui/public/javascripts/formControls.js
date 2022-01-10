@@ -197,20 +197,25 @@ function updateCalculatedDataElement(value, elementName, dontShowUpdate) {
   let vu=separateValueAndUnits(value);
   let el = document.querySelector(`span[data-bound='${elementName}']`)
   if(el.firstChild.textContent!=vu.value) {
-    el.firstChild.textContent = vu.value;
-    if(vu.units) {
-      let unitDisplay = vu.units;
-      let unitOptions = el.querySelectorAll("a.unit");
-      for(let opt of unitOptions) {
-        if (opt.getAttribute("data-unit")==vu.units) {
-          unitDisplay = opt.innerText
+    try {
+      el.firstChild.textContent = vu.value;
+      if(vu.units) {
+        let unitDisplay = vu.units;
+        let unitOptions = el.querySelectorAll("a.unit");
+        for(let opt of unitOptions) {
+          if (opt.getAttribute("data-unit")==vu.units) {
+            unitDisplay = opt.innerText
+          }
+        }
+        el.querySelector(".btn-group .btn").innerText = unitDisplay
+        if(!dontShowUpdate) {
+          el.classList.add("updated")     
+          setTimeout( (element)=> { element.classList.remove("updated")}, 1000, el)  
         }
       }
-      el.querySelector(".btn-group .btn").innerText = unitDisplay
-      if(!dontShowUpdate) {
-        el.classList.add("updated")     
-        setTimeout( (element)=> { element.classList.remove("updated")}, 1000, el)  
-      }
+
+    } catch (err) {
+      console.error(`Error updating element ${elementName}`, err)
     }
   }
 

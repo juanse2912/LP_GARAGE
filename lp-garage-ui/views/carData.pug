@@ -143,5 +143,60 @@ label.form-label Tipo de admisión
     ).form-check-input
     label(
         for="cardata_intakeType_S"
-    ).form-check-label Super cargado 
-        
+    ).form-check-label Super cargado
+label(for="cardata_tireWidth").form-label Ancho de neumático 
+.input-group.mb-3 
+    if getProperty(vehicleData, "tireWidth")
+        -var tw = getProperty(vehicleData, "tireWidth")
+        -var tireWidth = unitRE.exec(tw || "0 mm")[1]
+        -var tireWidthUnits = unitRE.exec(tw || "0 mm")[2]
+    else
+        -var tireWidth=0
+        -var tireUnits="mm"
+    input(
+        id="cardata_tireWidth"
+        type="number"
+        step=1
+        value=tireWidth 
+        required 
+        data-bound="tireWidth"
+    ).form-control.align-right
+    select.form-select.input-group-text.unit(
+        id="cardata_tireWidth_units"
+        aria-label="unidades ancho de neumático"
+    )
+        +unitOption("mm", "mm", longitudeUnits)
+        +unitOption("in", "pulg", longitudeUnits)
+label(for="cardata_tireAspectRatio").form-label Perfil neumático 
+-var tireAspectRatio = getProperty(vehicleData, "tireAspectRatio")||"0"
+input(
+    id="cardata_tireAspectRatio"
+    type="number"
+    step=1
+    value=tireAspectRatio 
+    required 
+    data-bound="tireAspectRatio"
+).form-control.align-right
+label(for="cardata_wheelRim").form-label Rim neumático
+.input-group.mb-3 
+    if getProperty(vehicleData, "wheelRim")
+        -var wr = getProperty(vehicleData, "wheelRim")
+        -var wheelRim = unitRE.exec(wr || "0 pulg")[1]
+        -var wheelRimUnits = unitRE.exec(wr || "0 pulg")[2]
+    else
+        -var wheelRim=0
+        -var tireUnits="pulg"
+    input(
+        id="cardata_wheelRim"
+        type="number"
+        step=1
+        value=wheelRim 
+        required 
+        data-bound="wheelRim"
+    ).form-control.align-right
+    select.form-select.input-group-text.unit(
+        id="cardata_wheelRim_units"
+        aria-label="unidades ancho de neumático"
+    )
+        +unitOption("in", "pulg", longitudeUnits)
+        +unitOption("mm", "mm", longitudeUnits)

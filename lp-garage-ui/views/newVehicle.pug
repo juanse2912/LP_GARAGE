@@ -58,6 +58,11 @@ block content
                             document.querySelector("#cardata_maxpower_units").value;
                         payload.Engine["rpmMaxPower"] = document.querySelector("#cardata_rpmmaxpower").value;
                         payload.Engine["intakeType"] = document.querySelector("[name='cardata_intakeType'][checked]").value;
+                        payload["tireWidth"] = document.querySelector("#cardata_tireWidth").value + " " +
+                            document.querySelector("#cardata_tireWidth_units").value;
+                        payload["tireAspectRatio"] = document.querySelector("#cardata_tireAspectRatio").value
+                        payload["wheelRim"] = document.querySelector("#cardata_wheelRim").value + " " +
+                            document.querySelector("#cardata_wheelRim_units").value;
                         fetch(`/vehicle/${payload.id}`, {
                             "method":"post",
                             "body":JSON.stringify(payload),

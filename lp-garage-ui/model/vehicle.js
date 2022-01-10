@@ -8,13 +8,27 @@ PARTS.set("Engine", Engine);
 PARTS.set("Suspenssion", Suspenssion)
 
 class Vehicle extends Part{
-    constructor(id, make, model, year, weight) {
+    constructor(id, make, model, year, weight,tireWidth, tireAspectRatio, wheelRim) {
         let partProperties = {
             "inputParameters":{
                 "weight":{
                     "alias":"wt",
                     "units":"kg",
                     "value":weight
+                },
+                tireWidth:{
+                    "alias":"TW",
+                    "units":"mm",
+                    "value":tireWidth
+                },
+                tireAspectRatio:{
+                    "alias":"AR",
+                    "value":tireAspectRatio
+                },
+                wheelRim:{
+                    "alias":"WR",
+                    "units":"in",
+                    "value":wheelRim
                 }
             }
         }
@@ -105,7 +119,7 @@ class Vehicle extends Part{
      * @returns Vehicle
      */
     static fromJSON(j) {
-        let v = new Vehicle(j.id, j.make, j.model, j.year, j.weight);
+        let v = new Vehicle(j.id, j.make, j.model, j.year, j.weight, j.tireWidth, j.tireAspectRatio, j.wheelRim);
         for (let [partName, classH] of PARTS) {
             if (j[partName]) {
                 v.parts[partName] = classH.fromJSON(v, j[partName]);

@@ -305,18 +305,26 @@ block content
                       +calculatedValue("Ratio de movimiento:", "Suspenssion.MotionRatio")
                       +calculatedValue("Ángulo de corrección:", "Suspenssion.CorrectionAngle")
                       +calculatedValue("Constante del resorte:", "Suspenssion.SpringConstant", {
-                        "kg / mm":"Kg/mm",
-                        "l / in" : "lb/pulg",
-                        "kg / cm":"Kg/cm"
+                        "kg / m":"Kg/m",
+                        "lb / in" : "lb/pulg",
+                        "g / cm":"g/cm"
                       })
                       +calculatedValue("Fuerza requerida:", "Suspenssion.RequiredForce", massUnits)
                       +calculatedValue("Fuerza ajustada:", "Suspenssion.AdjustedForce", massUnits)
-                      +calculatedValue("Tensión del neumático:", "Suspenssion.tireStifness")
-                      +calculatedValue("Rigidez de suspensión:","Suspenssion.SuspensionStiffness")
-                      +calculatedValue("Deformación bajo carga:", "Suspenssion.Deformationunderload")
-                      +calculatedValue("Longitud libre:", "Suspenssion.Freelenght")
-                      +calculatedValue("Frecuencia de pesos no suspendidos:", "Suspenssion.NoSuspendedWeightFrequency")
-                      +calculatedValue("Frecuencia de pesos suspendidos", "Suspenssion.SuspendenWeightFrequency")
+                      +calculatedValue("Tensión del neumático:", "Suspenssion.tireStifness", {"N / m":"N/m", "lbf / in":"lbf/pulg"})
+                      +calculatedValue("Constante del neumático", "Suspenssion.WheelRate", {
+                        "kg / m":"Kg/m",
+                        "lb / in" : "lb/pulg",
+                        "g / cm":"g/cm"
+                      })
+                      +calculatedValue("Rigidez de suspensión:","Suspenssion.SuspensionStiffness", {
+                        "kg / mm":"kg/mm",
+                        "lb / in":"lb / pulg"
+                      })
+                      +calculatedValue("Deformación bajo carga:", "Suspenssion.Deformationunderload", longitudeUnits)
+                      +calculatedValue("Longitud libre:", "Suspenssion.Freelenght", longitudeUnits)
+                      +calculatedValue("Frecuencia de pesos no suspendidos:", "Suspenssion.NoSuspendedWeightFrequency", {"Hz":"Hz"})
+                      +calculatedValue("Frecuencia de pesos suspendidos", "Suspenssion.SuspendenWeightFrequency", {"Hz":"Hz"})
                 //- Script
                 if getProperty(vehicleData, "Suspenssion")
                     script(src="/javascripts/formControls.js")

@@ -6,12 +6,13 @@
       }, vd) 
     }
 //- unit handling
--var unitRE = /^([\d\.e-]*)\s(.*)$/
+-var unitRE = /^([\d\.\(\)ie\-]*)\s(.*)$/
+-var longitudeUnits = { "km":"Km", "m":"m", "cm":"cm", "mm":"mm", "in":"pulg", "ft":"pie"}
 -var volumeUnits = {"m^3":"m³","cm^3":"cm³","in^3":"in³","l":"lt"}
 -var areaUnits = {"m^2":"m²","cm^2":"cm²","in^2":"in²"}
 -var pressureUnits = {"MPa":"MPA","kPa":"KPA","psi":"PSI","bar":"bar"}
 -var temperatureUnits = {"K":"°K","degC":"°C","degF":"°F"}
--var massUnits={"kg":"kg","t":"Ton","l":"lb"}
+-var massUnits={"kg":"kg","t":"Ton","lb":"lb"}
 -var powerUnits={"hp":"hp","kW":"KW"}
 -var angleUnits={"rad":"rad","deg":"°"}
 //- unit change for input fields
@@ -40,8 +41,9 @@ mixin calculatedValue(title, dataElement, unitOptions)
     li.list-group-item.fs-6
         strong.d-block=title+" "
         if unitOptions
-            -var dataVal=unitRE.exec(getProperty(vehicleData, dataElement)||"0 _")[1]
-            -var dataUnit=unitRE.exec(getProperty(vehicleData, dataElement)||"0 _")[2]
+            -var data = getProperty(vehicleData, dataElement)||"0 _"
+            -var dataVal=unitRE.exec(data)[1] 
+            -var dataUnit=unitRE.exec(data)[2]
         else 
             -var dataVal=getProperty(vehicleData, dataElement)||""
         span(data-bound=dataElement)=dataVal 

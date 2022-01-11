@@ -25,11 +25,7 @@
             "alias":"FAWRAE",
             "units":"kg"
         },
-        "frontAxleWeigh": {
-            "value": null,
-            "alias":"FAW",
-            "units":"kg"
-        },
+        
         "rearAxleWeight": {
             "value": null,
             "alias":"RAW",
@@ -154,7 +150,7 @@
         },
         "frontAxleWeightDeceleration":{
             "alias":"FAWD",
-            "formula":"FAW+(LWT/(9.8 in m/s^2))" 
+            "formula":"FAWRAE+(LWT/(9.8 in m/s^2))" 
         },
         "frontBrakeForce":{
             "alias":"FBF",
@@ -170,7 +166,7 @@
         },
         "frontWeightBalance":{
             "alias":"FWB",
-            "formula":"FAW/PT"
+            "formula":"FAWRAE/PT"
         },
         "frontAxleToHCGDistance":{
             "alias":"FAHD",

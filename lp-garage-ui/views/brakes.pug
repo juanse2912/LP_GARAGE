@@ -13,4 +13,399 @@ block content
                 include vehicleNav
                 .col.py-3
                     h1 Frenos
-                    p Página en construcción
+                    .col-lg-5
+                      form#form-breaks.needs-validation(novalidate action="#" method="post")
+                        h3 Altura del Centro de Gravedad
+                        label.form-label(for="breaks_wheelbase") Distancia entre ejes 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.wheelbase")
+                          if fieldValue
+                            -var wheelbase = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var wheelbase_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var wheelbase = ""
+                            -var wheelbase_units="cm"
+                          input.form-control.align-right(
+                            id="breaks_wheelbase"
+                            type="number"
+                            step="any"
+                            value= wheelbase 
+                            data-bound="Breaks.wheelbase"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_wheelbase_units"
+                            aria-label="Unidades Distancia entre ejes"
+                            data-from="breaks_wheelbase"
+                          )
+                            +unitOption("cm", "cm", wheelbase_units)
+                            +unitOption("m", "m", wheelbase_untis)
+                            +unitOption("in", "pulg", wheelbase_units)
+                        label.form-label(for="breaks_frontAxleWeightLeveled") Peso eje delantero con vehículo nivelado 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.frontAxleWeightLeveled")
+                          if fieldValue
+                            -var frontAxleWeightLeveled = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var frontAxleWeightLeveled_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var frontAxleWeightLeveled = ""
+                            -var frontAxleWeightLeveled_units="kg"
+                          input.form-control.align-right(
+                            id="breaks_frontAxleWeightLeveled"
+                            type="number"
+                            step="any"
+                            value= frontAxleWeightLeveled 
+                            data-bound="Breaks.frontAxleWeightLeveled"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_frontAxleWeightLeveled_units"
+                            aria-label="Unidades Peso eje delantero con vehículo nivelado"
+                            data-from="breaks_frontAxleWeightLeveled"
+                          )
+                            +unitOption("kg", "Kg", frontAxleWeightLeveled_units)
+                            +unitOption("lb", "lb", frontAxleWeightLeveled_untis)
+                        label.form-label(for="breaks_frontAxleWeightWithRearAxleElevated") Peso eje delantero con eje trasero elevado 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.frontAxleWeightWithRearAxleElevated")
+                          if fieldValue
+                            -var frontAxleWeightWithRearAxleElevated = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var frontAxleWeightWithRearAxleElevated_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var frontAxleWeightWithRearAxleElevated = ""
+                            -var frontAxleWeightWithRearAxleElevated_units="kg"
+                          input.form-control.align-right(
+                            id="breaks_frontAxleWeightWithRearAxleElevated"
+                            type="number"
+                            step="any"
+                            value= frontAxleWeightWithRearAxleElevated 
+                            data-bound="Breaks.frontAxleWeightWithRearAxleElevated"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_frontAxleWeightWithRearAxleElevated_units"
+                            aria-label="Unidades Peso eje delantero con eje trasero elevado"
+                            data-from="breaks_frontAxleWeightWithRearAxleElevated"
+                          )
+                            +unitOption("kg", "Kg", frontAxleWeightWithRearAxleElevated_units)
+                            +unitOption("lb", "lb", frontAxleWeightWithRearAxleElevated_untis)
+                        label.form-label(for="breaks_rearAxleElevationHeight") Altura elevada del eje trasero 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.rearAxleElevationHeight")
+                          if fieldValue
+                            -var rearAxleElevationHeight = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var rearAxleElevationHeight_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var rearAxleElevationHeight = ""
+                            -var rearAxleElevationHeight_units="cm"
+                          input.form-control.align-right(
+                            id="breaks_rearAxleElevationHeight"
+                            type="number"
+                            step="any"
+                            value= rearAxleElevationHeight 
+                            data-bound="Breaks.rearAxleElevationHeight"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_rearAxleElevationHeight_units"
+                            aria-label="Unidades Altura elevada del eje trasero"
+                            data-from="breaks_rearAxleElevationHeight"
+                          )
+                            +unitOption("cm", "cm", rearAxleElevationHeight_units)
+                            +unitOption("in", "pulg", rearAxleElevationHeight_untis)
+                            +unitOption("m", "m", rearAxleElevationHeight_units)
+                        label.form-label(for="breaks_rearAxleWeight") Peso del eje trasero 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.rearAxleWeight")
+                          if fieldValue
+                            -var rearAxleWeight = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var rearAxleWeight_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var rearAxleWeight = ""
+                            -var rearAxleWeight_units="kg"
+                          input.form-control.align-right(
+                            id="breaks_rearAxleWeight"
+                            type="number"
+                            step="any"
+                            value= rearAxleWeight 
+                            data-bound="Breaks.rearAxleWeight"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_rearAxleWeight_units"
+                            aria-label="Unidades Peso del eje trasero"
+                            data-from="breaks_rearAxleWeight"
+                          )
+                            +unitOption("kg", "Kg", rearAxleWeight_units)
+                            +unitOption("lb", "lb", rearAxleWeight_untis)
+                        h3 Transferencia de Pesos
+                        label.form-label(for="breaks_trackWidth") Distancia de vía o trocha 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.trackWidth")
+                          if fieldValue
+                            -var trackWidth = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var trackWidth_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var trackWidth = ""
+                            -var trackWidth_units="cm"
+                          input.form-control.align-right(
+                            id="breaks_trackWidth"
+                            type="number"
+                            step="any"
+                            value= trackWidth 
+                            data-bound="Breaks.trackWidth"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_trackWidth_units"
+                            aria-label="Unidades Distancia de vía o trocha"
+                            data-from="breaks_trackWidth"
+                          )
+                            +unitOption("cm", "cm", trackWidth_units)
+                            +unitOption("m", "m", trackWidth_untis)
+                            +unitOption("in", "pulg", trackWidth_units)
+                        h3 Características Freno 
+                        label.form-label(for="breaks_brakePumpPistonDiameter") Diámetro del pistón de la bomba 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.brakePumpPistonDiameter")
+                          if fieldValue
+                            -var brakePumpPistonDiameter = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var brakePumpPistonDiameter_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var brakePumpPistonDiameter = ""
+                            -var brakePumpPistonDiameter_units="m"
+                          input.form-control.align-right(
+                            id="breaks_brakePumpPistonDiameter"
+                            type="number"
+                            step="any"
+                            value= brakePumpPistonDiameter 
+                            data-bound="Breaks.brakePumpPistonDiameter"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_brakePumpPistonDiameter_units"
+                            aria-label="Unidades Diámetro del pistón de la bomba"
+                            data-from="breaks_brakePumpPistonDiameter"
+                          )
+                            +unitOption("m", "m", brakePumpPistonDiameter_units)
+                            +unitOption("in", "pulg", brakePumpPistonDiameter_untis)
+                            +unitOption("cm", "cm", brakePumpPistonDiameter_untis)
+                        label.form-label(for="breaks_numberOfCaliperPiston") Número de pistonoes de la mordaza 
+                        -var numberOfCaliperPiston = getProperty(vehicleData, "Breaks.numberOfCaliperPiston")||""
+                        input.form-control.align-right(
+                          id="breaks_numberOfCaliperPiston"
+                          type="number"
+                          step=1
+                          value= numberOfCaliperPiston 
+                          data-bound="Breaks.numberOfCaliperPiston"
+                          data-from="breaks_numberOfCaliperPiston"
+                        )
+                        label.form-label(for="breaks_caliperPistonDiameter") Diámetro del pistón de la mordaza 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.caliperPistonDiameter")
+                          if fieldValue
+                            -var caliperPistonDiameter = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var caliperPistonDiameter_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var caliperPistonDiameter = ""
+                            -var caliperPistonDiameter_units="m"
+                          input.form-control.align-right(
+                            id="breaks_caliperPistonDiameter"
+                            type="number"
+                            step="any"
+                            value= caliperPistonDiameter 
+                            data-bound="Breaks.caliperPistonDiameter"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_caliperPistonDiameter_units"
+                            aria-label="Unidades Diámetro del pistón de la mordaza"
+                            data-from="breaks_caliperPistonDiameter"
+                          )
+                            +unitOption("m", "m", caliperPistonDiameter_units)
+                            +unitOption("in", "pulg", caliperPistonDiameter_untis)
+                            +unitOption("cm", "cm", caliperPistonDiameter_units)
+                        h3 Fuerzas de Frenado 
+                        label.form-label(for="breaks_tireFrictionCoefficient") Coeficiente de fricción del neumático 
+                        -var tireFrictionCoefficient = getProperty(vehicleData, "Brakes.tireFrictionCoefficient") || "0.8"
+                        input.form-control.align-right(
+                          id="breaks_tireFrictionCoefficient"
+                          type="number"
+                          step="any"
+                          value= tireFrictionCoefficient 
+                          data-bound="Breaks.tireFrictionCoefficient"
+                          required
+                        )
+                        label.form-label(for="breaks_appliedForceInBrakePedal") Fuerza aplicada al pedal del freno 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.appliedForceInBrakePedal")
+                          if fieldValue
+                            -var appliedForceInBrakePedal = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var appliedForceInBrakePedal_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var appliedForceInBrakePedal = ""
+                            -var appliedForceInBrakePedal_units="kgf"
+                          input.form-control.align-right(
+                            id="breaks_appliedForceInBrakePedal"
+                            type="number"
+                            step="any"
+                            value= appliedForceInBrakePedal 
+                            data-bound="Breaks.appliedForceInBrakePedal"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_appliedForceInBrakePedal_units"
+                            aria-label="Unidades Fuerza aplicada al pedal del freno"
+                            data-from="breaks_appliedForceInBrakePedal"
+                          )
+                            +unitOption("kgf", "kgf", appliedForceInBrakePedal_units)
+                            +unitOption("lbf", "lbf", appliedForceInBrakePedal_untis)
+                            +unitOption("N", "N", appliedForceInBrakePedal_units)
+                        label.form-label(for="breaks_padFrictionCoefficient") Coeficiente de fricción de la pastilla 
+                        -var padFrictionCoefficient = getProperty(vehicleData, "Brakes.padFrictionCoefficient")
+                        input.form-control.align-right(
+                          id="breaks_padFrictionCoefficient"
+                          type="number"
+                          step="any"
+                          value= padFrictionCoefficient 
+                          data-bound="Breaks.padFrictionCoefficient"
+                          required
+                        )
+                        label.form-label(for="breaks_padWidth") Ancho de pastilla 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.padWidth")
+                          if fieldValue
+                            -var padWidth = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var padWidth_units = unitRE(fieldValue)[2] || ""
+                          else 
+                            -var padWidth = ""
+                            -var padWidth_units="m"
+                          input.form-control.align-right(
+                            id="breaks_padWidth"
+                            type="number"
+                            step="any"
+                            value= padWidth 
+                            data-bound="Breaks.padWidth"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_padWidth_units"
+                            aria-label="Unidades Ancho de pastilla"
+                            data-from="breaks_padWidth"
+                          )
+                            +unitOption("m", "m", padWidth_units)
+                            +unitOption("in", "pulg", padWidth_untis)
+                            +unitOption("cm", "cm", padWidth_units)
+                        h3 Distancia de Frenado
+                        label.form-label(for="breaks_speedBeforeBraking") Velocidad antes de frenado 
+                        .input-group.mb-3 
+                          -var fieldValue = getProperty(vehicleData, "Brakes.speedBeforeBraking")
+                          if fieldValue
+                            -var speedBeforeBraking = unitRE.exec(fieldValue)[1] || fieldValue
+                            -var speedBeforeBraking_units = unitRE(fieldValue)[2] || "km / h"
+                          else 
+                            -var speedBeforeBraking = ""
+                            -var speedBeforeBraking_units="km / h"
+                          input.form-control.align-right(
+                            id="breaks_speedBeforeBraking"
+                            type="number"
+                            step="any"
+                            value= speedBeforeBraking 
+                            data-bound="Breaks.speedBeforeBraking"
+                            required
+                          )
+                          select.form-select.input-group-text.unit(
+                            id="breaks_speedBeforeBraking_units"
+                            aria-label="Unidades Ancho de pastilla"
+                            data-from="breaks_speedBeforeBraking"
+                          )
+                            +unitOption("km / h", "Km/h", speedBeforeBraking_units)
+                            +unitOption("mi / h", "MPH", speedBeforeBraking_untis)
+                        if !getProperty(vehicleData, "Brakes")
+                          .d-grid
+                            button.btn.btn-primary( 
+                              type="submit"
+                              id="btn-save"
+                              value="submit"
+                            ) Guardar
+                .col-lg-6 
+                  if getProperty(vehicleData, "Brakes")
+                    h3 Cálculos de Freno
+                    ul.list-group 
+
+
+                if getProperty(vehicleData, "Brakes")
+                  script(src="/javascripts/formControls.js")
+                  script. 
+                        var vehicleData= !{JSON.stringify(vehicleData)};
+                        const partName="#{partName}";
+                        const subpartName="#{subpartName}";        
+                        document.addEventListener("DOMContentLoaded", ()=> {
+                            setUnitSelectEventListener();
+                            setInputEventListener();
+                            setUnitButtonListener();
+                        })
+                else 
+                    script.
+                        // Scripts
+                        var vehicleData= !{JSON.stringify(vehicleData)};
+                        function savePart() {
+                          let payload={};
+                          dataBoundElements = [
+                            {elName:"wheelbase", units:true}, 
+                            {elName:"trackWidth", units:true},
+                            {elName:"frontAxleWeightLeveled", units:true},
+                            {elName:"rearAxleElevationHeight", units:true},
+                            {elName:"frontAxleWeightWithRearAxleElevated", units:true},
+                            {elName:"rearAxleWeight", untis:true},
+                            {elName:"brakePumpPistonDiameter", units:true},
+                            {elName:"numberOfCaliperPiston", units:false},
+                            {elName:"caliperPistonDiameter", units:true},
+                            {elName:"padFrictionCoefficient", units:false},
+                            {elName:"padWidth", units:true},
+                            {elName:"speedBeforeBraking", units:true},
+                            {elName:"appliedForceInBrakePedal", units:true},
+                            {elName:"tireFrictionCoefficient", units:false}
+                          ]
+                          for( let i=0; i<dataBoundElements.length; i++) {
+                            let dbe = dataBoundElements[i];
+                            payload[dbe.elName] = document.querySelector(`#brakes_${dbe.elName}`).value +
+                              dbe.units ? " " + document.querySelector(`#brakes_${dbe.elName}_units`).value : ""
+                          }
+                            fetch(
+                                `/vehicle/${vehicleData.id}/Brakes`,
+                                {
+                                    "method":"post",
+                                    "body":JSON.stringify(payload),
+                                    "headers":{
+                                        "Content-Type":"application/json"
+                                    }
+                                }
+                            )
+                                .then(res=>res.json())
+                                .then(jsonData => {
+                                    if(!jsonData.Error) {
+                                        window.location.reload()
+                                    } else {
+                                        showAlert("Error creando sección de frenos", "ERROR")
+                                        console.error("Error creating Brakes", jsonData)
+                                    }
+                                })
+                                .catch(e=>{
+                                    console.error("Error creating Breaks", e)
+                                    showAlert("Error creando sección de frenos", "ERROR")
+                                })
+                        }
+                        document.querySelector("form#form-brakes").addEventListener(
+                            "submit",
+                            e => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                let form=document.getElementById("form-brakes")
+                                if (form.checkValidity()) {
+                                    savePart();
+                                } else {
+                                    form.classList.add('was-validated');
+                                }
+                            }
+                        )

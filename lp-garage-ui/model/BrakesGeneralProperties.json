@@ -72,20 +72,21 @@
     "formulas":{
         "tireRadius":{
             "alias":"TR",
-            "formula":"(((2*(AR/100)*TW)+((R*(25.4 in mm)))/(1 in in))/2)/((10 in mm)* (1 in cm))"  
+            "formula":"(((2*(AR/100)*TWd)+(WRim in mm))/2) in cm"  
         },
         "heightOfCenterOfGravity":{
             "alias":"HCG",
-            "formula":"(WB*(FAWRAE-FAWL))/(wt*(RAEH/SQRT((WB^2)-(RAEH^2))))+TR" 
+            "formula":"(WB*(FAWRAE-FAWL))/(wt*(RAEH/sqrt((WB^2)-(RAEH^2))))+TR" 
         },
         "longitudinalWeightTransfer":{
             "alias":"LWT",
-            "formula":"((0.8*9.8 in m*/s^2) *wt*((HCG*(1 in m))/(100 in cm)))/((WB*(1 in m))/(100 in cm))"
+            "formula":"(0.8*9.81m/s^2*wt*(HCG/100))/(WB/100) in N"
         },
         "crossWeightTransfer":{
             "alias":"CWT",
-            "formula":"((0.8*9.8 in m*/s^2)*wt*((HCG*(1 in m))/(100 in cm)))/((TW*(1 in m))/(100 in cm))"
+            "formula":"(0.8*9.81m/s^2*wt*(HCG/100))/(TW/100) in N"
         },
+        
         "totalBrakeForce":{
             "alias":"TBF",
             "formula":"FBF+RBF"

@@ -19,7 +19,7 @@ class Vehicle extends Part{
                     "value":weight
                 },
                 tireWidth:{
-                    "alias":"TW",
+                    "alias":"TWd",
                     "units":"mm",
                     "value":tireWidth
                 },
@@ -28,7 +28,7 @@ class Vehicle extends Part{
                     "value":tireAspectRatio
                 },
                 wheelRim:{
-                    "alias":"WR",
+                    "alias":"WRim",
                     "units":"in",
                     "value":wheelRim
                 }

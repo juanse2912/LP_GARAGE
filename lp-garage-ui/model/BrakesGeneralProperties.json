@@ -59,16 +59,10 @@
             "alias":"SBB",
             "units":"km/h"
         },
-        "actualDistanceOfBraking": {       
-            "value": null,
-            "alias":"ADB",
-            "units":"m"
-        }
-    },
-    "constants":{
         "appliedForceInBrakePedal":{
             "alias":"AFBP",
-            "value": "10 kgf"
+            "value": "10 kgf",
+            "units":"kgf"
         },
         "tireFrictionCoefficient":{
             "alias":"TFC",

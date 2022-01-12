@@ -2,10 +2,12 @@ const math = require("./part").math;
 const Part = require("./part").Part;
 const Engine = require("./engine").Engine;
 const Suspenssion = require("./suspenssion").Suspenssion;
+const Brakes = require("./brakes").Brakes;
 
 const PARTS = new Map();
 PARTS.set("Engine", Engine);
 PARTS.set("Suspenssion", Suspenssion)
+PARTS.set("Brakes", Brakes);
 
 class Vehicle extends Part{
     constructor(id, make, model, year, weight,tireWidth, tireAspectRatio, wheelRim) {

@@ -86,22 +86,69 @@
             "alias":"CWT",
             "formula":"(0.8*9.81m/s^2*wt*(HCG/100))/(TW/100) in N"
         },
-        
+        "frontAxleWeightDeceleration":{
+            "alias":"FAWD",
+            "formula":"FAWL+(LWT/(9.81N)*kg) in kg " 
+        },
+        "rearAxleWeightDeceleration":{
+            "alias":"RAWD",
+            "formula":"RAW-(LWT/(9.81 N)*kg)"
+        },
+        "frontBrakeForce":{
+            "alias":"FBF",
+            "formula":"(FAWD*TFC)*kgf/kg"
+        },
+        "rearBrakeForce":{
+            "alias":"RBF",
+            "formula":"(RAWD*TFC)*kgf/kg"
+        },
         "totalBrakeForce":{
             "alias":"TBF",
             "formula":"FBF+RBF"
+        },
+        "frontBrakeTorque":{
+            "alias":"FBT",
+            "formula":"(FBF*TR)in kgf*m"
+        },
+        "rearBrakeTorque":{
+            "alias":"RBT",
+            "formula":"(RBF*TR)in kgf*m"
         },
         "totalBrakeTorque":{
             "alias":"TBT",
             "formula":"FBT+RBT"
         },
+        "frontOptimumBrakeBalance":{
+            "alias":"FOBB",
+            "formula":"((FBF/FAWD)/9.81)*s^2/m"
+        },
+        "rearOptimumBrakeBalance":{
+            "alias":"ROBB",
+            "formula":"((RBF/RAWD)/9.81)s^2/m"
+        },
         "discBrakeSize":{
             "alias":"DBS",
             "formula":"TBT/TBF"
         },
+        "frontAxleToHCGDistance":{
+            "alias":"FAHD",
+            "formula":"WB*0.6"
+        },
+        "rearAxleToHCGDistance":{
+            "alias":"RAHD",
+            "formula":"WB*0.4"
+        },
         "brakePedalForce":{
             "alias":"BPF",
             "formula":"AFBP*(FAHD/RAHD)"
+        },
+        "frontPumpCircuitOutputForce":{
+            "alias":"FPCOF",
+            "formula":"(1+0.3)*(BPF/2)"
+        },
+        "rearPumpCircuitOutputForce":{
+            "alias":"RPCOF",
+            "formula":"(1-0.3)*BPF/2"
         },
         "totalPumpCircuitInputForce":{
             "alias":"TPCIF",
@@ -111,6 +158,14 @@
             "alias":"PPA",
             "formula":"((BPPD^2)*pi)/4"
         },
+        "frontPressureDistributionGeneratedByBrakePump":{
+            "alias":"FPDGBP",
+            "formula":"(FPCOF/PPA)in kgf/m^2"
+        },
+        "rearPressureDistributionGeneratedByBrakePump ":{
+            "alias":"RPDGBP",
+            "formula":"(RPCOF/PPA)in kgf/m^2"
+        },
         "totalPressureDistributionGeneratedByBrakePump":{
             "alias":"TPDGBP",
             "formula":"FPDGBP+RPDGBP"
@@ -119,13 +174,45 @@
             "alias":"CPA",
             "formula":"((CPD^2)*pi)/4" 
         },
+        "frontLinealForcesGeneratedByCaliper":{
+            "alias":"FLFGC",
+            "formula":"NCP*FPDGBP*CPA"
+        },
+        "rearLinealForcesGeneratedByCaliper":{
+            "alias":"RLFGC",
+            "formula":"NCP*RPDGBP*CPA"
+        },
+        "frontFrictionForceBetweenDiscPad":{
+            "alias":"FFFBDP",
+            "formula":"FLFGC*PFC"
+        },
+        "rearFrictionForceBetweenDiscPad":{
+            "alias":"RFFBDP",
+            "formula":"RLFGC*PFC"
+        },
         "effectiveRadiusOfDisc":{
             "alias":"ERD",
-            "formula":"(DBS+(DBS-PW)/2"
+            "formula":"(DBS+(DBS-PW))/2"
+        },
+        "frontBrakeTorqueByDiscPadContact":{
+            "alias":"FBTDPC",
+            "formula":"(2*ERD*FFFBDP) in kgf*m"
+        },
+        "rearBrakeTorqueByDiscPadContact":{
+            "alias":"RBTDPC",
+            "formula":"(2*ERD*RFFBDP) in kgf*m"
         },
         "totalBrakeTorqueByDiscPadContact":{
             "alias":"TBTDPC",
             "formula":"FBTDPC+RBTDPC"
+        },
+        "frontBrakeForceOverTires":{
+            "alias":"FBFOT",
+            "formula":"FBTDPC/TR"
+        },
+        "rearBrakeForceOverTires":{
+            "alias":"RBFOT",
+            "formula":"RBTDPC/TR"
         },
         "totalBrakeForceOverTires":{
             "alias":"TBFOT",
@@ -133,111 +220,15 @@
         },
         "vehicleMass":{
             "alias":"VM",
-            "formula":"wt/(9.81 in m/s^2)"
+            "formula":"wt/(9.81)"
         },
         "vehicleDeceleration":{
             "alias":"VD",
-            "formula":"((TBFOT*9.81)/VM)"
+            "formula":"((TBFOT)/VM)"
         },
         "estimatedBrakeDistance":{          
             "alias":"EBD",
-            "formula":"((((SBB*(1000 in m)/(1km))*(1 in h))/(3600 in s))^2)/(2*VD)"
-        },
-        "frontAxleWeightDeceleration":{
-            "alias":"FAWD",
-            "formula":"FAWRAE+(LWT/(9.8 in m/s^2))" 
-        },
-        "frontBrakeForce":{
-            "alias":"FBF",
-            "formula":"FAWD*TFC"
-        },
-        "frontBrakeTorque":{
-            "alias":"FBT",
-            "formula":"FBF*TR"
-        },
-        "frontOptimumBrakeBalance":{
-            "alias":"FOBB",
-            "formula":"FBF/FAWD"
-        },
-        "frontWeightBalance":{
-            "alias":"FWB",
-            "formula":"FAWRAE/PT"
-        },
-        "frontAxleToHCGDistance":{
-            "alias":"FAHD",
-            "formula":"WB/FWB"
-        },
-        "frontPumpCircuitOutputForce":{
-            "alias":"FPCOF",
-            "formula":"(1+0.3)*(BPF/2)"
-        },
-        "frontPressureDistributionGeneratedByBrakePump":{
-            "alias":"FPDGBP",
-            "formula":"FPCOF/PPA"
-        },
-        "frontLinealForcesGeneratedByCaliper":{
-            "alias":"FLFGC",
-            "formula":"NCP*FPDGBP*CPA"
-        },
-        "frontFrictionForceBetweenDiscPad":{
-            "alias":"FFFBDP",
-            "formula":"FLFGC*PFC"
-        },
-        "frontBrakeTorqueByDiscPadContact":{
-            "alias":"FBTDPC",
-            "formula":"2*ERD*FFFBDP"
-        },
-        "frontBrakeForceOverTires":{
-            "alias":"FBFOT",
-            "formula":"FBTDPC/TR"
-        },
-        "rearAxleWeightDeceleration":{
-            "alias":"RAWD",
-            "formula":"RAW-(LWT/(9.8 in m/s^2)"
-        },
-        "rearBrakeForce":{
-            "alias":"RBF",
-            "formula":"RAWD*TFC"
-        },
-        "rearBrakeTorque":{
-            "alias":"RBT",
-            "formula":"RBF*TR"
-        },
-        "rearOptimumBrakeBalance":{
-            "alias":"ROBB",
-            "formula":"RBF/RAWD"
-        },
-        "rearWeightBalance":{
-            "alias":"RWB",
-            "formula":"RAW/PT"
-        },
-        "rearAxleToHCGDistance":{
-            "alias":"RAHD",
-            "formula":"WB/RWB"
-        },
-        "rearPumpCircuitOutputForce":{
-            "alias":"RPCOF",
-            "formula":"(1-0.3)*BPF/2"
-        },
-        "rearPressureDistributionGeneratedByBrakePump ":{
-            "alias":"RPDGBP",
-            "formula":"RPCOF/PPA"
-        },
-        "rearLinealForcesGeneratedByCaliper":{
-            "alias":"RLFGC",
-            "formula":"NCP*RPDGBP*CPA"
-        },
-        "rearFrictionForceBetweenDiscPad":{
-            "alias":"RFFBDP",
-            "formula":"RLFGC*PFC"
-        },
-        "rearBrakeTorqueByDiscPadContact":{
-            "alias":"RBTDPC",
-            "formula":"2*ERD*RFFBDP"
-        },
-        "rearBrakeForceOverTires":{
-            "alias":"RBFOT",
-            "formula":"RBTDPC/TR"
+            "formula":"(((((SBB*1h/km)*1000)/3600)^2)/((VD*s^2/m)*2))*1m"
         }
     }
 }

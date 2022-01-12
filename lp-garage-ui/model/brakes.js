@@ -21,7 +21,7 @@ class Brakes extends Part {
         brakesGeneralProperties.inputParameters.appliedForceInBrakePedal.value = appliedForceInBrakePedal
         brakesGeneralProperties.inputParameters.tireFrictionCoefficient.value = tireFrictionCoefficient
         //brakesGeneralProperties.inputParameters.actualDistanceOfBraking.value = actualDistanceOfBraking;
-        super(vehicle, brakesGeneralProperties);
+        super(vehicle.scope, brakesGeneralProperties);
         this.scope = vehicle.scope;
 
     }

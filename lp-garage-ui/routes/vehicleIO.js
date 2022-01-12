@@ -41,7 +41,6 @@ async function getVehicleFromFile(id) {
                 fs.readFile(filepath, "utf-8")
                     .then(data => {
                         let vehicle = Vehicle.fromJSON(JSON.parse(data))
-                        console.debug("Vehicle data", vehicle)
                         resolve(vehicle)
                     })
                     .catch(e => {

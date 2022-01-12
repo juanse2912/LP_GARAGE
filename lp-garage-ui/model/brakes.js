@@ -45,6 +45,7 @@ class Brakes extends Part {
             j.appliedForceInBrakePedal, 
             j.tireFrictionCoefficient
         );
+        return brakes;
 
     }
 

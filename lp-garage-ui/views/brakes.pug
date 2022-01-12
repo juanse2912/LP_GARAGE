@@ -21,7 +21,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.wheelbase")
                           if fieldValue
                             -var wheelbase = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var wheelbase_units = unitRE(fieldValue)[2] || ""
+                            -var wheelbase_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var wheelbase = ""
                             -var wheelbase_units="cm"
@@ -46,7 +46,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.frontAxleWeightLeveled")
                           if fieldValue
                             -var frontAxleWeightLeveled = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var frontAxleWeightLeveled_units = unitRE(fieldValue)[2] || ""
+                            -var frontAxleWeightLeveled_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var frontAxleWeightLeveled = ""
                             -var frontAxleWeightLeveled_units="kg"
@@ -70,7 +70,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.frontAxleWeightWithRearAxleElevated")
                           if fieldValue
                             -var frontAxleWeightWithRearAxleElevated = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var frontAxleWeightWithRearAxleElevated_units = unitRE(fieldValue)[2] || ""
+                            -var frontAxleWeightWithRearAxleElevated_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var frontAxleWeightWithRearAxleElevated = ""
                             -var frontAxleWeightWithRearAxleElevated_units="kg"
@@ -94,7 +94,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.rearAxleElevationHeight")
                           if fieldValue
                             -var rearAxleElevationHeight = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var rearAxleElevationHeight_units = unitRE(fieldValue)[2] || ""
+                            -var rearAxleElevationHeight_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var rearAxleElevationHeight = ""
                             -var rearAxleElevationHeight_units="cm"
@@ -119,7 +119,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.rearAxleWeight")
                           if fieldValue
                             -var rearAxleWeight = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var rearAxleWeight_units = unitRE(fieldValue)[2] || ""
+                            -var rearAxleWeight_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var rearAxleWeight = ""
                             -var rearAxleWeight_units="kg"
@@ -144,7 +144,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.trackWidth")
                           if fieldValue
                             -var trackWidth = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var trackWidth_units = unitRE(fieldValue)[2] || ""
+                            -var trackWidth_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var trackWidth = ""
                             -var trackWidth_units="cm"
@@ -170,7 +170,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.brakePumpPistonDiameter")
                           if fieldValue
                             -var brakePumpPistonDiameter = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var brakePumpPistonDiameter_units = unitRE(fieldValue)[2] || ""
+                            -var brakePumpPistonDiameter_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var brakePumpPistonDiameter = ""
                             -var brakePumpPistonDiameter_units="m"
@@ -205,7 +205,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.caliperPistonDiameter")
                           if fieldValue
                             -var caliperPistonDiameter = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var caliperPistonDiameter_units = unitRE(fieldValue)[2] || ""
+                            -var caliperPistonDiameter_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var caliperPistonDiameter = ""
                             -var caliperPistonDiameter_units="m"
@@ -241,7 +241,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.appliedForceInBrakePedal")
                           if fieldValue
                             -var appliedForceInBrakePedal = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var appliedForceInBrakePedal_units = unitRE(fieldValue)[2] || ""
+                            -var appliedForceInBrakePedal_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var appliedForceInBrakePedal = ""
                             -var appliedForceInBrakePedal_units="kgf"
@@ -276,7 +276,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.padWidth")
                           if fieldValue
                             -var padWidth = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var padWidth_units = unitRE(fieldValue)[2] || ""
+                            -var padWidth_units = unitRE.exec(fieldValue)[2] || ""
                           else 
                             -var padWidth = ""
                             -var padWidth_units="m"
@@ -302,7 +302,7 @@ block content
                           -var fieldValue = getProperty(vehicleData, "Brakes.speedBeforeBraking")
                           if fieldValue
                             -var speedBeforeBraking = unitRE.exec(fieldValue)[1] || fieldValue
-                            -var speedBeforeBraking_units = unitRE(fieldValue)[2] || "km / h"
+                            -var speedBeforeBraking_units = unitRE.exec(fieldValue)[2] || "km / h"
                           else 
                             -var speedBeforeBraking = ""
                             -var speedBeforeBraking_units="km / h"

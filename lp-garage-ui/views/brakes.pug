@@ -332,11 +332,52 @@ block content
                   if getProperty(vehicleData, "Brakes")
                     h3 Cálculos de Freno
                     ul.list-group 
-
-
-                if getProperty(vehicleData, "Brakes")
-                  script(src="/javascripts/formControls.js")
-                  script. 
+                      +calculatedValue("Radio del neumático:", "Brakes.tireRadius", longitudeUnits)
+                      +calculatedValue("Altura del centro de gravedad:", "Brakes.heightOfCenterOfGravity", longitudeUnits)
+                      +calculatedValue("Transferencia de pesos longitudinal:", "Brakes.longitudinalWeightTransfer", {"N / m":"N/m", "lbf / in":"lbf/pulg"})
+                      +calculatedValue("Transferencia de pesos transversal:", "Brakes.crossWeightTransfer", {"N / m":"N/m", "lbf / in":"lbf/pulg"})
+                      +calculatedValue("Peso del eje delantero en desaceleración:", "Brakes.frontAxleWeightDeceleration", {"lbf", "kgf"})
+                      +calculatedValue("Peso del eje posterior en desaceleración:", "Brakes.rearAxleWeightDeceleration", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza de frenado en el eje delantero:", "Brakes.frontBrakeForce", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza de frenado en el eje posterior:", "Brakes.rearBrakeForce", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza total de frenado:", "Brakes.totalBrakeForce", {"lbf", "kgf"})
+                      +calculatedValue("Par de frenado en el eje delantero:", "Brakes.frontBrakeTorque", {"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
+                      +calculatedValue("Par de frenado en el eje posterior:", "Brakes.rearBrakeTorque", {"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
+                      +calculatedValue("Par de frenado total:", "Brakes.totalBrakeTorque", {"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
+                      +calculatedValue("Balance óptimo de frenado en el eje delantero", "Brakes.frontOptimumBrakeBalance")
+                      +calculatedValue("Balance óptimo de frenado en el eje posterior", "Brakes.rearOptimumBrakeBalance")
+                      +calculatedValue("Diámetro óptimo del disco de freno", "Brakes.discBrakeSize", longitudeUnits)
+                      +calculatedValue("Distancia del Centro de Gravedad al eje delantero:","Brakes.frontAxleToHCGDistance", longitudeUnits)
+                      +calculatedValue("Distancia del Centro de Gravedad al eje posterior:","Brakes.rearAxleToHCGDistance", longitudeUnits)
+                      +calculatedValue("Fuerza total de salida del pedal:","Brakes.brakePedalForce", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza de entrada a la bomba del circuito delantero:", "Brakes.frontPumpCircuitOutputForce", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza de entrada a la bomba del circuito posterior:", "Brakes.rearPumpCircuitOutputForce", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza de entrada a la bomba:", "Brakes.totalPumpCircuitInputForce", {"lbf", "kgf"})
+                      +calculatedValue("Área del pistón de la bomba:", "Brakes.pumpPistonArea", {"m^2":"m^2", "cm^2":"cm^2", "mm^2":"mm^2", "in^2":"pulg^2"})
+                      +calculatedValue("Presión hidráulica generada por la bomba en el eje delantero:", "Brakes.frontPressureDistributionGeneratedByBrakePump", {"kgf / m^2":"kgf/m^2", "KPa":"KPa", "bar":"bar", "lb / in^2":"PSI", "in^2":"pulg^2"})
+                      +calculatedValue("Presión hidráulica generada por la bomba en el eje posterior:", "Brakes.rearPressureDistributionGeneratedByBrakePump", {"kgf / m^2":"kgf/m^2", "KPa":"KPa", "bar":"bar", "lb / in^2":"PSI", "in^2":"pulg^2"})
+                      +calculatedValue("Presión hidráulica total:", "Brakes.totalPressureDistributionGeneratedByBrakePump", {"kgf / m^2":"kgf/m^2", "KPa":"KPa", "bar":"bar", "lb / in^2":"PSI", "in^2":"pulg^2"})
+                      +calculatedValue("Área del pistón de la mordaza:", "Brakes.caliperPistonArea", {"m^2":"m^2", "cm^2":"cm^2", "mm^2":"mm^2", "in^2":"pulg^2"})
+                      +calculatedValue("Fuerza lineal en la mordaza delantera:", "Brakes.frontLinealForcesGeneratedByCaliper", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza lineal en la mordaza posterior:", "Brakes.rearLinealForcesGeneratedByCaliper",{"lbf", "kgf"})
+                      +calculatedValue("Fuerza de fricción entre disco y pastillas del eje delantero:", "Brakes.frontFrictionForceBetweenDiscPad",{"lbf", "kgf"})
+                      +calculatedValue("Fuerza de fricción entre disco y pastillas del eje posterior:", "Brakes.rearFrictionForceBetweenDiscPad",{"lbf", "kgf"})
+                      +calculatedValue("Radio efectivo del disco de freno:", "Brakes.effectiveRadiusOfDisc", longitudeUnits)
+                      +calculatedValue("Par de frenado entre pastilla-disco eje delantero:", "Brakes.frontBrakeTorqueByDiscPadContact",{"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
+                      +calculatedValue("Par de frenado entre pastilla-disco eje posterior:", "Brakes.rearBrakeTorqueByDiscPadContact",{"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
+                      +calculatedValue("Par de frenado entre pastilla-disco:", "Brakes.totalBrakeTorqueByDiscPadContact",{"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
+                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.frontBrakeForceOverTires", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.rearBrakeForceOverTires", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.totalBrakeForceOverTires", {"lbf", "kgf"})
+                      +calculatedValue("Masa del vehículo:", "Brakes.vehicleMass", {"lb", "kg"})
+                      +calculatedValue("Desaceleración del vehículo:", "Brakes.vehicleDeceleration", {"m / s^2":"m/s^2", "ft / s^2":"ft/s^2"})
+                      +calculatedValue("Distancia de frenado:", "Brakes.estimatedBrakeDistance", longitudeUnits)
+                        })
+                 //- Script
+                if getProperty(vehicleData, "brakes")
+                    script(src="/javascripts/formControls.js")
+                    script.
+                        //Scripts
                         var vehicleData= !{JSON.stringify(vehicleData)};
                         const partName="#{partName}";
                         const subpartName="#{subpartName}";        
@@ -344,7 +385,6 @@ block content
                             setUnitSelectEventListener();
                             setInputEventListener();
                             setUnitButtonListener();
-                        })
                 else 
                     script.
                         // Scripts

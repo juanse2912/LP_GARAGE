@@ -162,7 +162,7 @@
             "alias":"FPDGBP",
             "formula":"(FPCOF/PPA)in kgf/m^2"
         },
-        "rearPressureDistributionGeneratedByBrakePump ":{
+        "rearPressureDistributionGeneratedByBrakePump":{
             "alias":"RPDGBP",
             "formula":"(RPCOF/PPA)in kgf/m^2"
         },

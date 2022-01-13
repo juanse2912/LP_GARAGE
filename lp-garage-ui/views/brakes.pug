@@ -336,11 +336,11 @@ block content
                       +calculatedValue("Altura del centro de gravedad:", "Brakes.heightOfCenterOfGravity", longitudeUnits)
                       +calculatedValue("Transferencia de pesos longitudinal:", "Brakes.longitudinalWeightTransfer", {"N / m":"N/m", "lbf / in":"lbf/pulg"})
                       +calculatedValue("Transferencia de pesos transversal:", "Brakes.crossWeightTransfer", {"N / m":"N/m", "lbf / in":"lbf/pulg"})
-                      +calculatedValue("Peso del eje delantero en desaceleración:", "Brakes.frontAxleWeightDeceleration", {"lbf", "kgf"})
-                      +calculatedValue("Peso del eje posterior en desaceleración:", "Brakes.rearAxleWeightDeceleration", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza de frenado en el eje delantero:", "Brakes.frontBrakeForce", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza de frenado en el eje posterior:", "Brakes.rearBrakeForce", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza total de frenado:", "Brakes.totalBrakeForce", {"lbf", "kgf"})
+                      +calculatedValue("Peso del eje delantero en desaceleración:", "Brakes.frontAxleWeightDeceleration", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Peso del eje posterior en desaceleración:", "Brakes.rearAxleWeightDeceleration", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de frenado en el eje delantero:", "Brakes.frontBrakeForce", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de frenado en el eje posterior:", "Brakes.rearBrakeForce", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza total de frenado:", "Brakes.totalBrakeForce", {"lbf":"lbf", "kgf":"kgf"})
                       +calculatedValue("Par de frenado en el eje delantero:", "Brakes.frontBrakeTorque", {"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
                       +calculatedValue("Par de frenado en el eje posterior:", "Brakes.rearBrakeTorque", {"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
                       +calculatedValue("Par de frenado total:", "Brakes.totalBrakeTorque", {"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
@@ -349,103 +349,102 @@ block content
                       +calculatedValue("Diámetro óptimo del disco de freno", "Brakes.discBrakeSize", longitudeUnits)
                       +calculatedValue("Distancia del Centro de Gravedad al eje delantero:","Brakes.frontAxleToHCGDistance", longitudeUnits)
                       +calculatedValue("Distancia del Centro de Gravedad al eje posterior:","Brakes.rearAxleToHCGDistance", longitudeUnits)
-                      +calculatedValue("Fuerza total de salida del pedal:","Brakes.brakePedalForce", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza de entrada a la bomba del circuito delantero:", "Brakes.frontPumpCircuitOutputForce", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza de entrada a la bomba del circuito posterior:", "Brakes.rearPumpCircuitOutputForce", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza de entrada a la bomba:", "Brakes.totalPumpCircuitInputForce", {"lbf", "kgf"})
+                      +calculatedValue("Fuerza total de salida del pedal:","Brakes.brakePedalForce", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de entrada a la bomba del circuito delantero:", "Brakes.frontPumpCircuitOutputForce", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de entrada a la bomba del circuito posterior:", "Brakes.rearPumpCircuitOutputForce", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de entrada a la bomba:", "Brakes.totalPumpCircuitInputForce", {"lbf":"lbf", "kgf":"kgf"})
                       +calculatedValue("Área del pistón de la bomba:", "Brakes.pumpPistonArea", {"m^2":"m^2", "cm^2":"cm^2", "mm^2":"mm^2", "in^2":"pulg^2"})
                       +calculatedValue("Presión hidráulica generada por la bomba en el eje delantero:", "Brakes.frontPressureDistributionGeneratedByBrakePump", {"kgf / m^2":"kgf/m^2", "KPa":"KPa", "bar":"bar", "lb / in^2":"PSI", "in^2":"pulg^2"})
                       +calculatedValue("Presión hidráulica generada por la bomba en el eje posterior:", "Brakes.rearPressureDistributionGeneratedByBrakePump", {"kgf / m^2":"kgf/m^2", "KPa":"KPa", "bar":"bar", "lb / in^2":"PSI", "in^2":"pulg^2"})
                       +calculatedValue("Presión hidráulica total:", "Brakes.totalPressureDistributionGeneratedByBrakePump", {"kgf / m^2":"kgf/m^2", "KPa":"KPa", "bar":"bar", "lb / in^2":"PSI", "in^2":"pulg^2"})
                       +calculatedValue("Área del pistón de la mordaza:", "Brakes.caliperPistonArea", {"m^2":"m^2", "cm^2":"cm^2", "mm^2":"mm^2", "in^2":"pulg^2"})
-                      +calculatedValue("Fuerza lineal en la mordaza delantera:", "Brakes.frontLinealForcesGeneratedByCaliper", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza lineal en la mordaza posterior:", "Brakes.rearLinealForcesGeneratedByCaliper",{"lbf", "kgf"})
-                      +calculatedValue("Fuerza de fricción entre disco y pastillas del eje delantero:", "Brakes.frontFrictionForceBetweenDiscPad",{"lbf", "kgf"})
-                      +calculatedValue("Fuerza de fricción entre disco y pastillas del eje posterior:", "Brakes.rearFrictionForceBetweenDiscPad",{"lbf", "kgf"})
+                      +calculatedValue("Fuerza lineal en la mordaza delantera:", "Brakes.frontLinealForcesGeneratedByCaliper", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza lineal en la mordaza posterior:", "Brakes.rearLinealForcesGeneratedByCaliper",{"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de fricción entre disco y pastillas del eje delantero:", "Brakes.frontFrictionForceBetweenDiscPad",{"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de fricción entre disco y pastillas del eje posterior:", "Brakes.rearFrictionForceBetweenDiscPad",{"lbf":"lbf", "kgf":"kgf"})
                       +calculatedValue("Radio efectivo del disco de freno:", "Brakes.effectiveRadiusOfDisc", longitudeUnits)
                       +calculatedValue("Par de frenado entre pastilla-disco eje delantero:", "Brakes.frontBrakeTorqueByDiscPadContact",{"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
                       +calculatedValue("Par de frenado entre pastilla-disco eje posterior:", "Brakes.rearBrakeTorqueByDiscPadContact",{"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
                       +calculatedValue("Par de frenado entre pastilla-disco:", "Brakes.totalBrakeTorqueByDiscPadContact",{"N / m":"N/m", "lbf / in":"lbf/pulg", "kgf / m":"kgf/m"})
-                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.frontBrakeForceOverTires", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.rearBrakeForceOverTires", {"lbf", "kgf"})
-                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.totalBrakeForceOverTires", {"lbf", "kgf"})
-                      +calculatedValue("Masa del vehículo:", "Brakes.vehicleMass", {"lb", "kg"})
+                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.frontBrakeForceOverTires", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.rearBrakeForceOverTires", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Fuerza de frenado en los neumáticos:", "Brakes.totalBrakeForceOverTires", {"lbf":"lbf", "kgf":"kgf"})
+                      +calculatedValue("Masa del vehículo:", "Brakes.vehicleMass", {"lb":"lb", "kg":"kg"})
                       +calculatedValue("Desaceleración del vehículo:", "Brakes.vehicleDeceleration", {"m / s^2":"m/s^2", "ft / s^2":"ft/s^2"})
                       +calculatedValue("Distancia de frenado:", "Brakes.estimatedBrakeDistance", longitudeUnits)
-                        })
-                 //- Script
-                if getProperty(vehicleData, "brakes")
-                    script(src="/javascripts/formControls.js")
-                    script.
-                        //Scripts
-                        var vehicleData= !{JSON.stringify(vehicleData)};
-                        const partName="#{partName}";
-                        const subpartName="#{subpartName}";        
-                        document.addEventListener("DOMContentLoaded", ()=> {
-                            setUnitSelectEventListener();
-                            setInputEventListener();
-                            setUnitButtonListener();
-                else 
-                    script.
-                        // Scripts
-                        var vehicleData= !{JSON.stringify(vehicleData)};
-                        function savePart() {
-                          let payload={};
-                          dataBoundElements = [
-                            {elName:"wheelbase", units:true}, 
-                            {elName:"trackWidth", units:true},
-                            {elName:"frontAxleWeightLeveled", units:true},
-                            {elName:"rearAxleElevationHeight", units:true},
-                            {elName:"frontAxleWeightWithRearAxleElevated", units:true},
-                            {elName:"rearAxleWeight", units:true},
-                            {elName:"brakePumpPistonDiameter", units:true},
-                            {elName:"numberOfCaliperPiston", units:false},
-                            {elName:"caliperPistonDiameter", units:true},
-                            {elName:"padFrictionCoefficient", units:false},
-                            {elName:"padWidth", units:true},
-                            {elName:"speedBeforeBraking", units:true},
-                            {elName:"appliedForceInBrakePedal", units:true},
-                            {elName:"tireFrictionCoefficient", units:false}
-                          ]
-                          for( let i=0; i<dataBoundElements.length; i++) {
-                            let dbe = dataBoundElements[i];
-                            payload[dbe.elName] = document.querySelector(`#brakes_${dbe.elName}`).value +
-                              (dbe.units ? " " + document.querySelector(`#brakes_${dbe.elName}_units`).value : "")
-                          }
-                            fetch(
-                                `/vehicle/${vehicleData.id}/Brakes`,
-                                {
-                                    "method":"post",
-                                    "body":JSON.stringify(payload),
-                                    "headers":{
-                                        "Content-Type":"application/json"
-                                    }
-                                }
-                            )
-                                .then(res=>res.json())
-                                .then(jsonData => {
-                                    if(!jsonData.Error) {
-                                        window.location.reload()
-                                    } else {
-                                        showAlert("Error creando sección de frenos", "ERROR")
-                                        console.error("Error creating Brakes", jsonData)
-                                    }
-                                })
-                                .catch(e=>{
-                                    console.error("Error creating brakes", e)
-                                    showAlert("Error creando sección de frenos", "ERROR")
-                                })
-                        }
-                        document.querySelector("#form-brakes").addEventListener(
-                            "submit",
-                            e => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                let form=document.getElementById("form-brakes")
-                                if (form.checkValidity()) {
-                                    savePart();
-                                } else {
-                                    form.classList.add('was-validated');
-                                }
+                  //- Script
+                  if getProperty(vehicleData, "brakes")
+                      script(src="/javascripts/formControls.js")
+                      script.
+                          //Scripts
+                          var vehicleData= !{JSON.stringify(vehicleData)};
+                          const partName="#{partName}";
+                          const subpartName="#{subpartName}";        
+                          document.addEventListener("DOMContentLoaded", ()=> {
+                              setUnitSelectEventListener();
+                              setInputEventListener();
+                              setUnitButtonListener();
+                  else 
+                      script.
+                          // Scripts
+                          var vehicleData= !{JSON.stringify(vehicleData)};
+                          function savePart() {
+                            let payload={};
+                            dataBoundElements = [
+                              {elName:"wheelbase", units:true}, 
+                              {elName:"trackWidth", units:true},
+                              {elName:"frontAxleWeightLeveled", units:true},
+                              {elName:"rearAxleElevationHeight", units:true},
+                              {elName:"frontAxleWeightWithRearAxleElevated", units:true},
+                              {elName:"rearAxleWeight", units:true},
+                              {elName:"brakePumpPistonDiameter", units:true},
+                              {elName:"numberOfCaliperPiston", units:false},
+                              {elName:"caliperPistonDiameter", units:true},
+                              {elName:"padFrictionCoefficient", units:false},
+                              {elName:"padWidth", units:true},
+                              {elName:"speedBeforeBraking", units:true},
+                              {elName:"appliedForceInBrakePedal", units:true},
+                              {elName:"tireFrictionCoefficient", units:false}
+                            ]
+                            for( let i=0; i<dataBoundElements.length; i++) {
+                              let dbe = dataBoundElements[i];
+                              payload[dbe.elName] = document.querySelector(`#brakes_${dbe.elName}`).value +
+                                (dbe.units ? " " + document.querySelector(`#brakes_${dbe.elName}_units`).value : "")
                             }
-                        )
+                              fetch(
+                                  `/vehicle/${vehicleData.id}/Brakes`,
+                                  {
+                                      "method":"post",
+                                      "body":JSON.stringify(payload),
+                                      "headers":{
+                                          "Content-Type":"application/json"
+                                      }
+                                  }
+                              )
+                                  .then(res=>res.json())
+                                  .then(jsonData => {
+                                      if(!jsonData.Error) {
+                                          window.location.reload()
+                                      } else {
+                                          showAlert("Error creando sección de frenos", "ERROR")
+                                          console.error("Error creating Brakes", jsonData)
+                                      }
+                                  })
+                                  .catch(e=>{
+                                      console.error("Error creating brakes", e)
+                                      showAlert("Error creando sección de frenos", "ERROR")
+                                  })
+                          }
+                          document.querySelector("#form-brakes").addEventListener(
+                              "submit",
+                              e => {
+                                  e.preventDefault();
+                                  e.stopPropagation();
+                                  let form=document.getElementById("form-brakes")
+                                  if (form.checkValidity()) {
+                                      savePart();
+                                  } else {
+                                      form.classList.add('was-validated');
+                                  }
+                              }
+                          )

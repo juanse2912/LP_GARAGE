@@ -12,8 +12,9 @@ block content
             .row.flex-nowrap
                 include vehicleNav
                 .col.py-3
-                    h1 Suspensión
-                    .col-lg-5
+                  h1 Suspensión
+                  .row
+                    .col-10.col-md-4
                       form#form-suspenssion.needs-validation(novalidate action="#" method="post")
                         label.form-label(for="suspenssion_AxleWeight") Peso en el corner
                         .input-group.mb-3 
@@ -291,40 +292,40 @@ block content
                             +unitOption("mm", "mm", radialDeformation)
                             +unitOption("in", "pulg", radialDeformation)
                             +unitOption("cm", "cm", radialDeformation)
-                        if !getProperty(vehicleData, "Suspenssion")
-                          .d-grid
-                            button.btn.btn-primary( 
-                              type="submit"
-                              id="btn-save"
-                              value="submit"
-                            ) Guardar
-                .col-lg-6 
-                  if getProperty(vehicleData, "Suspenssion")
-                    h3 Cálculos de Suspensión 
-                    ul.list-group
-                      +calculatedValue("Ratio de movimiento:", "Suspenssion.MotionRatio")
-                      +calculatedValue("Ángulo de corrección:", "Suspenssion.CorrectionAngle")
-                      +calculatedValue("Constante del resorte:", "Suspenssion.SpringConstant", {
-                        "kg / m":"Kg/m",
-                        "lb / in" : "lb/pulg",
-                        "g / cm":"g/cm"
-                      })
-                      +calculatedValue("Fuerza requerida:", "Suspenssion.RequiredForce", massUnits)
-                      +calculatedValue("Fuerza ajustada:", "Suspenssion.AdjustedForce", massUnits)
-                      +calculatedValue("Tensión del neumático:", "Suspenssion.tireStifness", {"N / m":"N/m", "lbf / in":"lbf/pulg"})
-                      +calculatedValue("Constante del neumático", "Suspenssion.WheelRate", {
-                        "kg / m":"Kg/m",
-                        "lb / in" : "lb/pulg",
-                        "g / cm":"g/cm"
-                      })
-                      +calculatedValue("Rigidez de suspensión:","Suspenssion.SuspensionStiffness", {
-                        "kg / mm":"kg/mm",
-                        "lb / in":"lb / pulg"
-                      })
-                      +calculatedValue("Deformación bajo carga:", "Suspenssion.Deformationunderload", longitudeUnits)
-                      +calculatedValue("Longitud libre:", "Suspenssion.Freelenght", longitudeUnits)
-                      +calculatedValue("Frecuencia de pesos no suspendidos:", "Suspenssion.NoSuspendedWeightFrequency", {"Hz":"Hz"})
-                      +calculatedValue("Frecuencia de pesos suspendidos", "Suspenssion.SuspendenWeightFrequency", {"Hz":"Hz"})
+                      if !getProperty(vehicleData, "Suspenssion")
+                        .d-grid
+                          button.btn.btn-primary( 
+                            type="submit"
+                            id="btn-save"
+                            value="submit"
+                          ) Guardar
+                    .col-10.col-md-6
+                      if getProperty(vehicleData, "Suspenssion")
+                        h3 Cálculos de Suspensión 
+                        ul.list-group
+                          +calculatedValue("Ratio de movimiento:", "Suspenssion.MotionRatio")
+                          +calculatedValue("Ángulo de corrección:", "Suspenssion.CorrectionAngle")
+                          +calculatedValue("Constante del resorte:", "Suspenssion.SpringConstant", {
+                            "kg / m":"Kg/m",
+                            "lb / in" : "lb/pulg",
+                            "g / cm":"g/cm"
+                          })
+                          +calculatedValue("Fuerza requerida:", "Suspenssion.RequiredForce", massUnits)
+                          +calculatedValue("Fuerza ajustada:", "Suspenssion.AdjustedForce", massUnits)
+                          +calculatedValue("Tensión del neumático:", "Suspenssion.tireStifness", {"N / m":"N/m", "lbf / in":"lbf/pulg"})
+                          +calculatedValue("Constante del neumático", "Suspenssion.WheelRate", {
+                            "kg / m":"Kg/m",
+                            "lb / in" : "lb/pulg",
+                            "g / cm":"g/cm"
+                          })
+                          +calculatedValue("Rigidez de suspensión:","Suspenssion.SuspensionStiffness", {
+                            "kg / mm":"kg/mm",
+                            "lb / in":"lb / pulg"
+                          })
+                          +calculatedValue("Deformación bajo carga:", "Suspenssion.Deformationunderload", longitudeUnits)
+                          +calculatedValue("Longitud libre:", "Suspenssion.Freelenght", longitudeUnits)
+                          +calculatedValue("Frecuencia de pesos no suspendidos:", "Suspenssion.NoSuspendedWeightFrequency", {"Hz":"Hz"})
+                          +calculatedValue("Frecuencia de pesos suspendidos", "Suspenssion.SuspendenWeightFrequency", {"Hz":"Hz"})
                 //- Script
                 if getProperty(vehicleData, "Suspenssion")
                     script(src="/javascripts/formControls.js")

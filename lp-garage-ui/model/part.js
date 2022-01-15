@@ -75,8 +75,33 @@ class Part {
             let alias = this.partProperties.formulas[f].alias;
             let formula = this.partProperties.formulas[f].formula;
             console.debug("formula", this.partProperties.formulas[f])
-            math.evaluate( `${alias} = ${formula}`, this.scope)
-            console.debug("value", this.scope[alias].toString())
+
+            let range = this.partProperties.formulas[f].range;
+
+            if(range && Array.isArray(range) && range.length>=2) {
+                console.debug("is range")
+                const rangeValues = math.range(range[0], range[1], range[2]||1).toArray();
+                const rangeVariable = this.partProperties.formulas[f].rangeVariable||"x";
+                const rangeUnits = this.partProperties.formulas[f].rangeUnits||"";
+                const results = rangeValues.map( x => {
+                    return math.evaluate([
+                        `${rangeVariable}=${x} ${rangeUnits}`,
+                        formula
+                    ], this.scope)
+                })
+                this.scope[alias] = results;
+
+            } else {
+                console.debug("formula", this.partProperties.formulas[f])
+                try {
+                    math.evaluate( `${alias} = ${formula}`, this.scope)
+                    console.debug("value", this.scope[alias].toString())
+                } catch (err) {
+                    console.error(`Error evaluating: ${alias} = ${formula}`, err)
+                    console.debug(JSON.stringify(this.scope, math.replacer))
+                    break;
+                }    
+            }
         }
     }
 
@@ -115,7 +140,22 @@ class Part {
         }
 
         for (let f in formulas) {
-            result[f] = this.scope[formulas[f].alias].toString();
+            if( Array.isArray(this.scope[formulas[f].alias])) {
+                result[f] = this.scope[formulas[f].alias].map ( tuple => {
+                    let r = []
+                    for (let i=0; i<tuple.length; i++) {
+                        if (tuple[i] instanceof math.Unit ) {
+                            r.push(tuple[i].toString())
+                        } else {
+                            r.push(tuple[i])
+                        }
+                    }
+                    return r;
+                })
+            } else {
+                result[f] = this.scope[formulas[f].alias].toString();
+            }
+            
         }
         return result;
     }

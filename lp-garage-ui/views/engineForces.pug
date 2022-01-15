@@ -1,0 +1,150 @@
+.col-10.col-md-4 
+    form#engineForces.needs-validation(novalidate action="#" method="post")
+        label.form-label(for="engineforces_pistonDiameter") Diámetro del pistón 
+        .input-group.mb-3 
+            -var fieldData = getProperty(vehicleData, "Engine.Forces.pistonDiameter")
+            if (fieldData)
+                -var pistonDiameter = unitRE.exec(fieldData)[1] || ""
+                -var pistonDiameterUnits = unitRE.exec(fieldData)[2] || "mm"
+            else 
+                -var pistonDiameter = ""
+                -var pistonDiameterUnits = "mm"
+            input.form-control.align-right(
+                id="engineforces_pistonDiameter"
+                type="number"
+                step="any"
+                value= pistonDiameter 
+                data-bound="Engine.Forces.pistonDiameter"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="engineforces_pistonDiameter_units"
+                aria-label="unidades Diámetro del pistón"
+                data-from="engineforces_pistonDiameter"
+            )
+                +unitOption("mm", "mm", pistonDiameterUnits)
+                +unitOption("cm", "cm", pistonDiameterUnits)
+                +unitOption("in", "pulg", pistonDiameterUnits)
+        label.form-label(for="engineforces_crankshaftRadius") Radio del cigüeñal 
+        .input-group.mb-3 
+            -var fieldData = getProperty(vehicleData, "Engine.Forces.crankshaftRadius")
+            if (fieldData)
+                -var crankshaftRadius = unitRE.exec(fieldData)[1] || ""
+                -var crankshaftRadiusUnits = unitRE.exec(fieldData)[2] || "mm"
+            else 
+                -var crankshaftRadius = ""
+                -var crankshaftRadiusUnits = "mm"
+            input.form-control.align-right(
+                id="engineforces_crankshaftRadius"
+                type="number"
+                step="any"
+                value= crankshaftRadius 
+                data-bound="Engine.Forces.crankshaftRadius"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="engineforces_crankshaftRadius_units"
+                aria-label="unidades Radio del cigüeñal"
+                data-from="engineforces_crankshaftRadius"
+            )
+                +unitOption("mm", "mm", crankshaftRadiusUnits)
+                +unitOption("cm", "cm", crankshaftRadiusUnits)
+                +unitOption("in", "pulg", crankshaftRadiusUnits)
+        label.form-label(for="engineforces_connectingRodLength") Longitud de la biela 
+        .input-group.mb-3 
+            -var fieldData = getProperty(vehicleData, "Engine.Forces.connectingRodLength")
+            if (fieldData)
+                -var connectingRodLength = unitRE.exec(fieldData)[1] || ""
+                -var connectingRodLengthUnits = unitRE.exec(fieldData)[2] || "mm"
+            else 
+                -var connectingRodLength = ""
+                -var connectingRodLengthUnits = "mm"
+            input.form-control.align-right(
+                id="engineforces_connectingRodLength"
+                type="number"
+                step="any"
+                value= connectingRodLength 
+                data-bound="Engine.Forces.connectingRodLength"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="engineforces_connectingRodLength_units"
+                aria-label="unidades Longitud de la biela"
+                data-from="engineforces_connectingRodLength"
+            )
+                +unitOption("mm", "mm", connectingRodLengthUnits)
+                +unitOption("cm", "cm", connectingRodLengthUnits)
+                +unitOption("in", "pulg", connectingRodLengthUnits)
+        if !getProperty(vehicleData, "Engine.EngineForces")
+            .d-grid
+                button.btn.btn-primary(
+                    type="submit"
+                    id="btn-save"
+                    value="submit"
+                ) Guardar
+.col-10.col-md-6
+    if getProperty(vehicleData, "Engine.EngineForces")
+        h3 Calculos de fuerza del motor 
+
+//- Script
+if getProperty(vehicleData, "Engine.EngineForces")
+    script(src="/javascripts/formControls.js")
+    script.
+        //Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        const partName="#{partName}";
+        const subpartName="#{subpartName}";        
+        document.addEventListener("DOMContentLoaded", ()=> {
+            setUnitSelectEventListener();
+            setInputEventListener();
+            setUnitButtonListener();
+        })
+else 
+    script.
+        // Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        function savePart() {
+            let payload={};
+            payload['pistonDiameter'] = document.querySelector("#engineforces_pistonDiameter").value + " "+
+                document.querySelector("#engineforces_pistonDiameter_units").value
+            payload['crankshaftRadius'] = document.querySelector("#engineforces_crankshaftRadius").value + " "+
+                document.querySelector("#engineforces_crankshaftRadius_units").value
+            payload['connectingRodLength'] = document.querySelector("#engineforces_connectingRodLenth").value + " "+
+                document.querySelector("#engineforces_connectingRodLenth_units").value
+            fetch(
+                `/vehicle/${vehicleData.id}/Engine/EngineForces`,
+                {
+                    "method":"post",
+                    "body":JSON.stringify(payload),
+                    "headers":{
+                        "Content-Type":"application/json"
+                    }
+                }
+            )
+                .then(res=>res.json())
+                .then(jsonData => {
+                    if(!jsonData.Error) {
+                        window.location.reload()
+                    } else {
+                        showAlert("Error creando sección de fuerzas del motor", "ERROR")
+                        console.error("Error creating engineForces", jsonData)
+                    }
+                })
+                .catch(e=>{
+                    console.error("Error creating engineForces", e)
+                    showAlert("Error creando sección de potencia del motor", "ERROR")
+                })
+        }
+        document.querySelector("form#engineForces").addEventListener(
+            "submit",
+            e => {
+                e.preventDefault();
+                e.stopPropagation();
+                let form=document.getElementById("engineForces")
+                if (form.checkValidity()) {
+                    savePart();
+                } else {
+                    form.classList.add('was-validated');
+                }
+            }
+        )

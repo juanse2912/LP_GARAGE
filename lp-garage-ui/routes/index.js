@@ -62,6 +62,7 @@ router.get('/Engine/:subpart', (req,res) => {
   partRenderVars(req.query.vehicleId, "Engine", req.params.subpart)
     .then( r => {
       r["page"] = "Engine";
+      r["subpartName"] = req.params.subpart
       res.render("engine", r)
     })
     .catch(err => {

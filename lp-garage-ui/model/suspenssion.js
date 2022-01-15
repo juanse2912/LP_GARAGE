@@ -29,8 +29,7 @@ class Suspenssion extends Part {
     static fromJSON(vehicle, j) {
         let s = new Suspenssion(
             vehicle, 
-            j.AxleWeight, 
-            j.TireTension, 
+            j.AxleWeight,
             j.ArmShockDistance, 
             j.lowerControlArmLenght, 
             j.shockAngle, 

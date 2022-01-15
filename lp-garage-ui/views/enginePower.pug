@@ -1,4 +1,4 @@
-.col-lg-5
+.col-10.col-md-4
     form#enginePower.needs-validation(novalidate action="#" method="post")
         label.form-label(for="enginepower_intakepressure") Presión de admisión 
         .input-group.mb-3
@@ -55,7 +55,7 @@
                     id="btn-save"
                     value="submit"
                 ) Guardar                
-.col-lg-6
+.col-10.col-md-6
     if getProperty(vehicleData, "Engine.EnginePower")
         h3 Cálculos de Potencia
         ul.list-group

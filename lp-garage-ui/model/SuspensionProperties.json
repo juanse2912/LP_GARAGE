@@ -19,7 +19,7 @@
 
         "shockAngle": {
             "alias":"SA",
-            "units":"rad",
+            "units":"deg",
             "value": null
         },
         "suspendedWeights":{

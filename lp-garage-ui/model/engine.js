@@ -27,15 +27,15 @@ class EngineForces extends Part {
          */
         let partProperties = require("./EngineForcesProperties.json")
         partProperties.inputParameters.pistonDiameter.value = pistonDiameter;
-        partProperties.inputParameters.bore.value = R;
-        partProperties.inputParameters.stroke.value = L;
+        partProperties.inputParameters.crankshaftRadius.value = R;
+        partProperties.inputParameters.connectingRodLength.value = L;
         super(eng.scope, partProperties);
         this.engine = eng;
         this.scope = eng.scope;       
     }
 
     static fromJSON(engine, j) {
-        return new EngineForces(engine, j.pistonDiameter, j.R, j.L);
+        return new EngineForces(engine, j.pistonDiameter, j.crankshaftRadius, j.connectingRodLength);
     }
 
 }

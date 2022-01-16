@@ -39,7 +39,7 @@
     "formulas":{
         "admissionvalvediameter":{
             "alias":"Dv",
-            "formula":"((sqrt((((VH/1 m^3)/NC)*n)/(pi*(pgsav*1s/m)*750)))*10)*1 mm"
+            "formula":"(sqrt(((Vh/1cm^3)*n)/(pi*pgsav*750s/m)))*10 mm"
         },
         "avaragepistonspeed":{
             "alias":"avps",
@@ -87,11 +87,11 @@
         },
         "admissionvalvehigh":{
             "alias":"avh",
-            "formula":"(avps*AP)/(pgsav*PI*D16*(COS 30 in rad))"
+            "formula":"(avps*AP)/(pgsav*pi*Dv*(cos(30 deg))) in mm"
         },
         "admissionopenedsection":{
             "alias":"aos",
-            "formula":"PI*Dv*avh*(COS 30 in rad)"
+            "formula":"pi*Dv*avh*(cos(30 deg)) in mm^2"
         },
         "gasspeedinvalve":{
             "alias":"gsv",
@@ -99,7 +99,7 @@
         },
         "admissionductlongwithrunners":{
             "alias":"adl",
-            "formula": "(2*(fds/100)*(RC-1))/(((n*2)/(955*343))^2)*((VH in mm3)/4)*(RC+1)) in cm"
+            "formula": "(((2*(fds/100)*(RC-1))/((((n*2)/(955*343))^2)*(Vh)*(RC+1)))*1cm/m^-1)in cm"
         },
         "exhaustvalvediameter":{
             "alias":"evd",
@@ -107,11 +107,11 @@
         },
         "exhaustfirstsectioncolectorlong":{
             "alias":"efcl",
-            "formula":"=13000*(cEO+cEC+180)/(1 in deg)/(n*6)*(1 in cm)"
+            "formula":"((13000*(cEO+cEC+180deg))/(1deg)/(n*6))*(1cm)"
         },
         "exhaustfirstsectiondiameter":{
             "alias":"efd",
-            "formula":"=2*sqrt(((VH/4)*2)/(efcl*pi)) in cm"
+            "formula":"2*sqrt(((VH/4)*2)/(efcl*pi)) in cm"
         },
         "exhaustfirstsectiondiametercurvecorrection":{
             "alias":"efdC",

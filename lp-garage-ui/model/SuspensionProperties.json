@@ -51,7 +51,7 @@
 
         },
         "coilsNumber": {
-            "alias":"n",
+            "alias":"csn",
             "value": null
         },
         "pitchSpring":{
@@ -83,7 +83,7 @@
         },
         "SpringConstant":{
             "alias":"K",
-            "formula":"(d^4*G)/(8*n*D^3)"
+            "formula":"(d^4*G)/(8*csn*D^3)"
 
         },
         "WheelRate":{
@@ -114,12 +114,12 @@
         },
         "Deformationunderload":{
             "alias":"dF",
-            "formula":"(n*ASF*((D/2)^3)*64)/(G*(d^4))"
+            "formula":"(csn*ASF*((D/2)^3)*64)/(G*(d^4))"
 
         },
         "Freelenght":{
             "alias":"L",
-            "formula":"(n*(d+a)+dF in mm)"
+            "formula":"(csn*(d+a)+dF in mm)"
 
         },
 

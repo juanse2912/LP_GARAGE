@@ -10,6 +10,11 @@
             "units":"mm",
             "value": null
         },
+        "cylinderStroke":{
+            "alias":"L",
+            "units":"mm",
+            "value":null
+        },
         "camshaftAdmissionOpen":{
             "alias":"cAO",
             "units":"deg",

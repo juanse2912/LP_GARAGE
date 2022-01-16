@@ -41,9 +41,10 @@ mixin calculatedValue(title, dataElement, unitOptions)
     li.list-group-item.fs-6
         strong.d-block=title+" "
         -var dataVal = getProperty(vehicleData, dataElement)||"0 _"
-        if unitOptions && unitRE.match(dataVal)
-            -var dataVal=unitRE.exec(data)[1] 
-            -var dataUnit=unitRE.exec(data)[2]
+        if unitOptions && unitRE.test(dataVal)
+            -var val_unit = unitRE.exec(dataVal)
+            -var dataVal=val_unit[1] 
+            -var dataUnit=val_unit[2]
         span(data-bound=dataElement)=dataVal 
             if unitOptions
                 +unitButton(dataUnit,unitOptions,dataElement)

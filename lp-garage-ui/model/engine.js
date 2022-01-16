@@ -40,10 +40,49 @@ class EngineForces extends Part {
 
 }
 
+class EngineNozzles extends Part {
+    constructor(
+        engine,
+        pretendedGasSpeedinAdmissionValve,
+        admissionValvesDiameter,
+        cylinderStroke,
+        camshaftAdmissionOpen,
+        camshaftAdmissionClose,
+        camshaftEscapeOpen,
+        camshaftEscapeClose
+     ) {
+        let partProperties = require("./EngineNozzlesProperties.json");
+        partProperties.inputParameters.pretendedGasSpeedinAdmissionValve.value = pretendedGasSpeedinAdmissionValve;
+        partProperties.inputParameters.admissionValvesDiameter.value = admissionValvesDiameter;
+        partProperties.inputParameters.cylinderStroke.value = cylinderStroke;
+        partProperties.inputParameters.camshaftAdmissionClose.value = camshaftAdmissionClose;
+        partProperties.inputParameters.camshaftAdmissionOpen.value = camshaftAdmissionOpen;
+        partProperties.inputParameters.camshaftEscapeOpen.value = camshaftEscapeOpen;
+        partProperties.inputParameters.camshaftEscapeClose.value = camshaftEscapeClose;
+        super(engine.scope, partProperties);
+        this.engine = engine;
+        this.scope = engine.scope;
+     }
+
+     static fromJSON(engine, j){
+         return new EngineNozzles(
+             engine, 
+             j.pretendedGasSpeedinAdmissionValve,
+             j.admissionValvesDiameter,
+             j.cylinderStroke,
+             j.camshaftAdmissionOpen,
+             j.camshaftAdmissionClose,
+             j.camshaftEscapeOpen,
+             j.camshaftEscapeClose
+         )
+     }
+}
+
 
 const SUBPARTS = new Map();
 SUBPARTS.set("EnginePower",EnginePower);
-SUBPARTS.set("EngineForces", EngineForces)
+SUBPARTS.set("EngineForces", EngineForces);
+SUBPARTS.set("EngineNozzles", EngineNozzles);
 
 
 class Engine extends Part {

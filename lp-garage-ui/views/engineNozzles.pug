@@ -1,0 +1,296 @@
+.col-10.col-md-4 
+    form#engine-nozzles.needs-validation(novalidate action="#" method="post")
+        label.form-label(for="enginenozzles_pretendedGasSpeedinAdmissionValve") Velocidad de gas en admisión esperada 
+        .input-group.mb-3 
+            -var fData = getProperty(vehicleData, "Engine.EngineNozzles.pretendedGasSpeedinAdmissionValve")
+            if (fData) 
+                -var pretendedGasSpeedinAdmissionValve = unitRE.exec(fData)[1] || ""
+                -var pretendedGasSpeedinAdmissionValveUnits = unitRE.exec(fData)[2] || "m / s"
+            else 
+                -var pretendedGasSpeedinAdmissionValve = ""
+                -var pretendedGasSpeedinAdmissionValveUnits = "m / s"
+            input.form-control.align-right(
+                id="enginenozzles_pretendedGasSpeedinAdmissionValve"
+                type="number"
+                step="any"
+                value= pretendedGasSpeedinAdmissionValve
+                data-bound="Engine.EngineNozzles.pretendedGasSpeedinAdmissionValve"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginenozzles_pretendedGasSpeedinAdmissionValve_units"
+                aria-label="unidades Velocidad de gas en admisión esperada"
+                data-from="enginenozzles_pretendedGasSpeedinAdmissionValve"
+            )
+                +unitOption("m / s", "m/s", pretendedGasSpeedinAdmissionValveUnits)
+                +unitOption("in / s", "pulg/s", pretendedGasSpeedinAdmissionValveUnits)
+                +unitOption("km / h", "km/h", pretendedGasSpeedinAdmissionValveUnits)
+        label.form-label(for="enginenozzles_admissionValvesDiameter") Diámetro de válvulas de admisión 
+        .input-group.mb-3 
+            -var fData = getProperty(vehicleData, "Engine.EngineNozzles.admissionValvesDiameter")
+            if (fData) 
+                -var admissionValvesDiameter = unitRE.exec(fData)[1] || ""
+                -var admissionValvesDiameterUnits = unitRE.exec(fData)[2] || "mm"
+            else 
+                -var admissionValvesDiameter = ""
+                -var admissionValvesDiameterUnits = "mm"
+            input.form-control.align-right(
+                id="enginenozzles_admissionValvesDiameter"
+                type="number"
+                step="any"
+                value= admissionValvesDiameter
+                data-bound="Engine.EngineNozzles.admissionValvesDiameter"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginenozzles_admissionValvesDiameter_units"
+                aria-label="unidades Diámetro de válvulas de admisión"
+                data-from="enginenozzles_admissionValvesDiameter"
+            )
+                +unitOption("mm", "mm", admissionValvesDiameterUnits)
+                +unitOption("cm", "cm", admissionValvesDiameterUnits)
+                +unitOption("in", "pulg", admissionValvesDiameterUnits)
+        label.form-label(for="enginenozzles_cylinderStroke") Carrera del cilindro 
+        .input-group.mb-3 
+            -var fData = getProperty(vehicleData, "Engine.EngineNozzles.cylinderStroke")
+            if (fData) 
+                -var cylinderStroke = unitRE.exec(fData)[1] || ""
+                -var cylinderStrokeUnits = unitRE.exec(fData)[2] || "mm"
+            else 
+                -var cylinderStroke = ""
+                -var cylinderStrokeUnits = "mm"
+            input.form-control.align-right(
+                id="enginenozzles_cylinderStroke"
+                type="number"
+                step="any"
+                value= cylinderStroke
+                data-bound="Engine.EngineNozzles.cylinderStroke"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginenozzles_cylinderStroke_units"
+                aria-label="unidades Carrera del cilindro"
+                data-from="enginenozzles_cylinderStroke"
+            )
+                +unitOption("mm", "mm", cylinderStrokeUnits)
+                +unitOption("cm", "cm", cylinderStrokeUnits)
+                +unitOption("in", "pulg", cylinderStrokeUnits)
+        label.form-label Ángulos de ataque del árbol de levas 
+        .input-group.mb-3
+            -var admOpen = getProperty(vehicleData, "Engine.EngineNozzles.camshaftAdmissionOpen")
+            if admOpen && unitRE.test(admOpen)
+                -var camshaftAdmissionOpen = unitRE.exec(admOpen)[1] || ""
+                -var camshaftAdmissionOpenUnits = unitRE.exec(admOpen)[2] || "deg"
+            else 
+                -var camshaftAdmissionOpen = ""
+                -var camshaftAdmissionOpenUnits = "deg"
+            -var admClose = getProperty(vehicleData, "Engine.EngineNozzles.camshaftAdmissionClose")
+            if admClose && unitRE.test(admClose)
+                -var camshaftAdmissionClose = unitRE.exec(admClose)[1] || ""
+                -var camshaftAdmissionCloseUnits = unitRE.exec(admClose)[2] || "deg"
+            else 
+                -var camshaftAdmissionClose = ""
+                -var camshaftAdmissionCloseUnits = "deg"
+            -var escOpen = getProperty(vehicleData, "Engine.EngineNozzles.camshaftEscapeOpen")
+            if escOpen && unitRE.test(escOpen)
+                -var camshaftExcapeOpen = unitRE.exec(escOpen)[1] || ""
+                -var camshaftExcapeOpenUnits = unitRE.exec(escOpen)[2] || "deg"
+            else 
+                -var camshaftExcapeOpen = ""
+                -var camshaftExcapeOpenUnits = "deg"
+            -var admClose = getProperty(vehicleData, "Engine.EngineNozzles.camshaftExcapeClose")
+            if escClose && unitRE.test(escClose)
+                -var camshaftExcapeClose = unitRE.exec(escClose)[1] || ""
+                -var camshaftExcapeCloseUnits = unitRE.exec(escClose)[2] || "deg"
+            else 
+                -var camshaftExcapeClose = ""
+                -var camshaftExcapeCloseUnits = "deg"
+            input.form-control.align-right(
+                id="enginenozzles_camshaftAdmissionOpen"
+                type="number"
+                step="any"
+                value= camshaftAdmissionOpen
+                data-bound="Engine.EngineNozzles.camshaftAdmissionOpen"
+                placeholder="AAA"
+                aria-label="Apertura Admisión"
+                max="360"
+                required
+            )
+            input.form-control.align-right(
+                id="enginenozzles_camshaftAdmissionClose"
+                type="number"
+                step="any"
+                value= camshaftAdmissionClose
+                data-bound="Engine.EngineNozzles.camshaftAdmissionClose"
+                placeholder="RCA"
+                aria-label="Cierre Admisión"
+                max="360"
+                required
+            )
+            input.form-control.align-right(
+                id="enginenozzles_camshaftEscapeOpen"
+                type="number"
+                step="any"
+                value= camshaftEscapeOpen
+                data-bound="Engine.EngineNozzles.camshaftEscapeOpen"
+                placeholder="AAE"
+                aria-label="Apertura Escape"
+                max="360"
+                required
+            )
+            input.form-control.align-right(
+                id="enginenozzles_camshaftEscapeClose"
+                type="number"
+                step="any"
+                value= camshaftEscapeClose
+                data-bound="Engine.EngineNozzles.camshaftEscapeClose"
+                placeholder="RCE"
+                aria-label="Cierre Escape"
+                max="360"
+                required
+            )
+            .visually-hidden 
+                select.unit(
+                    id="enginenozzles_camshaftAdmissionOpen_units"
+                    data-from="enginenozzles_camshaftAdmissionOpen"
+                )
+                    option(value="deg" selected) deg
+                select.unit(
+                    id="enginenozzles_camshaftAdmissionClose_units"
+                    data-from="enginenozzles_camshaftAdmissionClose"
+                )
+                    option(value="deg" selected) deg
+                select.unit(
+                    id="enginenozzles_camshaftEscapeOpen_units"
+                    data-from="enginenozzles_camshaftEscapeOpen"
+                )
+                    option(value="deg" selected) deg
+                select.unit(
+                    id="enginenozzles_camshaftEscapeClose_units"
+                    data-from="enginenozzles_camshaftEscapeClose"
+                )
+                    option(value="deg" selected) deg
+        if !getProperty(vehicleData, "Engine.EngineNozzles")
+            .d-grid
+                button.btn.btn-primary(
+                    type="submit"
+                    id="btn-save"
+                    value="submit"
+                ) Guardar
+.col-10.col-md-6
+    if getProperty(vehicleData, "Engine.EngineNozzles")
+        h3 Cálculos de Toberas
+        ul.list-group
+            +calculatedValue("Diámetro Válvula de Admisión:", "Engine.Enginenozzles.admissionvalvediameter", longitudeUnits)
+            +calculatedValue("Velocidad media del Pistón:", "Engine.Enginenozzles.avaragepistonspeed", speedUnits)
+            +calculatedValue("Diámetro del primero Conducto:", "Engine.Enginenozzles.firstductdiameter", longitudeUnits )
+            +calculatedValue("Sección del primer Conducto:", "Engine.Enginenozzles.firstductsection", {
+                "m^2":"m^2", 
+                "cm^2":"cm^2", 
+                "mm^2":"mm^2", 
+                "in^2":"pulg^2"
+                })
+            +calculatedValue("Velocidad de Gases del primer Conducto:", "Engine.Enginenozzles.gasspeedinfirstduct", speedUnits)
+            +calculatedValue("Diámetro del segundo Conducto:", "Engine.Enginenozzles.secondductdiameter", longitudeUnits)
+            +calculatedValue("Sección del segundo Conducto:", "Engine.Enginenozzles.seconductsection", {
+                "m^2":"m^2", 
+                "cm^2":"cm^2", 
+                "mm^2":"mm^2", 
+                "in^2":"pulg^2"
+                })
+            +calculatedValue("Velocidad de Gases del segundo Conducto:", "Engine.Enginenozzles.gasspeedinsecondduct", speedUnits)
+            +calculatedValue("Diámetro del conducto de la Válvula:", "Engine.Enginenozzles.valveductdiameter",longitudeUnits)
+            +calculatedValue("Sección del conducto de la Válvula:", "Engine.Enginenozzles.valveductsection", areaUnits)
+            +calculatedValue("Sección de la Válvula:", "Engine.Enginenozzles.valvesection", {
+                "m^2":"m^2", 
+                "cm^2":"cm^2", 
+                "mm^2":"mm^2", 
+                "in^2":"pulg^2"
+                })
+            +calculatedValue("Velocidad de Gases del conducto de la Válvula:", "Engine.Enginenozzles.gasspeedinvalveduct", speedUnits)
+            +calculatedValue("Alzada de la Válvula:", "Engine.Enginenozzles.admissionvalvehigh", longitudeUnits)
+            +calculatedValue("Sección de Paso Valvular:", "Engine.Enginenozzles.admissionopenedsection", {
+                "m^2":"m^2", 
+                "cm^2":"cm^2", 
+                "mm^2":"mm^2", 
+                "in^2":"pulg^2"
+                })
+            +calculatedValue("Velocidad de gases en la Válvula:", "Engine.Enginenozzles.gasspeedinvalve", speedUnits)
+            +calculatedValue("Longitud del conducto con Runners:", "Engine.Enginenozzles.admissionductlongwithrunners", longitudeUnits)
+            +calculatedValue("Diámetro de la Válvula de Escape:", "Engine.Enginenozzles.exhaustvalvediameter", longitudeUnits)
+            +calculatedValue("Longitud del Colector de Escape:", "Engine.Enginenozzles.exhaustfirstsectioncolectorlong", longitudeUnits)
+            +calculatedValue("Diámetro del tramo primario de Escape:", "Engine.Enginenozzles.exhaustfirstsectiondiameter", longitudeUnits)
+            +calculatedValue("Diámetro del tramo primario de Escape corregido por pérdidas en curvaturas:", "Engine.Enginenozzles.exhaustfirstsectiondiametercurvecorrection", longitudeUnits)
+            +calculatedValue("Diámetro del tramo secundario de Escape:", "Engine.Enginenozzles.exhaustsecondarysectiondiameter", longitudeUnits)
+            +calculatedValue("Diámetro del tramo secundario de Escape corregido por pérdidas en curvaturas:", "Engine.Enginenozzles.exhaustsecondarysectiondiametercurvecorrection", longitudeUnits)
+
+//- Script
+if getProperty(vehicleData, "Engine.EngineNozzles")
+    script(src="/javascripts/formControls.js")
+    script.
+        //Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        const partName="#{partName}";
+        const subpartName="#{subpartName}";        
+        document.addEventListener("DOMContentLoaded", ()=> {
+            setUnitSelectEventListener();
+            setInputEventListener();
+            setUnitButtonListener();
+        })
+else 
+    script.
+        // Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        function savePart() {
+            let payload={};
+            payload['pretendedGasSpeedinAdmissionValve'] = document.querySelector("#enginenozzles_pretendedGasSpeedinAdmissionValve").value + " "+
+                document.querySelector("#enginenozzles_pretendedGasSpeedinAdmissionValve_units").value
+            payload['admissionValvesDiameter'] = document.querySelector("#enginenozzles_admissionValvesDiameter").value + " "+
+                document.querySelector("#enginenozzles_admissionValvesDiameter_units").value
+            payload['camshaftAdmissionOpen'] = document.querySelector("#enginenozzles_camshaftAdmissionOpen").value + " "+
+                document.querySelector("#enginenozzles_camshaftAdmissionOpen_units").value
+            payload['camshaftAdmissionOpen'] = document.querySelector("#enginenozzles_camshaftAdmissionOpen").value + " "+
+                document.querySelector("#enginenozzles_camshaftAdmissionOpen_units").value
+            payload['cylinderStroke'] = document.querySelector("#enginenozzles_cylinderStroke").value + " "+
+                document.querySelector("#enginenozzles_cylinderStroke_units").value
+            payload['camshaftEscapeOpen'] = document.querySelector("#enginenozzles_camshaftEscapeOpen").value + " "+
+                document.querySelector("#enginenozzles_camshaftEscapeOpen_units").value
+            payload['camshaftEscapeClose'] = document.querySelector("#enginenozzles_camshaftEscapeClose").value + " "+
+                document.querySelector("#enginenozzles_camshaftEscapeClose_units").value
+            fetch(
+                `/vehicle/${vehicleData.id}/Engine/EngineNozzles`,
+                {
+                    "method":"post",
+                    "body":JSON.stringify(payload),
+                    "headers":{
+                        "Content-Type":"application/json"
+                    }
+                }
+            )
+                .then(res=>res.json())
+                .then(jsonData => {
+                    if(!jsonData.Error) {
+                        window.location.reload()
+                    } else {
+                        showAlert("Error creando sección de toberas", "ERROR")
+                        console.error("Error creating EngineNozzles", jsonData)
+                    }
+                })
+                .catch(e=>{
+                    console.error("Error creating EngineNozzles", e)
+                    showAlert("Error creando sección de toberas", "ERROR")
+                })
+        }
+        document.querySelector("form#engine-nozzles").addEventListener(
+            "submit",
+            e => {
+                e.preventDefault();
+                e.stopPropagation();
+                let form=document.getElementById("engine-nozzles")
+                if (form.checkValidity()) {
+                    savePart();
+                } else {
+                    form.classList.add('was-validated');
+                }
+            }
+        )

@@ -6,7 +6,7 @@ const Part = require("./part").Part;
 
 class Suspenssion extends Part {
 
-    constructor(vehicle, AxleWeight, TireTension, ArmShockDistance, lowerControlArmLenght, shockAngle, suspendedWeights,WireSpringDiameter, outerSpringDiameter, mediumSpringDiameter, elasticityCoefficient, coilsNumber, pitchSpring) {
+    constructor(vehicle, AxleWeight, ArmShockDistance, lowerControlArmLenght, shockAngle, suspendedWeights,WireSpringDiameter, outerSpringDiameter, mediumSpringDiameter, elasticityCoefficient, coilsNumber, pitchSpring) {
         let SuspenssionProperties = require("./SuspensionProperties.json")
         SuspenssionProperties.inputParameters.AxleWeight.value = AxleWeight;
         SuspenssionProperties.inputParameters.ArmShockDistance.value = ArmShockDistance;

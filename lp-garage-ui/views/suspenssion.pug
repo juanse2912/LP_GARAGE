@@ -292,13 +292,13 @@ block content
                             +unitOption("mm", "mm", radialDeformation)
                             +unitOption("in", "pulg", radialDeformation)
                             +unitOption("cm", "cm", radialDeformation)
-                      if !getProperty(vehicleData, "Suspenssion")
-                        .d-grid
-                          button.btn.btn-primary( 
-                            type="submit"
-                            id="btn-save"
-                            value="submit"
-                          ) Guardar
+                        if !getProperty(vehicleData, "Suspenssion")
+                          .d-grid
+                            button.btn.btn-primary( 
+                              type="submit"
+                              id="btn-save"
+                              value="submit"
+                            ) Guardar
                     .col-10.col-md-6
                       if getProperty(vehicleData, "Suspenssion")
                         h3 Cálculos de Suspensión 

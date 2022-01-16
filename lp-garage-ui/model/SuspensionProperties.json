@@ -130,7 +130,7 @@
         },
         "SuspendenWeightFrequency":{
             "alias":"Wm2",
-            "formula":"(1/(2*pi))*sqrt(((K*9810m/s^2)*kn)/((kn+(K*9810m/s^2))*(SW/1kg)))*(1s/kg^0.5)*1Hz"
+            "formula":"(1/(2*pi))*sqrt(((K*9.810m/s^2)*kn)/((kn+(K*9.810m/s^2))*(SW/1kg)))*(1s/kg^0.5)*1Hz"
 
 
         }

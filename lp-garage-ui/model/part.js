@@ -132,6 +132,7 @@ class Part {
      * @returns {object} JSON Serialized part
      */
     toJSON() {
+        const unitRE = /^([\d\.\(\)ie\-+]*)\s(.*)$/
         let ip = this.partProperties.inputParameters;
         let formulas = this.partProperties.formulas;
         let result = {};
@@ -141,6 +142,45 @@ class Part {
 
         for (let f in formulas) {
             if( Array.isArray(this.scope[formulas[f].alias])) {
+                const vArr = this.scope[formulas[f].alias]
+                let r = {
+                    xAxis:[],
+                    xAxisUnit:null,
+                    yAxis:[],
+                    yAxisUnit:null
+                }
+                for (let i=0; i<vArr.length; i++) {
+                    if (!r.xAxisUnit) {
+                        if(vArr[i][0] instanceof math.Unit) {
+                            r.xAxisUnit = vArr[i][0].toJSON().unit
+                        }
+                    }
+                    if (!r.yAxisUnit){
+                        if(vArr[i][1] instanceof math.Unit) {
+                            console.debug(f, vArr[i][1].toString())
+                            console.debug("unit", unitRE.exec(vArr[i][1].toString()))
+                            r.yAxisUnit = unitRE.exec(
+                                vArr[i][1].toString()
+                            )[2]
+                            
+                            
+                        }
+                    }
+                    if(vArr[i][0] instanceof math.Unit) {
+                        r.xAxis.push(vArr[i][0].toNumber(r.xAxisUnit))
+                    } else {
+                        xAxix.push(vArr[i][0])
+                    }
+                    if(vArr[i][1] instanceof math.Unit) {
+                        r.yAxis.push(vArr[i][1].toNumber(r.yAxisUnit))
+                    } else {
+                        r.yAxix.push(vArr[i][1])
+                    }
+                }
+
+                result[f] = r
+
+/*
                 result[f] = this.scope[formulas[f].alias].map ( tuple => {
                     let r = []
                     for (let i=0; i<tuple.length; i++) {
@@ -152,6 +192,7 @@ class Part {
                     }
                     return r;
                 })
+*/
             } else {
                 result[f] = this.scope[formulas[f].alias].toString();
             }

@@ -6,7 +6,21 @@ const Part = require("./part").Part;
 
 class Suspenssion extends Part {
 
-    constructor(vehicle, AxleWeight, ArmShockDistance, lowerControlArmLenght, shockAngle, suspendedWeights,WireSpringDiameter, outerSpringDiameter, mediumSpringDiameter, elasticityCoefficient, coilsNumber, pitchSpring) {
+    constructor(
+        vehicle, 
+        AxleWeight, 
+        ArmShockDistance, 
+        lowerControlArmLenght, 
+        shockAngle, 
+        suspendedWeights,
+        WireSpringDiameter, 
+        outerSpringDiameter, 
+        mediumSpringDiameter, 
+        elasticityCoefficient, 
+        coilsNumber, 
+        pitchSpring,
+        radialDeformation
+    ) {
         let SuspenssionProperties = require("./SuspensionProperties.json")
         SuspenssionProperties.inputParameters.AxleWeight.value = AxleWeight;
         SuspenssionProperties.inputParameters.ArmShockDistance.value = ArmShockDistance;
@@ -19,7 +33,7 @@ class Suspenssion extends Part {
         SuspenssionProperties.inputParameters.elasticityCoefficient.value = elasticityCoefficient;
         SuspenssionProperties.inputParameters.coilsNumber.value = coilsNumber;
         SuspenssionProperties.inputParameters.pitchSpring.value = pitchSpring;
-        SuspenssionProperties.inputParameters.radialDeformation.value = pitchSpring;
+        SuspenssionProperties.inputParameters.radialDeformation.value = radialDeformation;
 
         super(vehicle.scope, SuspenssionProperties)
         this.scope = vehicle.scope;
@@ -39,7 +53,8 @@ class Suspenssion extends Part {
             j.mediumSpringDiameter, 
             j.elasticityCoefficient, 
             j.coilsNumber, 
-            j.pitchSpring);
+            j.pitchSpring,
+            j.radialDeformation)
   
         return s;
     }

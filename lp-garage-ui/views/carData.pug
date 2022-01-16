@@ -157,13 +157,14 @@ label(for="cardata_tireWidth").form-label Ancho de neumático
         id="cardata_tireWidth"
         type="number"
         step=1
-        value=tireWidth 
+        value= tireWidth 
         required 
         data-bound="tireWidth"
     ).form-control.align-right
     select.form-select.input-group-text.unit(
         id="cardata_tireWidth_units"
         aria-label="unidades ancho de neumático"
+        data-from="cardata_tireWidth"
     )
         +unitOption("mm", "mm", longitudeUnits)
         +unitOption("in", "pulg", longitudeUnits)
@@ -197,6 +198,7 @@ label(for="cardata_wheelRim").form-label Rim neumático
     select.form-select.input-group-text.unit(
         id="cardata_wheelRim_units"
         aria-label="unidades ancho de neumático"
+        data-from="cardata_wheelRim"
     )
         +unitOption("in", "pulg", longitudeUnits)
         +unitOption("mm", "mm", longitudeUnits)

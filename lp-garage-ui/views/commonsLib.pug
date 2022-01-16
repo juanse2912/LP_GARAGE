@@ -15,6 +15,7 @@
 -var massUnits={"kg":"kg","t":"Ton","lb":"lb"}
 -var powerUnits={"hp":"hp","kW":"KW"}
 -var angleUnits={"rad":"rad","deg":"°"}
+-var speedUnits={"m / s":"m/s", "ft / s":"pie/s", "in / s":"pulg/s", "km / h":"km/h", "mile / hour":"mph"}
 //- unit change for input fields
 mixin unitOption(unitValue, unitName, selectedVal)
     option(value=unitValue selected=(unitValue==selectedVal?true:false))= unitName

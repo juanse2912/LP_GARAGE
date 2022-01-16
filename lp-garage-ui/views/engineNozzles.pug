@@ -181,48 +181,48 @@
     if getProperty(vehicleData, "Engine.EngineNozzles")
         h3 Cálculos de Toberas
         ul.list-group
-            +calculatedValue("Diámetro Válvula de Admisión:", "Engine.Enginenozzles.admissionvalvediameter", longitudeUnits)
-            +calculatedValue("Velocidad media del Pistón:", "Engine.Enginenozzles.avaragepistonspeed", speedUnits)
-            +calculatedValue("Diámetro del primero Conducto:", "Engine.Enginenozzles.firstductdiameter", longitudeUnits )
-            +calculatedValue("Sección del primer Conducto:", "Engine.Enginenozzles.firstductsection", {
+            +calculatedValue("Diámetro Válvula de Admisión:", "Engine.EngineNozzles.admissionvalvediameter", longitudeUnits)
+            +calculatedValue("Velocidad media del Pistón:", "Engine.EngineNozzles.avaragepistonspeed", speedUnits)
+            +calculatedValue("Diámetro del primero Conducto:", "Engine.EngineNozzles.firstductdiameter", longitudeUnits )
+            +calculatedValue("Sección del primer Conducto:", "Engine.EngineNozzles.firstductsection", {
                 "m^2":"m^2", 
                 "cm^2":"cm^2", 
                 "mm^2":"mm^2", 
                 "in^2":"pulg^2"
                 })
-            +calculatedValue("Velocidad de Gases del primer Conducto:", "Engine.Enginenozzles.gasspeedinfirstduct", speedUnits)
-            +calculatedValue("Diámetro del segundo Conducto:", "Engine.Enginenozzles.secondductdiameter", longitudeUnits)
-            +calculatedValue("Sección del segundo Conducto:", "Engine.Enginenozzles.seconductsection", {
+            +calculatedValue("Velocidad de Gases del primer Conducto:", "Engine.EngineNozzles.gasspeedinfirstduct", speedUnits)
+            +calculatedValue("Diámetro del segundo Conducto:", "Engine.EngineNozzles.secondductdiameter", longitudeUnits)
+            +calculatedValue("Sección del segundo Conducto:", "Engine.EngineNozzles.seconductsection", {
                 "m^2":"m^2", 
                 "cm^2":"cm^2", 
                 "mm^2":"mm^2", 
                 "in^2":"pulg^2"
                 })
-            +calculatedValue("Velocidad de Gases del segundo Conducto:", "Engine.Enginenozzles.gasspeedinsecondduct", speedUnits)
-            +calculatedValue("Diámetro del conducto de la Válvula:", "Engine.Enginenozzles.valveductdiameter",longitudeUnits)
-            +calculatedValue("Sección del conducto de la Válvula:", "Engine.Enginenozzles.valveductsection", areaUnits)
-            +calculatedValue("Sección de la Válvula:", "Engine.Enginenozzles.valvesection", {
+            +calculatedValue("Velocidad de Gases del segundo Conducto:", "Engine.EngineNozzles.gasspeedinsecondduct", speedUnits)
+            +calculatedValue("Diámetro del conducto de la Válvula:", "Engine.EngineNozzles.valveductdiameter",longitudeUnits)
+            +calculatedValue("Sección del conducto de la Válvula:", "Engine.EngineNozzles.valveductsection", areaUnits)
+            +calculatedValue("Sección de la Válvula:", "Engine.EngineNozzles.valvesection", {
                 "m^2":"m^2", 
                 "cm^2":"cm^2", 
                 "mm^2":"mm^2", 
                 "in^2":"pulg^2"
                 })
-            +calculatedValue("Velocidad de Gases del conducto de la Válvula:", "Engine.Enginenozzles.gasspeedinvalveduct", speedUnits)
-            +calculatedValue("Alzada de la Válvula:", "Engine.Enginenozzles.admissionvalvehigh", longitudeUnits)
-            +calculatedValue("Sección de Paso Valvular:", "Engine.Enginenozzles.admissionopenedsection", {
+            +calculatedValue("Velocidad de Gases del conducto de la Válvula:", "Engine.EngineNozzles.gasspeedinvalveduct", speedUnits)
+            +calculatedValue("Alzada de la Válvula:", "Engine.EngineNozzles.admissionvalvehigh", longitudeUnits)
+            +calculatedValue("Sección de Paso Valvular:", "Engine.EngineNozzles.admissionopenedsection", {
                 "m^2":"m^2", 
                 "cm^2":"cm^2", 
                 "mm^2":"mm^2", 
                 "in^2":"pulg^2"
                 })
-            +calculatedValue("Velocidad de gases en la Válvula:", "Engine.Enginenozzles.gasspeedinvalve", speedUnits)
-            +calculatedValue("Longitud del conducto con Runners:", "Engine.Enginenozzles.admissionductlongwithrunners", longitudeUnits)
-            +calculatedValue("Diámetro de la Válvula de Escape:", "Engine.Enginenozzles.exhaustvalvediameter", longitudeUnits)
-            +calculatedValue("Longitud del Colector de Escape:", "Engine.Enginenozzles.exhaustfirstsectioncolectorlong", longitudeUnits)
-            +calculatedValue("Diámetro del tramo primario de Escape:", "Engine.Enginenozzles.exhaustfirstsectiondiameter", longitudeUnits)
-            +calculatedValue("Diámetro del tramo primario de Escape corregido por pérdidas en curvaturas:", "Engine.Enginenozzles.exhaustfirstsectiondiametercurvecorrection", longitudeUnits)
-            +calculatedValue("Diámetro del tramo secundario de Escape:", "Engine.Enginenozzles.exhaustsecondarysectiondiameter", longitudeUnits)
-            +calculatedValue("Diámetro del tramo secundario de Escape corregido por pérdidas en curvaturas:", "Engine.Enginenozzles.exhaustsecondarysectiondiametercurvecorrection", longitudeUnits)
+            +calculatedValue("Velocidad de gases en la Válvula:", "Engine.EngineNozzles.gasspeedinvalve", speedUnits)
+            +calculatedValue("Longitud del conducto con Runners:", "Engine.EngineNozzles.admissionductlongwithrunners", longitudeUnits)
+            +calculatedValue("Diámetro de la Válvula de Escape:", "Engine.EngineNozzles.exhaustvalvediameter", longitudeUnits)
+            +calculatedValue("Longitud del Colector de Escape:", "Engine.EngineNozzles.exhaustfirstsectioncolectorlong", longitudeUnits)
+            +calculatedValue("Diámetro del tramo primario de Escape:", "Engine.EngineNozzles.exhaustfirstsectiondiameter", longitudeUnits)
+            +calculatedValue("Diámetro del tramo primario de Escape corregido por pérdidas en curvaturas:", "Engine.EngineNozzles.exhaustfirstsectiondiametercurvecorrection", longitudeUnits)
+            +calculatedValue("Diámetro del tramo secundario de Escape:", "Engine.EngineNozzles.exhaustsecondarysectiondiameter", longitudeUnits)
+            +calculatedValue("Diámetro del tramo secundario de Escape corregido por pérdidas en curvaturas:", "Engine.EngineNozzles.exhaustsecondarysectiondiametercurvecorrection", longitudeUnits)
 
 //- Script
 if getProperty(vehicleData, "Engine.EngineNozzles")

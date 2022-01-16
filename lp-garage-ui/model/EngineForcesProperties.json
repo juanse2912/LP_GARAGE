@@ -85,7 +85,7 @@
         },
         "SE":{
             "alias":"SE",
-            "formula":"R*(1+(RLR/4))-(R*cos(alpha))-(R*((RLR/4)*cos(2*alpha)))",
+            "formula":"R*(1+(RLR/4))-(R*cos(alpha))-(R*((RLR/4)*cos(2*alpha))) in mm",
             "range":[0,360,1],
             "rangeUnits":"deg",
             "rangeVariable":"alpha"

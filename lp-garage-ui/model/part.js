@@ -115,7 +115,6 @@ class Part {
                     console.debug("value", this.scope[alias].toString())
                 } catch (err) {
                     console.error(`Error evaluating: ${alias} = ${formula}`, err)
-                    console.debug(JSON.stringify(this.scope, math.replacer))
                     break;
                 }    
             }

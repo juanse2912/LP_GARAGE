@@ -39,7 +39,7 @@
     "formulas":{
         "admissionvalvediameter":{
             "alias":"Dv",
-            "formula":"((sqrt((((VH in m^3)/NC)*n)/(pi*pgsav*750)))*10)/(1 in m/s)*(1 in mm)"
+            "formula":"((sqrt((((VH/1 m^3)/NC)*n)/(pi*(pgsav*1s/m)*750)))*10)*1 mm"
         },
         "avaragepistonspeed":{
             "alias":"avps",

@@ -74,6 +74,7 @@ function saveChanges() {
     .then( jsonData => {
       console.log("update done");
       vehicleData = jsonData;
+      document.dispatchEvent(new CustomEvent("vehicleUpdated", {bubles:true, detail:vehicleData}))
       updateDataBoundElements();
     })
     .catch(e => {
@@ -98,8 +99,8 @@ function updateDataBoundElements() {
   for (let element of elementCollection){
     let dataElement = getDataElement(element.getAttribute("data-bound"));
     switch (element.nodeName) {
-      case "DIV":
-      case "SPAN":
+      case "DIV":vehicleData
+      case "SPAN":vehicleData
       case "P":
       case "TD":
         //element.innerText = dataElement;

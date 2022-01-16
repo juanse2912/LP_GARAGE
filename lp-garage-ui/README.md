@@ -7,6 +7,6 @@
 
 ### Ejecución
 1. Desde la interfaz de comandos, ubicarse en el directorio `<directorio de trabajo>\LP_GARAGE\lp-garage-ui\`
-2. Ejecutar el comando `npm start`
-3. En el navegador acceder al url (https://localhost:3000)
+2. Ejecutar el comando `nodemon --inspect ./bin/www --ignore ./vehicles`
+3. En el navegador acceder al url (http://localhost:3000)
 

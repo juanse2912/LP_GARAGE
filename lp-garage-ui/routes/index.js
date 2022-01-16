@@ -52,7 +52,7 @@ partRenderVars = async function(vehicleId, part, subpart){
 renderError = function(err, res) {
   err.status=500
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = res.app.get('env') === 'development' ? err : {};
   // render the error page
   res.status(err.status || 500);
   res.render('error');    

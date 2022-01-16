@@ -16,7 +16,7 @@ block content
                   .row
                     .col-10.col-md-4
                       form#form-suspenssion.needs-validation(novalidate action="#" method="post")
-                        label.form-label(for="suspenssion_AxleWeight") Peso en el corner
+                        label.form-label(for="suspenssion_AxleWeight") Peso en el eje
                         .input-group.mb-3 
                           if getProperty(vehicleData, "Suspenssion.AxleWeight")
                             -var AxleWeight = unitRE.exec(getProperty(vehicleData, "Suspenssion.AxleWeight"))[1] || "";
@@ -34,7 +34,7 @@ block content
                           )
                           select.form-select.input-group-text.unit(
                             id="suspenssion_AxleWeight_units"
-                            aria-label="Unidades de peso en el corner"
+                            aria-label="Unidades de peso en el eje"
                             data-from="suspenssion_AxleWeight"
                           )
                             +unitOption("kg", "Kg", AxleWeightUnits)
@@ -345,29 +345,29 @@ block content
                         var vehicleData= !{JSON.stringify(vehicleData)};
                         function savePart() {
                             let payload={};
-                            payload['AxleWeight'] = document.querySelector("#suspenssion_AxleWeight").value + " "+
-                                document.querySelector("#suspenssion_AxleWeight_units").value
-                            payload['ArmShockDistance'] = document.querySelector("#suspenssion_ArmShockDistance").value + " "+
-                                document.querySelector("#suspenssion_ArmShockDistance_units").value
-                            payload['lowerControlArmLenght'] = document.querySelector("#suspenssion_lowerControlArmLenght").value + " "+
-                                document.querySelector("#suspenssion_lowerControlArmLenght_units").value
-                            payload['shockAngle'] = document.querySelector("#suspenssion_shockAngle").value + " "+
-                                document.querySelector("#suspenssion_shockAngle_units").value
-                            payload['suspendedWeights'] = document.querySelector("#suspenssion_suspendedWeights").value + " "+
-                                document.querySelector("#suspenssion_suspendedWeights_units").value
-                            payload['WireSpringDiameter'] = document.querySelector("#suspenssion_WireSpringDiameter").value + " "+
-                                document.querySelector("#suspenssion_WireSpringDiameter_units").value
-                            payload['outerSpringDiameter'] = document.querySelector("#suspenssion_outerSpringDiameter").value + " "+
-                                document.querySelector("#suspenssion_outerSpringDiameter_units").value
-                            payload['mediumSpringDiameter'] = document.querySelector("#suspenssion_mediumSpringDiameter").value + " "+
-                                document.querySelector("#suspenssion_mediumSpringDiameter_units").value
-                            payload['elasticityCoefficient'] = document.querySelector("#suspenssion_elasticityCoefficient").value + " "+
-                                document.querySelector("#suspenssion_elasticityCoefficient_units").value
-                            payload['coilsNumber'] = document.querySelector("#suspenssion_coilsNumber").value
-                            payload['pitchSpring'] = document.querySelector("#suspenssion_pitchSpring").value + " "+
-                                document.querySelector("#suspenssion_pitchSpring_units").value
-                            payload['radialDeformation'] = document.querySelector("#suspenssion_radialDeformation").value + " "+
-                                document.querySelector("#suspenssion_radialDeformation_units").value
+                            payload['AxleWeight'] = documcormion_AxleWeight").value + " "+
+                                documcormion_AxleWeight_units").value
+                            payload['ArmShockDistance'] = documcormion_ArmShockDistance").value + " "+
+                                documcormion_ArmShockDistance_units").value
+                            payload['lowerControlArmLenght'] = documcormion_lowerControlArmLenght").value + " "+
+                                documcormion_lowerControlArmLenght_units").value
+                            payload['shockAngle'] = documcornerion_shockAngle").value + " "+
+                                documcornerion_shockAngle_units").value
+                            payload['suspendedWeights'] = documcornerion_suspendedWeights").value + " "+
+                                documcormion_suspendedWeights_units").value
+                            payload['WireSpringDiameter'] = documcormion_WireSpringDiameter").value + " "+
+                                documcormion_WireSpringDiameter_units").value
+                            payload['outerSpringDiameter'] = documcormion_outerSpringDiameter").value + " "+
+                                documcormion_outerSpringDiameter_units").value
+                            payload['mediumSpringDiameter'] = documcormion_mediumSpringDiameter").value + " "+
+                                documcormion_mediumSpringDiameter_units").value
+                            payload['elasticityCoefficient'] = documcormion_elasticityCoefficient").value + " "+
+                                documcormion_elasticityCoefficient_units").value
+                            payload['coilsNumber'] = documcormion_coilsNumber").value
+                            payload['pitchSpring'] = documcormion_pitchSpring").value + " "+
+                                documcormion_pitchSpring_units").value
+                            payload['radialDeformation'] = documcormion_radialDeformation").value + " "+
+                                documcormion_radialDeformation_units").value
                             fetch(
                                 `/vehicle/${vehicleData.id}/Suspenssion`,
                                 {

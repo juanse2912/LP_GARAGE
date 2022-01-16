@@ -2,7 +2,7 @@
     form#engineForces.needs-validation(novalidate action="#" method="post")
         label.form-label(for="engineforces_pistonDiameter") Diámetro del pistón 
         .input-group.mb-3 
-            -var fieldData = getProperty(vehicleData, "Engine.Forces.pistonDiameter")
+            -var fieldData = getProperty(vehicleData, "Engine.EngineForces.pistonDiameter")
             if (fieldData)
                 -var pistonDiameter = unitRE.exec(fieldData)[1] || ""
                 -var pistonDiameterUnits = unitRE.exec(fieldData)[2] || "mm"
@@ -14,7 +14,7 @@
                 type="number"
                 step="any"
                 value= pistonDiameter 
-                data-bound="Engine.Forces.pistonDiameter"
+                data-bound="Engine.EngineForces.pistonDiameter"
                 required
             )
             select.form-select.input-group-text.unit(
@@ -27,7 +27,7 @@
                 +unitOption("in", "pulg", pistonDiameterUnits)
         label.form-label(for="engineforces_crankshaftRadius") Radio del cigüeñal 
         .input-group.mb-3 
-            -var fieldData = getProperty(vehicleData, "Engine.Forces.crankshaftRadius")
+            -var fieldData = getProperty(vehicleData, "Engine.EngineForces.crankshaftRadius")
             if (fieldData)
                 -var crankshaftRadius = unitRE.exec(fieldData)[1] || ""
                 -var crankshaftRadiusUnits = unitRE.exec(fieldData)[2] || "mm"
@@ -39,7 +39,7 @@
                 type="number"
                 step="any"
                 value= crankshaftRadius 
-                data-bound="Engine.Forces.crankshaftRadius"
+                data-bound="Engine.EngineForces.crankshaftRadius"
                 required
             )
             select.form-select.input-group-text.unit(
@@ -52,7 +52,7 @@
                 +unitOption("in", "pulg", crankshaftRadiusUnits)
         label.form-label(for="engineforces_connectingRodLength") Longitud de la biela 
         .input-group.mb-3 
-            -var fieldData = getProperty(vehicleData, "Engine.Forces.connectingRodLength")
+            -var fieldData = getProperty(vehicleData, "Engine.EngineForces.connectingRodLength")
             if (fieldData)
                 -var connectingRodLength = unitRE.exec(fieldData)[1] || ""
                 -var connectingRodLengthUnits = unitRE.exec(fieldData)[2] || "mm"
@@ -64,7 +64,7 @@
                 type="number"
                 step="any"
                 value= connectingRodLength 
-                data-bound="Engine.Forces.connectingRodLength"
+                data-bound="Engine.EngineForces.connectingRodLength"
                 required
             )
             select.form-select.input-group-text.unit(
@@ -84,7 +84,160 @@
                 ) Guardar
 .col-10.col-md-6
     if getProperty(vehicleData, "Engine.EngineForces")
-        h3 Calculos de fuerza del motor 
+        //- Import plotly.javascript to draw plots
+        script(src="https://cdn.plot.ly/plotly-2.8.3.min.js")
+        script.
+            const charts = {
+                "NE":{
+                    srcData:!{JSON.stringify(vehicleData.Engine.EngineForces.NE)},
+                    xAxisTitle:"Ángulo",
+                    yAxisTitle:"Fuerza",
+                    div_id:"plot-ne"
+                },
+                "KE":{
+                    srcData:!{JSON.stringify(vehicleData.Engine.EngineForces.KE)},
+                    xAxisTitle:"Ángulo",
+                    yAxisTitle:"Fuerza",
+                    div_id:"plot-ke"
+                },
+                "TE":{
+                    srcData:!{JSON.stringify(vehicleData.Engine.EngineForces.TE)},
+                    xAxisTitle:"Ángulo",
+                    yAxisTitle:"Fuerza",
+                    div_id:"plot-te"
+                },
+                "ZE":{
+                    srcData:!{JSON.stringify(vehicleData.Engine.EngineForces.ZE)},
+                    xAxisTitle:"Ángulo",
+                    yAxisTitle:"Fuerza",
+                    div_id:"plot-ze"
+                },
+                "VE":{
+                    srcData:!{JSON.stringify(vehicleData.Engine.EngineForces.VE)},
+                    xAxisTitle:"Ángulo",
+                    yAxisTitle:"Velocidad",
+                    div_id:"plot-ve"
+                },
+                "WE":{
+                    srcData:!{JSON.stringify(vehicleData.Engine.EngineForces.WE)},
+                    xAxisTitle:"Ángulo",
+                    yAxisTitle:"Aceleración",
+                    div_id:"plot-we"
+                },
+                "SE":{
+                    srcData:!{JSON.stringify(vehicleData.Engine.EngineForces.SE)},
+                    xAxisTitle:"Ángulo",
+                    yAxisTitle:"Desplazamiento",
+                    div_id:"plot-se"
+                }
+            };
+
+            function plot(srcData, xAxisTitle, yAxisTitle, div_id){
+                const trace={
+                    x:srcData.xAxis,
+                    y:srcData.yAxis,
+                    type:"scatter"
+                }
+                const data = [trace]
+                Plotly.newPlot(div_id, data, {
+                    autosize:true,
+                    xaxis:{
+                        title:`${xAxisTitle} (${srcData.xAxisUnit})`
+                    },
+                    yaxis:{
+                        title:`${yAxisTitle} (${srcData.yAxisUnit})`
+                    }
+                })
+            }
+            function updateCharts() {
+                for (let [k,v] of Object.entries(charts)) {
+                    plot(
+                        v.srcData,
+                        v.xAxisTitle,
+                        v.yAxisTitle,
+                        v.div_id
+                    )
+                }
+            }
+            document.addEventListener("vehicleUpdated", e=>{
+                let vehicleData = e.detail;
+                for (let [k,v] of Object.entries(charts)) {
+                    v.srcData = vehicleData.Engine.EngineForces[k]
+                }
+                updateCharts();
+            })
+        nav 
+            .nav.nav-tabs(id="nav-tab" role="tablist")
+                button#nav-calculos.nav-link(
+                    data-bs-toggle="tab"
+                    data-bs-target="#tab-calculos"
+                    type="button"
+                    role="tab"
+                    aria-controls="tab-calculos"
+                    aria-selected=false
+                ) Cálculos de Fuerza
+                button#nav-graficas.nav-link.active(
+                    data-bs-toggle="tab"
+                    data-bs-target="#tab-graficas"
+                    type="button"
+                    role="tab"
+                    aria-controls="tab-graficas"
+                    aria-selected=true
+                ) Gráficas
+        #nav-content.tab-content
+            #tab-calculos.tab-pane.fade(
+                role="tabpanel"
+                aria-labelledby="nav-calculos"
+            )
+                +calculatedValue("Área del pistón:", "Engine.EngineForces.pistonarea", {
+                    "m^2":"m^2", 
+                    "cm^2":"cm^2", 
+                    "mm^2":"mm^2", 
+                    "in^2":"pulg^2"
+                    })
+                +calculatedValue("Fuerza sobre el pistón:", "Engine.EngineForces.pistonpressure", {
+                    "N":"N", 
+                    "kgf":"kgf", 
+                    "lbf":"lbf"
+                    })
+                +calculatedValue("Relacion Lambda:", "Engine.EngineForces.RLratio")
+                +calculatedValue("Carrera del pistón:", "Engine.EngineForces.stroke", longitudeUnits)
+            #tab-graficas.tab-pane.fade.show.active(
+                role="tabpanel"
+                aria-labeledby="nav-graficas"
+            )
+                .row 
+                    .col-6
+                        .card
+                            .card-header Fuerzas laterales (NE)
+                            div#plot-ne.card-img-top
+                    .col-6
+                        .card
+                            .card-header Fuerza ejercida sobre biela (KE)
+                            div#plot-ke.card-img-top
+                    .col-6
+                        .card
+                            .card-header Fuerza transversal al cigüeñal (TE)
+                            div#plot-te.card-img-top
+                    .col-6
+                        .card
+                            .card-header Fuerza en cojinete del cigüeñal (ZE)
+                            div#plot-ze.card-img-top
+                    .col-6
+                        .card
+                            .card-header Velocidad pistón (VE)
+                            div#plot-ve.card-img-top                
+                    .col-6
+                        .card
+                            .card-header Aceleración pistón (WE)
+                            div#plot-we.card-img-top
+                    .col-6
+                        .card
+                            .card-header Desplazamiento pistón (SE)
+                            div#plot-se.card-img-top
+        script.
+            updateCharts();
+  
 
 //- Script
 if getProperty(vehicleData, "Engine.EngineForces")
@@ -109,8 +262,8 @@ else
                 document.querySelector("#engineforces_pistonDiameter_units").value
             payload['crankshaftRadius'] = document.querySelector("#engineforces_crankshaftRadius").value + " "+
                 document.querySelector("#engineforces_crankshaftRadius_units").value
-            payload['connectingRodLength'] = document.querySelector("#engineforces_connectingRodLenth").value + " "+
-                document.querySelector("#engineforces_connectingRodLenth_units").value
+            payload['connectingRodLength'] = document.querySelector("#engineforces_connectingRodLength").value + " "+
+                document.querySelector("#engineforces_connectingRodLength_units").value
             fetch(
                 `/vehicle/${vehicleData.id}/Engine/EngineForces`,
                 {

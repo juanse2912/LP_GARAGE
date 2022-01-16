@@ -47,6 +47,22 @@ class Part {
         this.scope = scope;
         this.partProperties = partProperties
         //Add input parameters to the scope
+
+
+        for (let [k,v] of Object.entries(partProperties.inputParameters)) {
+            let alias = v.alias;
+            if (v.hasOwnProperty("units")) {
+                try {
+                    this.scope[alias] = math.unit(v.value).to(v.units)
+                } catch (error) {
+                    console.error(`Error reading input parameter ${k} - value ${v.value} - units ${v.units}`, error)
+                }
+                
+            } else {
+                this.scope[alias] = math.number(v.value)
+            }
+        }
+/*
         for (let param in partProperties.inputParameters) {
             let alias = partProperties.inputParameters[param].alias;
             if (partProperties.inputParameters[param].hasOwnProperty("units")) {
@@ -58,6 +74,7 @@ class Part {
                     .number(partProperties.inputParameters[param].value)
             }
         }
+*/
         //Add constants to the scope
         for (let c in partProperties.constants) {
             let alias = partProperties.constants[c].alias;

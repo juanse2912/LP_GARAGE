@@ -93,18 +93,18 @@
                 -var camshaftAdmissionCloseUnits = "deg"
             -var escOpen = getProperty(vehicleData, "Engine.EngineNozzles.camshaftEscapeOpen")
             if escOpen && unitRE.test(escOpen)
-                -var camshaftExcapeOpen = unitRE.exec(escOpen)[1] || ""
-                -var camshaftExcapeOpenUnits = unitRE.exec(escOpen)[2] || "deg"
+                -var camshaftEscapeOpen = unitRE.exec(escOpen)[1] || ""
+                -var camshaftEscapeOpenUnits = unitRE.exec(escOpen)[2] || "deg"
             else 
-                -var camshaftExcapeOpen = ""
-                -var camshaftExcapeOpenUnits = "deg"
-            -var admClose = getProperty(vehicleData, "Engine.EngineNozzles.camshaftExcapeClose")
+                -var camshaftEscapeOpen = ""
+                -var camshaftEscapeOpenUnits = "deg"
+            -var escClose = getProperty(vehicleData, "Engine.EngineNozzles.camshaftEscapeClose")
             if escClose && unitRE.test(escClose)
-                -var camshaftExcapeClose = unitRE.exec(escClose)[1] || ""
-                -var camshaftExcapeCloseUnits = unitRE.exec(escClose)[2] || "deg"
+                -var camshaftEscapeClose = unitRE.exec(escClose)[1] || ""
+                -var camshaftEscapeCloseUnits = unitRE.exec(escClose)[2] || "deg"
             else 
-                -var camshaftExcapeClose = ""
-                -var camshaftExcapeCloseUnits = "deg"
+                -var camshaftEscapeClose = ""
+                -var camshaftEscapeCloseUnits = "deg"
             input.form-control.align-right(
                 id="enginenozzles_camshaftAdmissionOpen"
                 type="number"

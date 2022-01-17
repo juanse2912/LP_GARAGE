@@ -22,7 +22,7 @@
             "formula":"(pi*(dp^2))/4"
         },
         "pistonpressure":{
-            "alias":"PE",
+            "alias":"PEs",
             "formula":"pme*(AP in m^2)"
         },
         "RLratio":{
@@ -43,28 +43,28 @@
         },
         "NE":{
             "alias":"NE",
-            "formula":"PE*tan(asin(sin(alpha)*RLR))",
+            "formula":"PEs*tan(asin(sin(alpha)*RLR))",
             "range":[0,360,1],
             "rangeUnits":"deg",
             "rangeVariable":"alpha"
         },
         "KE":{
             "alias":"KE",
-            "formula":"PE/(cos(asin(sin(alpha)*RLR)))",
+            "formula":"PEs/(cos(asin(sin(alpha)*RLR)))",
             "range":[0,360,1],
             "rangeUnits":"deg",
             "rangeVariable":"alpha"
         },
         "TE":{
             "alias":"TE", 
-            "formula":"(PE*sin(alpha+asin(sin(alpha)*RLR) rad))/cos(asin(sin(alpha)*RLR))",
+            "formula":"(PEs*sin(alpha+asin(sin(alpha)*RLR) rad))/cos(asin(sin(alpha)*RLR))",
             "range":[0, 6.283185307179586, 0.017453292519943295],
             "rangeUnits":"rad",
             "rangeVariable":"alpha"
         },
         "ZE":{
             "alias":"ZE",
-            "formula":"(PE*cos(alpha+asin(sin(alpha)*RLR) rad))/cos(asin(sin(alpha)*RLR))",
+            "formula":"(PEs*cos(alpha+asin(sin(alpha)*RLR) rad))/cos(asin(sin(alpha)*RLR))",
             "range":[0, 6.283185307179586, 0.017453292519943295],
             "rangeUnits":"rad",
             "rangeVariable":"alpha"

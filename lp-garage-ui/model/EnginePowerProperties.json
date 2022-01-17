@@ -68,7 +68,7 @@
             "alias":"pme",
             "formula":"PA*((((RC^(k-1))*(l2-1)))/((RC-1)(k-1)))*(1-(1/(RC^(k-1))))"
         },
-        "efectivePower":{
+        "effectivePower":{
             "alias":"PE",
             "formula":"(((pme*1000/9.81)*VH*n)/(2*60*75))/(1 in kJ)*(1 in hp)"
         }

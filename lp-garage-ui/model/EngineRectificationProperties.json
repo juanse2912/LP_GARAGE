@@ -5,30 +5,30 @@
             "alias":"ic",
             "value": null
         },
+        "Stcylinderdiameter":{
+            "alias":"Stcd",
+            "units":"mm",
+            "value":null
+
+        },
         "cylindertopwear":{
             "alias":"cw",
-            "units":"in",
+            "units":"mm",
             "value":null
 
         },
         "standardcrankjornaldiameter": {
             "alias":"cd",
-            "units":"in",
+            "units":"mm",
             "value": null
         },
         "cranktopwear":{
             "alias":"cp",
-            "units":"in",
+            "units":"mm",
             "value":null
         }
     },
     "formulas":{
-
-        "tabla" :{
-            "alias":"",
-        "formula":""
-        },
-
 
         "thicknesstobedevastated": {
             "alias":"td",

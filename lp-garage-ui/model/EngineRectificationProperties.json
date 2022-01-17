@@ -46,17 +46,17 @@
         },
         "cylinderdiameterbeforehoning":{
             "alias":"dbh",
-            "formula":"(drc-0.002)*(1 in in)"
+            "formula":"(drc-0.002in)"
 
         },
         "pistoncylindergap":{
             "alias":"pcg",
-            "formula":"(0.001*(drc-1))*(1 in in)"
+            "formula":"(0.001 in*(drc-1 in))"
 
         },
         "newpistondiameter":{
             "alias":"npd",
-            "formula":"(drc-pcg)*(1 in in)"
+            "formula":"(drc-pcg)"
         },
         "crankbearingrectification":{
             "alias":"cbr",
@@ -70,12 +70,12 @@
         },
         "bearingjournalgap":{
             "alias":"bjg",
-            "formula":"(CD*0.001)*(1 in in)" 
+            "formula":"(CD*0.001in)*" 
 
         },
         "bearinginternaldiameter":{
             "alias":"bid",
-            "formula":"(crd+bjg)*(1 in in)"
+            "formula":"(crd+bjg)"
         
 
         }

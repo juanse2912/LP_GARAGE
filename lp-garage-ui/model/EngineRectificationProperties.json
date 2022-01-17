@@ -34,11 +34,6 @@
             "alias":"td",
             "formula":"(L/(RC-1))-(L/(ic-1))"
         },
-        "cylindertopwearmm":{
-            "alias":"CW",
-            "formula":"(cw*25.4)*(1 in mm)"
-
-        },
         "cylinderrectification":{
             "alias":"cr",
             "formula":""

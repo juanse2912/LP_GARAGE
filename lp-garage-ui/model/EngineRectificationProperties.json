@@ -32,26 +32,11 @@
 
         "thicknesstobedevastated": {
             "alias":"td",
-            "formula":"(stoke/(compratio-1))-(stroke/(ic-1))"
+            "formula":"(L/(RC-1))-(L/(ic-1))"
         },
         "cylindertopwearmm":{
             "alias":"CW",
             "formula":"(cw*25.4)*(1 in mm)"
-
-        },
-        "standardcrankjornaldiametermm":{
-            "alias":"CD",
-            "formula":"(cd*25.4)*(1 in mm)"
-
-        },
-        "cranktopwearmm":{
-            "alias":"CW",
-            "formula":"(cw*25.4)*(1 in mm)"
-
-        },
-        "FORMULA EN FUNCION DE TABLA":{
-            "alias":"",
-            "formula":""
 
         },
         "cylinderrectification":{

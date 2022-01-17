@@ -36,12 +36,12 @@
         },
         "cylinderrectification":{
             "alias":"cr",
-            "formula":"Stcd-cw"
+            "formula":"floor(Stcd-cw,2)+.01 in"
 
         },
         "diameterrectifiedcylinder":{
             "alias":"drc",
-            "formula":""
+            "formula":"cr + cw"
 
         },
         "cylinderdiameterbeforehoning":{
@@ -60,12 +60,12 @@
         },
         "crankbearingrectification":{
             "alias":"cbr",
-            "formula":"cd-cp"
+            "formula":"floor(cd-cp,2)+.01 in"
 
         },
         "crankbearingrectificationdiameter":{
             "alias":"crd",
-            "formula":""
+            "formula":"cbr+cp"
 
         },
         "bearingjournalgap":{

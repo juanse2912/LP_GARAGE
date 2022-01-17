@@ -1,28 +1,28 @@
 
 {
     "inputParameters": {
-        "intendedcompressionratio": {
+        "intendedCompressionRatio": {
             "alias":"ic",
             "value": null
         },
-        "Stcylinderdiameter":{
+        "standardCylinderDiameter":{
             "alias":"Stcd",
             "units":"mm",
             "value":null
 
         },
-        "cylindertopwear":{
+        "cylinderTopwWear":{
             "alias":"cw",
             "units":"mm",
             "value":null
 
         },
-        "standardcrankjornaldiameter": {
+        "standardCrankJornalDiameter": {
             "alias":"cd",
             "units":"mm",
             "value": null
         },
-        "cranktopwear":{
+        "crankTopWear":{
             "alias":"cp",
             "units":"mm",
             "value":null
@@ -36,7 +36,7 @@
         },
         "cylinderrectification":{
             "alias":"cr",
-            "formula":""
+            "formula":"Stcd-cw"
 
         },
         "diameterrectifiedcylinder":{
@@ -60,7 +60,7 @@
         },
         "crankbearingrectification":{
             "alias":"cbr",
-            "formula":""
+            "formula":"cd-cp"
 
         },
         "crankbearingrectificationdiameter":{

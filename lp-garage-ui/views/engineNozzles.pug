@@ -181,7 +181,43 @@
     if getProperty(vehicleData, "Engine.EngineNozzles")
         h3 Cálculos de Toberas
         ul.list-group
-            +calculatedValue("Diámetro Válvula de Admisión:", "Engine.EngineNozzles.admissionvalvediameter", longitudeUnits)
+            li.list-group-item.fs-6 
+                strong.d-block Diámetro Válvula de Admisión 
+                span(data-bound="Engine.EngineNozzles.admissionvalvediameter")
+                    -var dp=getProperty(vehicleData, "Engine.EngineForces.pistonDiameter")
+                    -var Dv=getProperty(vehicleData, "Engine.EngineNozzles.admissionvalvediameter")
+                    if unitRE.test(dp) && unitRE.test(Dv)
+                        =unitRE.exec(Dv)[1]
+                        -var addm = Number(unitRE.exec(dp)[1]) * 0.57
+                        if Number(unitRE.exec(Dv)[1]) <= addm
+                            span#valvediameter-badge.badge.bg-success Admisible 
+                        else 
+                            span#valvediameter-badge.badge.bg-danger Inadmisible
+                        +unitButton(unitRE.exec(dp)[2], longitudeUnits, "Engine.EngineNozzles.admissionvalvediameter")
+                        script.
+                            document.addEventListener("vehicleUpdated", e => {
+                                let vehicleData = e.detail;
+                                let unitRE=!{unitRE}
+                                let dp = vehicleData.Engine.EngineForces.pistonDiameter 
+                                let Dv = vehicleData.Engine.EngineNozzles.admissionvalvediameter 
+                                let badge = document.getElementById("valvediameter-badge")
+                                if (unitRE.test(dp) && unitRE.test(Dv)) {
+                                    if (Number(unitRE.exec(Dv)[1]) <= Number(unitRE.exec(dp)[1])*.57){
+                                        badge.classList.remove("bg-danger")
+                                        badge.classList.add("bg-success")
+                                        badge.innerText="Admisible"
+                                    } else {
+                                        badge.classList.remove("bg-success")
+                                        badge.classList.add("bg-danger")
+                                        badge.innerText="Inadmisible"
+                                    }
+                                }
+
+
+                            })
+                    else 
+                        =Dv
+                    
             +calculatedValue("Velocidad media del Pistón:", "Engine.EngineNozzles.avaragepistonspeed", speedUnits)
             +calculatedValue("Diámetro del primero Conducto:", "Engine.EngineNozzles.firstductdiameter", longitudeUnits )
             +calculatedValue("Sección del primer Conducto:", "Engine.EngineNozzles.firstductsection", {

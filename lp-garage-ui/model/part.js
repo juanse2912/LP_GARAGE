@@ -44,7 +44,12 @@ class Part {
      * @param {partProperties} partProperties 
      */
     constructor(scope, partProperties) {
-        this.scope = scope;
+        if (scope.hasOwnProperty("scope")) {
+            this.scope = scope.scope
+        } else  {
+            this.scope = scope;
+        }
+        
         this.partProperties = partProperties
         //Add input parameters to the scope
 
@@ -59,7 +64,13 @@ class Part {
                 }
                 
             } else {
-                this.scope[alias] = math.number(v.value)
+                try {
+                    this.scope[alias] = math.bignumber(v.value)
+                } catch (err) {
+                    console.error(`Can't transform ${k}'s value "${v.value}" to number: `, err)
+                    this.scope[alias] = 0;
+                }
+                
             }
         }
 /*
@@ -111,7 +122,8 @@ class Part {
             } else {
                 console.debug("formula", this.partProperties.formulas[f])
                 try {
-                    math.evaluate( `${alias} = ${formula}`, this.scope)
+                    this.scope[alias] = math.evaluate(formula, this.scope)
+                    //math.evaluate( `${alias} = ${formula}`, this.scope)
                     console.debug("value", this.scope[alias].toString())
                 } catch (err) {
                     console.error(`Error evaluating: ${alias} = ${formula}`, err)
@@ -210,7 +222,12 @@ class Part {
                 })
 */
             } else {
-                result[f] = this.scope[formulas[f].alias].toString();
+                try {
+                    result[f] = this.scope[formulas[f].alias].toString();
+                } catch (err) {
+                    console.error(`Failed to get value of ${f} - ${formulas[f].alias}`, err)
+                }
+                
             }
             
         }

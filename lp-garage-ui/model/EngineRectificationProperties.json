@@ -45,7 +45,7 @@
         },
         "diameterrectifiedcylinder":{
             "alias":"drc",
-            "formula":"cr + cw"
+            "formula":"cr + Stcd"
 
         },
         "cylinderdiameterbeforehoning":{
@@ -73,7 +73,7 @@
         },
         "crankbearingrectificationdiameter":{
             "alias":"crd",
-            "formula":"cbr+cp"
+            "formula":"cd-cbr"
 
         },
         "bearingjournalgap":{

@@ -1,345 +1,87 @@
 {
-
     "inputParameters":{ 
-        "tyrewidth": {
+        "firstGearRatio": {
             "value": null,
-            "alias": "TW",
-            "units": null
+            "alias": "FGR"
         },
-        "tyreprofile": {
+        "secondGearRatio": {
             "value": null,
-            "alias": "TP",
-            "units": null
+            "alias": "SGR"
         },
-        "tyrerim": {
+        "thirdGearRatio": {
             "value": null,
-            "alias": "TR",
-            "units": null
+            "alias": "TGR"
         },
-        "diffratio": {
-            "value":null,
-            "alias":"DR",
-            "units": null
-        },
-        "rpmMaxPower":{
-            "alias":"n",
-            "value":null,
-            "units": null
-        },
-        "firstgearratio":{
-            "alias":"FGR",
-            "value":null,
-            "units": null
-        },
-        "secondgearratio":{
-            "alias":"SGR",
-            "value":null,
-            "units": null 
-        },
-        "thirdgearratio":{
-            "alias":"TGR",
-            "value":null,
-            "units": null 
-        },
-        "fourthgearratio":{
-            "alias":"FOGR",
-            "value":null,
-            "units": null 
-        },
-        "fithgearratio":{
-            "alias":"FIGR",
-            "value":null,
-            "units": null 
-        },
-        "sixthgearratio":{
-            "alias":"SIGR",
-            "value":null,
-            "units": null 
-        },
-        "reversegearratio":{
-            "alias":"RGR",
-            "value":null,
-            "units": null
-        },
-        "piniongearteeth":{
-            "alias":"PGT",
-            "value":null,
-            "units": null
-        },
-        "crowngearteeth":{
-            "alias":"CGT",
-            "value":null,
-            "units": null  
-        },
-        "newtyrewidth": {
+        "fouthGearRatio": {
             "value": null,
-            "alias": "NTW",
-            "units": null            
+            "alias": "FoGR"
         },
-        "newtyreprofile": {
+        "fifthGearRatio": {
             "value": null,
-            "alias": "NTP",
-            "units": null
+            "alias": "FiGR"
         },
-        "newtyrerim": {
+        "sixthGearRatio": {
             "value": null,
-            "alias": "NTR",
-            "units": null
+            "alias": "SiGR"
         },
-        "firstgearz1": {
+        "finalGearRatio": {
+                "value": null,
+                "alias": "FFGR"
+        },
+        "maximunRPM": {
             "value": null,
-            "alias": "FGZ1",
-            "units": null
-        },
-        "firstgearz2": {
-            "value": null,
-            "alias": "FGZ2",
-            "units": null
-        },
-        "secondgearz1": {
-            "value": null,
-            "alias": "SGZ1",
-            "units": null
-        },
-        "secondgearz2": {
-            "value": null,
-            "alias": "SGZ2",
-            "units": null
-        },
-        "thirdgearz1": {
-            "value": null,
-            "alias": "TGZ1",
-            "units": null
-        },
-        "thirdgearz2": {
-            "value": null,
-            "alias": "TGZ2",
-            "units": null
-        },
-        "fourthgearz1": {
-            "value": null,
-            "alias": "FOGZ1",
-            "units": null
-        },
-        "fourthgearz2": {
-            "value": null,
-            "alias": "FOGZ2",
-            "units": null
-        },
-        "fithgearz1": {
-            "value": null,
-            "alias": "FIGZ1",
-            "units": null
-        },
-        "fithgearz2": {
-            "value": null,
-            "alias": "FIGZ2",
-            "units": null
-        },
-        "sixthgearz1": {
-            "value": null,
-            "alias": "SIGZ1",
-            "units": null
-        },
-        "sixthgearz2": {
-            "value": null,
-            "alias": "SIGZ2",
-            "units": null
-        },
-        "reversegearz1": {
-            "value": null,
-            "alias": "RGZ1",
-            "units": null
-        },
-        "reversegearz2": {
-            "value": null,
-            "alias": "RGZ2",
-            "units": null
-        },
-        "newrpmMaxPower":{
-            "alias":"nn",
-            "value":null,
-            "units": null
-
-            
+            "alias": "nMax"
+        }
 
     }, 
     "formulas":{
-        "newDiffratio":{
-            "alias":"NDR",
-            "formula":"PGT/CGT",
-            "units":null
+        "tirePerimeter":{
+            "alias":"Tpr",
+            "formula":"pi*TR*2"
         },
-        "standardtyreperimeter":{
-            "alias":"Pstd",
-            "formula":"(((TW*TP/100)*2)+TR*25.4)*pi",
-            "units":null
+        "firstSecondGap":{
+            "alias":"FSGap",
+            "formula":"nMax-(nMax*(SGR/FGR))"
         },
-        "newtyreperimeter":{
-            "alias":"Pnew",
-            "formula":"(((NTW*NTP/100)*2)+NTR*25.4)*pi",
-            "units":null
+        "secondThirdGap":{
+            "alias":"STGap",
+            "formula":"nMax-(nMax*(TGR/SGR))"
         },
-        "perimeterpercentage":{
-            "alias":"pp",
-            "formula":"(Pnew/Pstd)-1",
-            "units":"%"
+        "thirdFourthGap":{
+            "alias":"TFGap",
+            "formula":"nMax-(nMax*(FoGR/TGR))"
         },
-        "firstgearfinalspeed":{
-            "alias":"FFS",
-            "formula":"((n-500)*(60)*((((TW*(TP/100))*2+(TR*25.4))*pi/1000000))/((FGR)*(DR))",
-            "units":"km/h"
+        "fourthFifthGap":{
+            "alias":"FFGap",
+            "formula":"nMax-(nMax*(FiGR/FoGR))"
         },
-        "secondgearfinalspeed":{
-            "alias":"SFS",
-            "formula":"((n-500)*(60)*((((TW*(TP/100))*2+(TR*25.4))*pi/1000000))/((SGR)*(DR))",
-            "units":"km/h"
+        "fifthSixthGap":{
+            "alias":"FSiGap",
+            "formula":"nMax-(nMax*(SiGR/FiGR))"
         },
-        "thirdgearfinalspeed":{
-            "alias":"TFS",
-            "formula":"((n-500)*(60)*((((TW*(TP/100))*2+(TR*25.4))*pi/1000000))/((TGR)*(DR))",
-            "units":"km/h"
+        "firstGearSpeed":{
+            "alias":"FSp",
+            "formula":"(nMax*(Tpr/1000000mm)*60km/h)/((FGR*FFGR))in km/h"
         },
-        "fourthgearfinalspeed":{
-            "alias":"FOFS",
-            "formula":"((n-500)*(60)*((((TW*(TP/100))*2+(TR*25.4))*pi/1000000))/((FOGR)*(DR))",
-            "units":"km/h"
+        "secondGearSpeed":{
+            "alias":"SSp",
+            "formula":"(nMax*(Tpr/1000000mm)*60km/h)/((SGR*FFGR))in km/h"
         },
-        "fithgearfinalspeed":{
-            "alias":"FIFS",
-            "formula":"((n-500)*(60)*((((TW*(TP/100))*2+(TR*25.4))*pi/1000000))/((FIGR)*(DR))",
-            "units":"km/h"
+        "ThirdGearSpeed":{
+            "alias":"TSp",
+            "formula":"(nMax*(Tpr/1000000mm)*60km/h)/((TGR*FFGR))in km/h"
         },
-        "sixthgearfinalspeed":{
-            "alias":"SIFS",
-            "formula":"((n-500)*(60)*((((TW*(TP/100))*2+(TR*25.4))*pi/1000000))/((SIGR)*(DR))",
-            "units":"km/h"
+        "fourthGearSpeed":{
+            "alias":"FoSp",
+            "formula":"(nMax*(Tpr/1000000mm)*60km/h)/((FoGR*FFGR))in km/h"
         },
-        "reversegearfinalspeed":{
-            "alias":"RFS",
-            "formula":"((n-500)*(60)*((((TW*(TP/100))*2+(TR*25.4))*pi/1000000))/((RGR)*(DR))",
-            "units":"km/h"
+        "fifthGearSpeed":{
+            "alias":"FiSp",
+            "formula":"(nMax*(Tpr/1000000mm)*60km/h)/((FiGR*FFGR))in km/h"
         },
-        "1&2geargap":{
-            "alias":"1-2gap",
-            "formula":"n-(n*(SGR/FGR))",
-            "units":null
-        },
-        "2&3geargap":{
-            "alias":"2-3gap",
-            "formula":"n-(n*(TGR/SGR))",
-            "units":null
-        },
-        "3&4geargap":{
-            "alias":"3-4gap",
-            "formula":"n-(n*(FOGR/TGR))",
-            "units":null
-        },
-        "4&5geargap":{
-            "alias":"4-5gap",
-            "formula":"n-(n*(FIGR/FOGR))",
-            "units":null
-        },
-        "5&6geargap":{
-            "alias":"5-6gap",
-            "formula":"n-(n*(SIGR/FIGR))",
-            "units":null
-        },
-        "newfirstgearratio":{
-            "alias":"NFGR",
-            "formula":"FGZ2/FGZ1",
-            "units":null
-        },
-        "newsecondgearratio":{
-            "alias":"NSGR",
-            "formula":"SGZ2/SGZ1",
-            "units":null
-        },
-        "newthirddgearratio":{
-            "alias":"NTGR",
-            "formula":"TGZ2/TGZ1",
-            "units":null
-        },
-        "newfourthgearratio":{
-            "alias":"NFOGR",
-            "formula":"FOGZ2/FOGZ1",
-            "units":null
-        },
-        "newfithgearratio":{
-            "alias":"NFIGR",
-            "formula":"FIGZ2/FIGZ1",
-            "units":null
-        },
-        "newsixthgearratio":{
-            "alias":"NSIGR",
-            "formula":"SIGZ2/SIGZ1",
-            "units":null
-        },
-        "newreversegearratio":{
-            "alias":"NRGR",
-            "formula":"RGZ2/RGZ1",
-            "units":null
-        },
-        "newfirstgearfinalspeed":{
-            "alias":"NFFS",
-            "formula":"((nn-500)*(60)*((((NTW*(NTP/100))*2+(NTR*25.4))*pi/1000000))/((NFGR)*(NDR))",
-            "units":"km/h"
-        },
-        "newsecondgearfinalspeed":{
-            "alias":"NSFS",
-            "formula":"((nn-500)*(60)*((((NTW*(NTP/100))*2+(NTR*25.4))*pi/1000000))/((NSGR)*(NDR))",
-            "units":"km/h"
-        },
-        "newthirddgearfinalspeed":{
-            "alias":"NTFS",
-            "formula":"((nn-500)*(60)*((((NTW*(NTP/100))*2+(NTR*25.4))*pi/1000000))/((NTGR)*(NDR))",
-            "units":"km/h"
-        },
-        "newfourthgearfinalspeed":{
-            "alias":"NFOFS",
-            "formula":"((nn-500)*(60)*((((NTW*(NTP/100))*2+(NTR*25.4))*pi/1000000))/((NFOGR)*(NDR))",
-            "units":"km/h"
-        },
-        "newfithgearfinalspeed":{
-            "alias":"NFIFS",
-            "formula":"((nn-500)*(60)*((((NTW*(NTP/100))*2+(NTR*25.4))*pi/1000000))/((NFIGR)*(NDR))",
-            "units":"km/h"
-        },
-        "newsixthgearfinalspeed":{
-            "alias":"NSIFS",
-            "formula":"((nn-500)*(60)*((((NTW*(NTP/100))*2+(NTR*25.4))*pi/1000000))/((NSIGR)*(NDR))",
-            "units":"km/h"
-        },
-        "newreversegearfinalspeed":{
-            "alias":"NRFS",
-            "formula":"((nn-500)*(60)*((((NTW*(NTP/100))*2+(NTR*25.4))*pi/1000000))/((NRGR)*(NDR))",
-            "units":"km/h"
-        },
-        "new1&2geargap":{
-            "alias":"new1-2gap",
-            "formula":"nn-(nn*(NSGR/NFGR))",
-            "units":null
-        },
-        "new2&3geargap":{
-            "alias":"new2-3gap",
-            "formula":"nn-(nn*(NTGR/NSGR))",
-            "units":null
-        },
-        "new3&4geargap":{
-            "alias":"new3-4gap",
-            "formula":"nn-(nn*(NFOGR/NTGR))",
-            "units":null
-        },
-        "new4&5geargap":{
-            "alias":"new4-5gap",
-            "formula":"nn-(nn*(NFIGR/NFOGR))",
-            "units":null
-        },
-        "new5&6geargap":{
-            "alias":"new5-6gap",
-            "formula":"nn-(nn*(NSIGR/NFIGR))",
-            "units":null
+        "SixthGearSpeed":{
+            "alias":"SiSp",
+            "formula":"(nMax*(Tpr/1000000mm)*60km/h)/((SiGR*FFGR))in km/h"
         }
     }
-}
 }

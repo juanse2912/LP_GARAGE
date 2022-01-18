@@ -1,0 +1,288 @@
+.col-10.col-md-4 
+    form#engine-rectification.needs-validation(novalidate action="#" method="post")
+        label.form-label(for="enginerectification_intendedCompressionRatio") Relación de compresión esperada (Opcional)
+        -var fData = getProperty(vehicleData, "Engine.EngineRectification.intendedCompressionRatio")
+        if fData && fData != ""
+            -var intendedCompressionRatio = fData
+        else 
+            -var intendedCompressionRatio = getProperty(vehicleData, "Engine.compressionRatio")
+        input.form-control.align-right(
+            id="enginerectification_intendedCompressionRatio"
+            type="number"
+            step="any"
+            value= intendedCompressionRatio
+            data-bound="Engine.EngineRectification.intendedCompressionRatio"
+        )
+        label.form-label(for="enginerectification_standardCylinderDiameter") Diámetro estándar del cilindro 
+        .input-group.mb-3 
+            -var fData = getProperty(vehicleData, "Engine.EngineRectification.standardCylinderDiameter")
+            if (fData) 
+                -var standardCylinderDiameter = unitRE.exec(fData)[1] || ""
+                -var standardCylinderDiameterUnits = unitRE.exec(fData)[2] || "mm"
+            else 
+                -var standardCylinderDiameter = ""
+                -var standardCylinderDiameterUnits = "mm"
+            input.form-control.align-right(
+                id="enginerectification_standardCylinderDiameter"
+                type="number"
+                step="any"
+                value= standardCylinderDiameter
+                data-bound="Engine.EngineRectification.standardCylinderDiameter"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginerectification_standardCylinderDiameter_units"
+                aria-label="unidades Diámetro estándar del cilindro"
+                data-from="enginerectification_standardCylinderDiameter"
+            )
+                +unitOption("mm", "mm", standardCylinderDiameterUnits)
+                +unitOption("cm", "cm", standardCylinderDiameterUnits)
+                +unitOption("in", "pulg", standardCylinderDiameterUnits)
+        label.form-label(for="enginerectification_cylinderTopWear") Desgaste superficial del cilindro 
+        .input-group.mb-3 
+            -var fData = getProperty(vehicleData, "Engine.EngineRectification.cylinderTopWear")
+            if (fData) 
+                -var cylinderTopWear = unitRE.exec(fData)[1] || ""
+                -var cylinderTopWearUnits = unitRE.exec(fData)[2] || "mm"
+            else 
+                -var cylinderTopWear = ""
+                -var cylinderTopWearUnits = "mm"
+            input.form-control.align-right(
+                id="enginerectification_cylinderTopWear"
+                type="number"
+                step="any"
+                value= cylinderTopWear
+                data-bound="Engine.EngineRectification.cylinderTopWear"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginerectification_cylinderTopWear_units"
+                aria-label="unidades Desgaste superficial del cilindro"
+                data-from="enginerectification_cylinderTopWear"
+            )
+                +unitOption("mm", "mm", cylinderTopWearUnits)
+                +unitOption("cm", "cm", cylinderTopWearUnits)
+                +unitOption("in", "pulg", cylinderTopWearUnits)
+        label.form-label(for="enginerectification_standardCrankJornalDiameter") Diámetro chaquetas del muñón del cigüeñal 
+        .input-group.mb-3 
+            -var fData = getProperty(vehicleData, "Engine.EngineRectification.standardCrankJornalDiameter")
+            if (fData) 
+                -var standardCrankJornalDiameter = unitRE.exec(fData)[1] || ""
+                -var standardCrankJornalDiameterUnits = unitRE.exec(fData)[2] || "mm"
+            else 
+                -var standardCrankJornalDiameter = ""
+                -var standardCrankJornalDiameterUnits = "mm"
+            input.form-control.align-right(
+                id="enginerectification_standardCrankJornalDiameter"
+                type="number"
+                step="any"
+                value= standardCrankJornalDiameter
+                data-bound="Engine.EngineRectification.standardCrankJornalDiameter"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginerectification_standardCrankJornalDiameter_units"
+                aria-label="unidades Diámetro chaquetas del muñón del cigüeñal"
+                data-from="enginerectification_standardCrankJornalDiameter"
+            )
+                +unitOption("mm", "mm", standardCrankJornalDiameterUnits)
+                +unitOption("cm", "cm", standardCrankJornalDiameterUnits)
+                +unitOption("in", "pulg", standardCrankJornalDiameterUnits)
+        label.form-label(for="enginerectification_crankTopWear") Desgaste superficial en muñón del cigüeñal 
+        .input-group.mb-3 
+            -var fData = getProperty(vehicleData, "Engine.EngineRectification.crankTopWear")
+            if (fData) 
+                -var crankTopWear = unitRE.exec(fData)[1] || ""
+                -var crankTopWearUnits = unitRE.exec(fData)[2] || "mm"
+            else 
+                -var crankTopWear = ""
+                -var crankTopWearUnits = "mm"
+            input.form-control.align-right(
+                id="enginerectification_crankTopWear"
+                type="number"
+                step="any"
+                value= crankTopWear
+                data-bound="Engine.EngineRectification.crankTopWear"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="enginerectification_crankTopWear_units"
+                aria-label="unidades Desgaste superficial en muñón del cigüeñal"
+                data-from="enginerectification_crankTopWear"
+            )
+                +unitOption("mm", "mm", crankTopWearUnits)
+                +unitOption("cm", "cm", crankTopWearUnits)
+                +unitOption("in", "pulg", crankTopWearUnits)
+        if !getProperty(vehicleData, "Engine.EngineRectification")
+            .d-grid
+                button.btn.btn-primary(
+                    type="submit"
+                    id="btn-save"
+                    value="submit"
+                ) Guardar
+.col-10.col-md-6 
+    if getProperty(vehicleData, "Engine.EngineRectification")
+        h3 Cálculos Rectificación
+        ul.list-group 
+            +calculatedValue("Rectificación del Cabezote", "Engine.EngineRectification.thicknesstobedevastated", longitudeUnits)
+        .row 
+            .col-6.col-md-12
+                h4 Rectificación en Block
+                ul.list-group
+                    li.list-group-item.fs-6 
+                        strong.d-block Medida de rectificación
+                        -var cr=unitRE.exec(getProperty(vehicleData, "Engine.EngineRectification.cylinderrectification"))
+                        if (cr.length>=1)
+                            if (Number(cr[1])<=0.02)
+                                -var cr_class="alert alert-success"
+                                -var msg = " (Dentro de margen de tolerancia)"
+                            else if Number(cr[1])<=0.04
+                                -var cr_class="alert alert-warning"
+                                -var msg = " (Dentro de margen de tolerancia)"
+                            else 
+                                -var cr_class="alert alert-danger"
+                                -var msg = " (Fuera de margen de tolerancia)"
+                            div#cylinderRectification(class= cr_class ) +
+                                =parseInt(Number(cr[1])*1000)
+                                =msg
+                            script.
+                                document.addEventListener("vehicleUpdated", e=>{
+                                    let vehicleData = e.detail;
+                                    let unitRE = !{unitRE}
+                                    let cr=unitRE.exec(vehicleData.Engine.EngineRectification.cylinderrectification)
+                                    let crn = parseInt(Number(cr[1])*1000)
+                                    let el = document.getElementById("cylinderRectification")
+                                    if (crn<=20) {
+                                        el.classList.remove("alert-warning")
+                                        el.classList.remove("alert-danger")
+                                        el.classList.add("alert-success")
+                                        el.innerText = '+'+crn+" (Dentro de margen de tolerancia)"
+                                    } else if (crn<=40) {
+                                        el.classList.remove("alert-success")
+                                        el.classList.remove("alert-danger")
+                                        el.classList.add("alert-warning")
+                                        el.innerText = '+'+crn+" (Dentro de margen de tolerancia)"
+                                    } else {
+                                        el.classList.remove("alert-success")
+                                        el.classList.remove("alert-warning")
+                                        el.classList.add("alert-danger")
+                                        el.innerText = '+'+crn+" (Fuera de margen de tolerancia)"
+                                    }
+                                })
+                        +calculatedValue("Diámetro del cilindro rectificado", "Engine.EngineRectification.diameterrectifiedcylinder", longitudeUnits)
+                        +calculatedValue("Diámetro del cilindro antes del bruñido", "Engine.EngineRectification.cylinderdiameterbeforehoning", longitudeUnits)
+                        +calculatedValue("Juego pistón/cilindro", "Engine.EngineRectification.pistoncylindergap", longitudeUnits)
+                        +calculatedValue("Nuevo diámetro del pistón", "Engine.EngineRectification.newpistondiameter", longitudeUnits)
+        .row 
+            .col-6.col-md-12
+                h4 Rectificación del Cigüeñal 
+                ul.list-group 
+                    li.list-group-item.fs-6 
+                        strong.d-block Medida de rectificación
+                        -var cbr=unitRE.exec(getProperty(vehicleData, "Engine.EngineRectification.crankbearingrectification"))
+                        if (cbr.length>=1)
+                            if Number(cbr[1])<=0.02
+                                -var cbr_class="alert alert-success"
+                                -var msg = " (Dentro de margen de tolerancia)"
+                            else if Number(cbr[1])<=0.04
+                                -var cbr_class="alert alert-warning"
+                                -var msg = " (Dentro de margen de tolerancia)"
+                            else 
+                                -var cbr_class="alert alert-danger"
+                                -var msg = " (Fuera de margen de tolerancia)"
+                            div#crankBearingRectification(class= cbr_class ) +
+                                =parseInt(Number(cbr[1])*1000)
+                                =msg
+                            script.
+                                document.addEventListener("vehicleUpdated", e=>{
+                                    let vehicleData = e.detail;
+                                    let unitRE = !{unitRE}
+                                    let cbr=unitRE.exec(vehicleData.Engine.EngineRectification.crankbearingrectification)
+                                    let cbrn = parseInt(Number(cbr[1])*1000)
+                                    let el = document.getElementById("crankBearingRectification")
+                                    if (cbrn<=20) {
+                                        el.classList.remove("alert-warning")
+                                        el.classList.remove("alert-danger")
+                                        el.classList.add("alert-success")
+                                        el.innerText = '+'+cbrn+" (Dentro de margen de tolerancia)"
+                                    } else if (cbrn<=40) {
+                                        el.classList.remove("alert-success")
+                                        el.classList.remove("alert-danger")
+                                        el.classList.add("alert-warning")
+                                        el.innerText = '+'+cbrn+" (Dentro de margen de tolerancia)"
+                                    } else {
+                                        el.classList.remove("alert-success")
+                                        el.classList.remove("alert-warning")
+                                        el.classList.add("alert-danger")
+                                        el.innerText = '+'+cbrn+" (Fuera de margen de tolerancia)"
+                                    }
+                                })
+                        +calculatedValue("Rectificación del muñón del cigueñal:", "Engine.EngineRectification.crankbearingrectificationdiameter", longitudeUnits)
+                        +calculatedValue("Juego cojinete/muñón:", "Engine.EngineRectification.bearingjournalgap", longitudeUnits)
+                        +calculatedValue("Diámetro interno del cojinete:","Engine.EngineRectification.bearinginternaldiameter", longitudeUnits)
+//- Script
+if getProperty(vehicleData, "Engine.EngineRectification")
+    script(src="/javascripts/formControls.js")
+    script.
+        //Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        const partName="#{partName}";
+        const subpartName="#{subpartName}";        
+        document.addEventListener("DOMContentLoaded", ()=> {
+            setUnitSelectEventListener();
+            setInputEventListener();
+            setUnitButtonListener();
+        })
+else 
+    script.
+        // Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        function savePart() {
+            let payload={};
+            let intendedCompressionRatio = document.querySelector("#enginerectification_intendedCompressionRatio").value;
+            payload['intendedCompressionRatio'] = intendedCompressionRatio =="" || isNaN(Number(intendedCompressionRatio)) ? vehicleData.Engine.compressionRatio : intendedCompressionRatio
+            payload['standardCylinderDiameter'] = document.querySelector("#enginerectification_standardCylinderDiameter").value + " "+
+                document.querySelector("#enginerectification_standardCylinderDiameter_units").value
+            payload['cylinderTopWear'] = document.querySelector("#enginerectification_cylinderTopWear").value + " "+
+                document.querySelector("#enginerectification_cylinderTopWear_units").value
+            payload['standardCrankJornalDiameter'] = document.querySelector("#enginerectification_standardCrankJornalDiameter").value + " "+
+                document.querySelector("#enginerectification_standardCrankJornalDiameter_units").value
+            payload['crankTopWear'] = document.querySelector("#enginerectification_crankTopWear").value + " "+
+                document.querySelector("#enginerectification_crankTopWear_units").value
+            fetch(
+                `/vehicle/${vehicleData.id}/Engine/EngineRectification`,
+                {
+                    "method":"post",
+                    "body":JSON.stringify(payload),
+                    "headers":{
+                        "Content-Type":"application/json"
+                    }
+                }
+            )
+                .then(res=>res.json())
+                .then(jsonData => {
+                    if(!jsonData.Error) {
+                        window.location.reload()
+                    } else {
+                        showAlert("Error creando sección de rectificación", "ERROR")
+                        console.error("Error creating EngineRectification", jsonData)
+                    }
+                })
+                .catch(e=>{
+                    console.error("Error creating EngineRectification", e)
+                    showAlert("Error creando sección de rectificación", "ERROR")
+                })
+        }
+        document.querySelector("form#engine-rectification").addEventListener(
+            "submit",
+            e => {
+                e.preventDefault();
+                e.stopPropagation();
+                let form=document.getElementById("engine-rectification")
+                if (form.checkValidity()) {
+                    savePart();
+                } else {
+                    form.classList.add('was-validated');
+                }
+            }
+        )

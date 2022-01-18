@@ -40,6 +40,31 @@ class EngineForces extends Part {
 
 }
 
+class EngineRectification extends Part {
+    constructor(eng, intendedCompressionRatio, standardCylinderDiameter, cylinderTopWear, standardCrankJornalDiameter, crankTopWear) {
+        let partProperties = require("./EngineRectificationProperties.json")
+        partProperties.inputParameters.intendedCompressionRatio.value = intendedCompressionRatio;
+        partProperties.inputParameters.standardCylinderDiameter.value = standardCylinderDiameter;
+        partProperties.inputParameters.cylinderTopWear.value = cylinderTopWear;
+        partProperties.inputParameters.standardCrankJornalDiameter.value = standardCrankJornalDiameter;
+        partProperties.inputParameters.crankTopWear.value = crankTopWear;
+        super(eng, partProperties);
+        this.engine = eng;
+        this.scope = eng.scope;
+    }
+
+    static fromJSON(eng, j){ 
+        return new EngineRectification(
+            eng,
+            j.intendedCompressionRatio,
+            j.standardCylinderDiameter,
+            j.cylinderTopWear,
+            j.standardCrankJornalDiameter,
+            j.crankTopWear
+        );
+    }
+}
+
 class EngineNozzles extends Part {
     constructor(
         engine,
@@ -83,7 +108,7 @@ const SUBPARTS = new Map();
 SUBPARTS.set("EnginePower",EnginePower);
 SUBPARTS.set("EngineForces", EngineForces);
 SUBPARTS.set("EngineNozzles", EngineNozzles);
-
+SUBPARTS.set("EngineRectification", EngineRectification);
 
 class Engine extends Part {
 

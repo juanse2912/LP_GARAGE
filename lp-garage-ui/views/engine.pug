@@ -28,8 +28,8 @@ block content
                             ) Fuerzas
                         li.nav-item 
                             a(
-                                class="nav-link "+(subpartName=="Overbore"?"active":"") 
-                                href=(subpartName=="Overbore"?"#":"/Engine/Overbore?vehicleId="+vehicleData.id)
+                                class="nav-link "+(subpartName=="EngineRectification"?"active":"") 
+                                href=(subpartName=="EngineRectification"?"#":"/Engine/EngineRectification?vehicleId="+vehicleData.id)
                             ) Rectificación
                         li.nav-item 
                             a(
@@ -42,8 +42,8 @@ block content
                                 include enginePower 
                             when "EngineForce"
                                 include engineForces 
-                            when "Overbore"
-                                //-include overbore 
+                            when "EngineRectification"
+                                include engineRectification
                             when "EngineNozzles"
                                 include engineNozzles
 

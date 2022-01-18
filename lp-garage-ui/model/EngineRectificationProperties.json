@@ -11,7 +11,7 @@
             "value":null
 
         },
-        "cylinderTopwWear":{
+        "cylinderTopWear":{
             "alias":"cw",
             "units":"mm",
             "value":null
@@ -34,9 +34,13 @@
             "alias":"td",
             "formula":"(L/(RC-1))-(L/(ic-1))"
         },
+        "cylinderWear":{
+            "alias":"tmp1",
+            "formula":"number(cw-Stcd, 'in')"
+        },
         "cylinderrectification":{
             "alias":"cr",
-            "formula":"floor(Stcd-cw,2)+.01 in"
+            "formula":"(floor(bignumber(tmp1),2)+0.01) inch"
 
         },
         "diameterrectifiedcylinder":{
@@ -51,16 +55,20 @@
         },
         "pistoncylindergap":{
             "alias":"pcg",
-            "formula":"(0.001 in*(drc-1 in))"
+            "formula":"(0.001*(drc-1 in))"
 
         },
         "newpistondiameter":{
             "alias":"npd",
             "formula":"(drc-pcg)"
         },
+        "crankWear":{
+            "alias":"tmp2",
+            "formula":"number(cd-cp, 'in')"
+        },
         "crankbearingrectification":{
             "alias":"cbr",
-            "formula":"floor(cd-cp,2)+.01 in"
+            "formula":"(floor(bignumber(tmp2),2) + 0.01) inch"
 
         },
         "crankbearingrectificationdiameter":{
@@ -70,7 +78,7 @@
         },
         "bearingjournalgap":{
             "alias":"bjg",
-            "formula":"(CD*0.001in)*" 
+            "formula":"cd*0.001" 
 
         },
         "bearinginternaldiameter":{

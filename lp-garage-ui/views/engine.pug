@@ -1,5 +1,23 @@
 extends layout
 
+mixin engineLink(label, thisSubpartName, requiredSubpart, requiredSubpartLabel)
+    li.nav-item
+        if !requiredSubpart || vehicleData.Engine.hasOwnProperty(requiredSubpart)
+                a(
+                    class="nav-link " + (thisSubpartName==subpartName ? "active":"")
+                    href=(thisSubpartName==subpartName ? "#" : `/Engine/${thisSubpartName}?vehicleId=${vehicleData.id}`)
+                ) 
+                    = label
+        else
+            span(
+                tabindex="0" 
+                data-bs-toggle="tooltip" 
+                title=`Debe guardar la sección '${requiredSubpartLabel}' para habilitar esta opción`
+            ) 
+                a.nav-link.disabled
+                    = label
+
+
 block content 
   -var vehicleData 
   -var partName 
@@ -21,26 +39,14 @@ block content
                                 class="nav-link "+(subpartName=="EnginePower"?"active":"") 
                                 href=(subpartName=="EnginePower"?"#":"/Engine/EnginePower?vehicleId="+vehicleData.id) 
                             ) Potencia
-                        li.nav-item 
-                            a(
-                                class="nav-link "+(subpartName=="EngineForce"?"active":"") 
-                                href=(subpartName=="EngineForce"?"#":"/Engine/EngineForce?vehicleId="+vehicleData.id)
-                            ) Fuerzas
-                        li.nav-item 
-                            a(
-                                class="nav-link "+(subpartName=="EngineRectification"?"active":"") 
-                                href=(subpartName=="EngineRectification"?"#":"/Engine/EngineRectification?vehicleId="+vehicleData.id)
-                            ) Rectificación
-                        li.nav-item 
-                            a(
-                                class="nav-link "+(subpartName=="EngineNozzles"?"active":"") 
-                                href=(subpartName=="EngineNozzles"?"#":"/Engine/EngineNozzles?vehicleId="+vehicleData.id)
-                            ) Toberas
+                        +engineLink("Fuerzas", "EngineForces", "EnginePower", "Potencia")
+                        +engineLink("Toberas", "EngineNozzles", "EngineForces", "Fuerzas")
+                        +engineLink("Rectificación","EngineRectification", "EngineNozzles", "Toberas")
                     .row
                         case subpartName 
                             when "EnginePower"
                                 include enginePower 
-                            when "EngineForce"
+                            when "EngineForces"
                                 include engineForces 
                             when "EngineRectification"
                                 include engineRectification

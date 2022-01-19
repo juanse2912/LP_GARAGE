@@ -27,7 +27,8 @@ function setUnitSelectEventListener() {
             let targetInputId = srcSelect.getAttribute("data-from")
             let targetInput = document.querySelector(`input#${targetInputId}`)
             let dataElement = getDataElement(targetInput.getAttribute("data-bound"))
-            fetch(`/unitConversion?value=${encodeURI(dataElement)}&unit=${srcSelect.value}`, {"method":"get"})
+            let encodedValue = encodeURIComponent(dataElement)
+            fetch(`/unitConversion?value=${encodedValue}&unit=${srcSelect.value}`, {"method":"get"})
                 .then(res=>res.json())
                 .then(jsonData=>{
                     if(jsonData.result) {
@@ -63,7 +64,7 @@ function saveChanges() {
     if (unitSelect) {
         inputValue += " " + unitSelect.value
     }
-    queryParameters.push( `${dataElement}=${encodeURI(inputValue)}`)
+    queryParameters.push( `${dataElement}=${encodeURIComponent(inputValue)}`)
   }       
   let queryString = queryParameters.join("&");
   
@@ -168,7 +169,7 @@ function setUnitButtonListener() {
       let dataElement = getDataElement(dataElementName);
       let unit = e.target.getAttribute("data-unit")
       fetch(
-        `/unitConversion?value=${encodeURI(dataElement)}&unit=${unit}`,
+        `/unitConversion?value=${encodeURIComponent(dataElement)}&unit=${unit}`,
         {"method":"get"}
       )
         .then( response => response.json())

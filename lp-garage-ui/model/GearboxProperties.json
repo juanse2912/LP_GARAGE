@@ -20,7 +20,7 @@
         },
         "gearSpeed":{
             "alias":"Speed_${n}",
-            "formula":"(nMax+(Tpr / 1000000 mm)*60 km/h)/(GR_${n}*FFGR) in km/h"
+            "formula":"(nMax*((Tpr in km) / 1km)*60 )/(GR_${n}*FFGR) * 1 km/h"
         }
     },
     "formulas":{

@@ -147,7 +147,7 @@ class Part {
                 if (units) {
                     this.scope[alias] = math.unit(value).to(units)
                 } else {
-                    this.scope[alias] = math.number(value);
+                    this.scope[alias] = math.bignumber(value);
                 }
             } else {
                 console.warn("Invalid value for this part: " + key)

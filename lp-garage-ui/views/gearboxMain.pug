@@ -1,0 +1,150 @@
+.col-10.col-md-4 
+    form#gearbox-main.needs-validation(novalidate action="#", method="post")
+        label.form-label(for="garbox_gearcount") Número de marchas 
+        input.form-control.align-right(
+            id="gearbox_gearcount"
+            type="number"
+            step="1"
+            min="3"
+            max="7"
+            value= getProperty(vehicleData, "Gearbox.gearCount")||"5"
+            data-bound="Gearbox.gearCount"
+            required 
+        )
+        label.form-label(for="gearbox_diffRatio") Relación del diferencial 
+        input.form-control.align-right(
+            id="gearbox_diffRatio"
+            type="number"
+            step="any"
+            value= getProperty(vehicleData, "Gearbox.diffRatio")||""
+            data-bound="Gearbox.diffRatio"
+            required
+        )
+        label.form-label(for="gearbox_maximumRPM") Máximo de RPMs 
+        input.form-control.align-right(
+            id="gearbox_maximumRPM"
+            type="number"
+            step="1"
+            value= getProperty(vehicleData, "Gearbox.maximumRPM")||""
+            data-bound="Gearbox.maximumRPM"
+            required
+        )
+        -var gear=1
+        -var gearCount = getProperty(vehicleData, "Gearbox.gearCount")||5
+        while gear<=7
+            div(
+                id="gearRatioContainer_"+gear 
+                class= (gear>gearCount ? "visually-hidden":"")
+            )
+                label.form-label(for="gearbox_gearRatio_" + gear) Relación marcha #{gear}
+                input.form-control.align-right(
+                    id="gearbox_gearRatio_"+gear 
+                    type="number"
+                    step="any"
+                    value= getProperty(vehicleData, "Gearbox.gearRatio_"+gear)||""
+                    data-bound="Gearbox.gearRatio_"+gear++
+                )
+        if !getProperty(vehicleData, "Gearbox")
+            .d-grid.pt-4 
+                button.btn.btn-primary(
+                    type="submit"
+                    if="btn-save"
+                    value="submit"
+                ) Guardar 
+.col-10.col-md-6 
+    if getProperty(vehicleData, "Gearbox")
+        h3 Cálculos de caja de cambios 
+        ul.list-group 
+            +calculatedValue("Perímetro neumático:", "Gearbox.tirePerimeter", longitudeUnits)
+            -var gear=1
+            -var gearCount = getProperty("Gearbox.gearCount")
+            while gear<=gearCount 
+                if gear+1<gearCount
+                    +calculatedValue("Caída entre marchas #{gear} y #{gear+1}:", "Gearbox.gearGap_#{gear}")
+                +calculatedValue("Velocidad máxima en marcha #{gear}", "Gearbox.gearSpeed_#{gear++}")
+script.
+    function showHideGears() {
+        let gearCountElement = document.getElementById("gearbox_gearcount")
+        let gearCount = parseInt(gearCountElement.value);
+        if (!isNaN(gearCount) && gearCount>=3 && gearCount <=7){
+            gearCountElement.classList.remove("is-invalid")
+            for(let i=1; i<=7; i++) {
+                let el = document.getElementById("gearRatioContainer_" + i)
+                if(i<=gearCount) {
+                    el.classList.remove("visually-hidden")
+                    el.querySelector("input").setAttribute("required", true)
+                } else {
+                    el.classList.add("visually-hidden")
+                    el.querySelector("input").removeAttribute("required")
+                }
+            }
+        } else {
+            gearCountElement.classList.add("is-invalid")
+        }
+    }
+    document.getElementById("gearbox_gearcount").addEventListener("change", e=>showHideGears())
+    showHideGears();
+//- Script
+if getProperty(vehicleData, "Gearbox")
+    script(src="/javascripts/formControls.js")
+    script.
+        //Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        const partName="#{partName}";
+        const subpartName="#{subpartName}";        
+        document.addEventListener("DOMContentLoaded", ()=> {
+            setUnitSelectEventListener();
+            setInputEventListener();
+            setUnitButtonListener();
+        })
+else 
+    script.
+        // Scripts
+        var vehicleData=  !{JSON.stringify(vehicleData)};
+
+        function savePart() {
+            let payload={};
+            payload['gearCount'] = document.querySelector("#gearbox_gearcount").value
+            payload['diffRatio'] = document.querySelector("#gearbox_diffRatio").value
+            payload['maximumRPM'] = document.querySelector("#gearbox_maximumRPM").value
+            let gearCount = parseInt(document.querySelector("#gearbox_gearcount").value)
+            for (let i=1; i<=gearCount; i++) {
+                payload['gearRatio_'+i] = document.querySelector("#gearbox_gearRatio_"+i).value
+            }
+            fetch(
+                `vehicle/${vehicleData.id}/Gearbox`,
+                {
+                    "method":"post",
+                    "body":JSON.stringify(payload),
+                    "headers":{
+                        "Content-Type":"application/json"
+                    }
+                }
+            )
+                .then(res=>res.json())
+                .then(jsonData => {
+                    if(!jsonData.Error) {
+                        window.location.reload()
+                    } else {
+                        showAlert("Error creando sección de caja de cambios", "ERROR")
+                        console.error("Error creating Gearbox", jsonData)
+                    }
+                })
+                .catch(e=>{
+                    console.error("Error creating Gearbox", e)
+                    showAlert("Error creando sección de caja de cambios", "ERROR")
+                })
+        }
+        document.querySelector("form#gearbox-main").addEventListener(
+            "submit",
+            e => {
+                e.preventDefault();
+                e.stopPropagation();
+                let form=document.getElementById("gearbox-main")
+                if (form.checkValidity()) {
+                    savePart();
+                } else {
+                    form.classList.add('was-validated');
+                }
+            }
+        )

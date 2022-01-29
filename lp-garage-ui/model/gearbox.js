@@ -1,58 +1,115 @@
 const math = require("./part").math;
 const Part = require("./part").Part;
 
+function templateReplacer(str, n) {
+    const r1 = /(\$\{[n+-1]{1,3}\})/gm
+    const r2 = /\$\{([n+-1]{1,3})\}/
+
+    const macros = str.match(r1)
+    for (let m of macros) {
+        let v = r2.exec(m)
+        str = str.replace(m, eval(v[1]))
+    }
+    return str;
+}
+
 
 class Gearbox extends Part {
 
-    constructor(vehicle, tyrewidth, tyreprofile, tyrerim, diffratio, rpmMaxPower, firstgearratio, secondgearratio, thirdgearratio, fourthgearratio, fithgearratio, sixthgearratio, reversegearratio, piniongearteeth, crowngearteeth, newtyrewidth, newtyreprofile, newtyrerim, firstgearz1, firstgearz2, secondgearz1, secondgearz2, thirdgearz1, thirdgearz2, fourthgearz1, fourthgearz2, fithgearz1, fithgearz2, sixthgearz1, sixthgearz2, reversegearz1, reversegearz2){
-        let gearboxProperties = require("./GearboxProperties.json")
-        gearboxProperties.inputParameters.tyrewidth.value = tyrewidth
-        gearboxProperties.inputParameters.tyreprofile.value = tyreprofile
-        gearboxProperties.inputParameters.tyrerim.value = tyrerim
-        gearboxProperties.inputParameters.diffratio.value = diffratio
-        gearboxProperties.inputParameters.rpmMaxPower.value = rpmMaxPower
-        gearboxProperties.inputParameters.firstgearratio.value = firstgearratio
-        gearboxProperties.inputParameters.secondgearratio.value = secondgearratio
-        gearboxProperties.inputParameters.thirdgearratio.value = thirdgearratio
-        gearboxProperties.inputParameters.fourthgearratio.value = fourthgearratio
-        gearboxProperties.inputParameters.fithgearratio.value = fithgearratio
-        gearboxProperties.inputParameters.sixthgearratio.value = sixthgearratio
-        gearboxProperties.inputParameters.reversegearratio.value = reversegearratio
-        gearboxProperties.inputParameters.piniongearteeth.value = piniongearteeth
-        gearboxProperties.inputParameters.crowngearteeth.value = crowngearteeth
-        gearboxProperties.inputParameters.newtyrewidth.value = newtyrewidth
-        gearboxProperties.inputParameters.newtyreprofile.value = newtyreprofile
-        gearboxProperties.inputParameters.newtyrerim.value = newtyrerim
-        gearboxProperties.inputParameters.firstgearz1.value = firstgearz1
-        gearboxProperties.inputParameters.firstgearz2.value = firstgearz2
-        gearboxProperties.inputParameters.secondgearz1.value = secondgearz1
-        gearboxProperties.inputParameters.secondgearz2.value = secondgearz2
-        gearboxProperties.inputParameters.thirdgearz1.value = thirdgearz1
-        gearboxProperties.inputParameters.thirdgearz2.value = thirdgearz2
-        gearboxProperties.inputParameters.fourthgearz1.value = fourthgearz1
-        gearboxProperties.inputParameters.fourthgearz2.value = fourthgearz2
-        gearboxProperties.inputParameters.fithgearz1.value = fithgearz1
-        gearboxProperties.inputParameters.fithgearz2.value = fithgearz2
-        gearboxProperties.inputParameters.sixthgearz1.value = sixthgearz1
-        gearboxProperties.inputParameters.sixthgearz2.value = sixthgearz2
-        gearboxProperties.inputParameters.reversegearz1.value = reversegearz1
-        gearboxProperties.inputParameters.reversegearz2.value = reversegearz2
+    constructor(vehicle, gearCount, diffRatio, maximumRPM, gearRatios){
 
-        super(vehicle.scope, GearboxProperties)
+        let gearboxProperties = require("./GearboxProperties.json")
+        gearboxProperties.inputParameters.gearCount.value = gearCount;
+        gearboxProperties.inputParameters.diffRatio.value = diffRatio;
+        gearboxProperties.inputParameters.maximumRPM.value = maximumRPM;
+        for (let i=1; i<=parseInt(gearCount); i++) {
+            gearboxProperties.inputParameters[`gearRatio_${i}`] = {};
+            gearboxProperties.inputParameters[`gearRatio_${i}`]['value'] = gearRatios[i-1]
+            gearboxProperties.inputParameters[`gearRatio_${i}`]['alias'] = `GR_${i}`
+            if (i<parseInt(gearCount)) {
+                for (let ft of Object.keys(gearboxProperties.formula_templates)){
+                    gearboxProperties.formulas[`${ft}_${i}`] = {};
+                    gearboxProperties.formulas[`${ft}_${i}`].alias = 
+                        templateReplacer(gearboxProperties.formula_templates[ft].alias, i)
+                    gearboxProperties.formulas[`${ft}_${i}`].formula = 
+                        templateReplacer(gearboxProperties.formula_templates[ft].formula, i)
+                }
+            }
+            
+        }
+        console.debug("Gearbox properties", gearboxProperties);
+        gearboxProperties.inputParameters.gearCount.value=parseInt(gearCount);
+        super(vehicle.scope, gearboxProperties)
         this.scope = vehicle.scope;
         this.parts = {};
     }
     
 
-
     static fromJSON(vehicle, j) {
-        let gearbox = new Gearbox(vehicle, j.tyrewidth,j.tyreprofile, j.tyrerim, j.diffratio, j.rpmMaxPower, j.firstgearratio, j.secondgearratio, j.thirdgearratio, j.fourthgearratio, j.fithgearratio, j.sixthgearratio, j.reversegearratio, j.piniongearteeth, j.crowngearteeth, j.newtyrewidth, j.newtyreprofile, j.newtyrerim, j.firstgearz1, j.firstgearz2, j.secondgearz1, j.secondgearz2, j.thirdgearz1, j.thirdgearz2, j.fourthgearz1, j.fourthgearz2, j.fithgearz1, j.fithgearz2, j.sixthgearz1, j.sixthgearz2, j.reversegearz1, j.reversegearz2);
+        let params = [];
+
+        for(let i=1; i<=parseInt(j.gearCount); i++) {
+            params.push(j['gearRatio_'+i]);
+        }
+
+        console.debug("Gear ratios", params);
+        let gearbox = new Gearbox(vehicle, j.gearCount, j.diffRatio, j.maximumRPM, params);
         for( let [partName, classH] of SUBPARTS) {
             if(j[partName]) {
                 gearbox.parts[partName] = classH.fromJSON(Gearbox, j[partName]);
             }
         }
         return gearbox;
+    }
+
+    /**
+     * @override
+     * @param {Map<string,any>} valueMap 
+     */
+    updateValues(valueMap) {
+        
+        //if(valueMap.has("gearCount")) {
+            if(this.partProperties.gearCount.value>parseInt(valueMap.get("gearCount"))){
+                for(let i=parseInt(valueMap.get(gearCount))+1; i<this.partProperties.gearCount; i++) {
+                    delete this.partProperties.inputParameters[`gearRatio_${i}`]
+                    for (let key of Object.keys(this.partProperties.formula_templates)) {
+                        delete this.partProperties.formulas[`${key}_${i}`]
+                    }
+                }
+                this.partProperties.gearCount=valueMap.get("gearCount")
+            } else if(this.partProperties.gearCount.value>parseInt(valueMap.get("gearCount"))) {
+                for(let i=this.partProperties.gearCount.value+1; i<=parseInt(valueMap.get("gearCount")); i++) {
+                    this.partProperties.inputParameters[`gearRatio_${i}`]['alias'] = `GR_${i}`
+                    this.partProperties.inputParameters[`gearRatio_${i}`]['value'] = 
+                        valueMap.has(`gearRatio_${i}`) ? valueMap.get(`gearRatio_${i}`) : this.partProperties.inputParameters[`gearRatio_${i-1}`].value
+                    for(let key of Object.keys(this.partProperties.formula_templates)) {
+                        this.partProperties.formulas[`${key}_${i}`].alias = 
+                            templateReplacer(this.partProperties.formula_templates[key].alias, i)
+                        this.partProperties.formulas[`${key}_${i}`].formula =
+                            templateReplacer(this.partProperties.formula_templates[key].formula, i)
+                    }
+                }
+                this.partProperties.gearCount=valueMap.get("gearCount")
+            }
+            for (let [key, value] of valueMap) {
+                if (key!="gearCount" ) {
+                    if(this.partProperties.inputParameters.hasOwnProperty(key)) {
+                        let alias = this.partProperties.inputParameters[key].alias;
+                        let units = this.partProperties.inputParameters[key].units;
+                        this.partProperties.inputParameters[key].value = value;
+                        if(units) {
+                            this.scope[alias] = math.unit(value).to(units);
+                        } else {
+                            this.scope[alias] = math.bignumber(value);
+                        }
+                    }
+                }
+            }
+
+//        } else {
+//            super(valueMap)
+//        }
+
     }
 
 

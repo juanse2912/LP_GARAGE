@@ -3,7 +3,7 @@ extends layout
 block content 
   -var vehicleData 
   -var partName 
-  -var subpartName = subpartName||""
+  -var subpartName = subpartName||"GearboxMain"
   div(id="wrapper").d-flex
     div(id="page-content-wrapper")
         -var page="Gearbox"
@@ -12,7 +12,31 @@ block content
             .row.flex-nowrap
                 include vehicleNav
                 .col.py-3
-                    h1 Caja de cambios
-                    p Página en construcción
+                    h1 Caja de Cambios
+                    ul.nav.nav-pills
+                      li.nav-item 
+                        a(
+                          class="nav-link "+(subpartName=="GearboxMain"?"active":"")
+                          href=(subpartName=="GearboxMain"?"#":"/Gearbox/GearboxMain")
+                        ) Datos Caja de Cambios 
+                      li.nav-item 
+                        if vehicleData.hasOwnProperty.Gearbox
+                          a(
+                            class="nav-link "+(subpartName=="GearboxMod"?"active":"")
+                            href=(subpartName=="GearboxMod"?"#":"/Gearbox/GearboxMod")
+                          ) Modificación Caja de Cambios 
+                        else
+                          span(
+                            tabindex="0"
+                            data-bs-toggle="tooltip"
+                            title="Debe guardar la sección Datos Caja de Cambios para habilitar esta opción"
+                          )
+                            a.nav-link.disabled Modificación Caja de Cambios 
+                    .row 
+                      case subpartName 
+                        when "GearboxMain"
+                          include gearboxMain 
+                        when "GearboxMod"
+                          //-include gearboxMod 
 
             

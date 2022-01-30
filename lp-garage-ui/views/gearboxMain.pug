@@ -85,7 +85,9 @@ script.
                 for(let container of containers) {
                     let el = document.getElementById(container + i)
                     if (el) {
-                        if(i<=gearCount) {
+                        if(i<gearCount || (container!="gearGapContainer_" && i<=gearCount)
+                            
+                          ) {
                             el.classList.remove("visually-hidden")
                             let inEl = el.querySelector("input")
                             if (inEl) {

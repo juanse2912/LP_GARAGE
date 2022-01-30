@@ -30,8 +30,9 @@ class Gearbox extends Part {
             gearboxProperties.inputParameters[`gearRatio_${i}`]['alias'] = `GR_${i}`
             if (i<=parseInt(gearCount)) {
                 for (let ft of Object.keys(gearboxProperties.formula_templates)){
-                    if(!gearboxProperties.formula_templates[ft].formula.includes("n+1") || 
-                        i<parseInt(gearCount)) {
+                    if(i<gearCount || 
+                        (!gearboxProperties.formula_templates[ft].formula.includes("n+1") && i<=parseInt(gearCount))
+                    ) {
                         gearboxProperties.formulas[`${ft}_${i}`] = {};
                         gearboxProperties.formulas[`${ft}_${i}`].alias = 
                             templateReplacer(gearboxProperties.formula_templates[ft].alias, i)
@@ -49,7 +50,7 @@ class Gearbox extends Part {
         this.scope = vehicle.scope;
         this.parts = {};
     }
-    
+    _
 
     static fromJSON(vehicle, j) {
         let params = [];
@@ -91,7 +92,10 @@ class Gearbox extends Part {
                         valueMap.has(`gearRatio_${i}`) ? valueMap.get(`gearRatio_${i}`) : this.partProperties.inputParameters[`gearRatio_${i-1}`].value
                     valueMap.set(`gearRatio_${i}`, this.partProperties.inputParameters[`gearRatio_${i}`].value)
                     for(let key of Object.keys(this.partProperties.formula_templates)) {
-                        if (!this.partProperties.formula_templates[key].formula.includes("n+1") || i<valueMap.get("gearCount")) {
+                        if (
+                            i<parseInt(valueMap.get("gearCount")) ||
+                            (!this.partProperties.formula_templates[key].formula.includes("n+1") && i<=valueMap.get("gearCount"))
+                        ) {
                             this.partProperties.formulas[`${key}_${i}`] = {};
                             this.partProperties.formulas[`${key}_${i}`].alias = 
                                 templateReplacer(this.partProperties.formula_templates[key].alias, i)

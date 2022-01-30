@@ -13,11 +13,13 @@ function templateReplacer(str, n) {
     return str;
 }
 
+const SUBPARTS = new Map();
+
 
 class Gearbox extends Part {
 
     constructor(vehicle, gearCount, diffRatio, maximumRPM, gearRatios){
-
+        
         let gearboxProperties = require("./GearboxProperties.json")
         gearboxProperties.inputParameters.gearCount.value = gearCount;
         gearboxProperties.inputParameters.diffRatio.value = diffRatio;
@@ -26,13 +28,17 @@ class Gearbox extends Part {
             gearboxProperties.inputParameters[`gearRatio_${i}`] = {};
             gearboxProperties.inputParameters[`gearRatio_${i}`]['value'] = gearRatios[i-1]
             gearboxProperties.inputParameters[`gearRatio_${i}`]['alias'] = `GR_${i}`
-            if (i<parseInt(gearCount)) {
+            if (i<=parseInt(gearCount)) {
                 for (let ft of Object.keys(gearboxProperties.formula_templates)){
-                    gearboxProperties.formulas[`${ft}_${i}`] = {};
-                    gearboxProperties.formulas[`${ft}_${i}`].alias = 
-                        templateReplacer(gearboxProperties.formula_templates[ft].alias, i)
-                    gearboxProperties.formulas[`${ft}_${i}`].formula = 
-                        templateReplacer(gearboxProperties.formula_templates[ft].formula, i)
+                    if(!gearboxProperties.formula_templates[ft].formula.includes("n+1") || 
+                        i<parseInt(gearCount)) {
+                        gearboxProperties.formulas[`${ft}_${i}`] = {};
+                        gearboxProperties.formulas[`${ft}_${i}`].alias = 
+                            templateReplacer(gearboxProperties.formula_templates[ft].alias, i)
+                        gearboxProperties.formulas[`${ft}_${i}`].formula = 
+                            templateReplacer(gearboxProperties.formula_templates[ft].formula, i)                            
+                    }
+                    
                 }
             }
             
@@ -67,48 +73,55 @@ class Gearbox extends Part {
      * @param {Map<string,any>} valueMap 
      */
     updateValues(valueMap) {
-        
-        //if(valueMap.has("gearCount")) {
-            if(this.partProperties.gearCount.value>parseInt(valueMap.get("gearCount"))){
-                for(let i=parseInt(valueMap.get(gearCount))+1; i<this.partProperties.gearCount; i++) {
+
+        if(valueMap.has("gearCount")) {
+            if(parseInt(this.partProperties.inputParameters.gearCount.value)>parseInt(valueMap.get("gearCount"))){
+                for(let i=parseInt(valueMap.get("gearCount"))+1; i<=this.partProperties.inputParameters.gearCount.value; i++) {
                     delete this.partProperties.inputParameters[`gearRatio_${i}`]
                     for (let key of Object.keys(this.partProperties.formula_templates)) {
                         delete this.partProperties.formulas[`${key}_${i}`]
                     }
                 }
-                this.partProperties.gearCount=valueMap.get("gearCount")
-            } else if(this.partProperties.gearCount.value>parseInt(valueMap.get("gearCount"))) {
-                for(let i=this.partProperties.gearCount.value+1; i<=parseInt(valueMap.get("gearCount")); i++) {
+                
+            } else if(parseInt(this.partProperties.inputParameters.gearCount.value)<parseInt(valueMap.get("gearCount"))) {
+                for(let i=this.partProperties.inputParameters.gearCount.value+1; i<=parseInt(valueMap.get("gearCount")); i++) {
+                    this.partProperties.inputParameters[`gearRatio_${i}`] = {};
                     this.partProperties.inputParameters[`gearRatio_${i}`]['alias'] = `GR_${i}`
                     this.partProperties.inputParameters[`gearRatio_${i}`]['value'] = 
                         valueMap.has(`gearRatio_${i}`) ? valueMap.get(`gearRatio_${i}`) : this.partProperties.inputParameters[`gearRatio_${i-1}`].value
+                    valueMap.set(`gearRatio_${i}`, this.partProperties.inputParameters[`gearRatio_${i}`].value)
                     for(let key of Object.keys(this.partProperties.formula_templates)) {
-                        this.partProperties.formulas[`${key}_${i}`].alias = 
-                            templateReplacer(this.partProperties.formula_templates[key].alias, i)
-                        this.partProperties.formulas[`${key}_${i}`].formula =
-                            templateReplacer(this.partProperties.formula_templates[key].formula, i)
-                    }
-                }
-                this.partProperties.gearCount=valueMap.get("gearCount")
-            }
-            for (let [key, value] of valueMap) {
-                if (key!="gearCount" ) {
-                    if(this.partProperties.inputParameters.hasOwnProperty(key)) {
-                        let alias = this.partProperties.inputParameters[key].alias;
-                        let units = this.partProperties.inputParameters[key].units;
-                        this.partProperties.inputParameters[key].value = value;
-                        if(units) {
-                            this.scope[alias] = math.unit(value).to(units);
-                        } else {
-                            this.scope[alias] = math.bignumber(value);
+                        if (!this.partProperties.formula_templates[key].formula.includes("n+1") || i<valueMap.get("gearCount")) {
+                            this.partProperties.formulas[`${key}_${i}`] = {};
+                            this.partProperties.formulas[`${key}_${i}`].alias = 
+                                templateReplacer(this.partProperties.formula_templates[key].alias, i)
+                            this.partProperties.formulas[`${key}_${i}`].formula =
+                                templateReplacer(this.partProperties.formula_templates[key].formula, i)
+
                         }
                     }
                 }
+                
             }
+            this.partProperties.inputParameters.gearCount.value=valueMap.get("gearCount")
+    
+        }
+        for (let [key, value] of valueMap) {
+            if (key!="gearCount" ) {
+                if(this.partProperties.inputParameters.hasOwnProperty(key)) {
+                    let alias = this.partProperties.inputParameters[key].alias;
+                    let units = this.partProperties.inputParameters[key].units;
+                    this.partProperties.inputParameters[key].value = value;
+                    if(units) {
+                        this.scope[alias] = math.unit(value).to(units);
+                    } else {
+                        this.scope[alias] = math.bignumber(value);
+                    }
+                }
+            }
+        }
+        this.calculate();
 
-//        } else {
-//            super(valueMap)
-//        }
 
     }
 

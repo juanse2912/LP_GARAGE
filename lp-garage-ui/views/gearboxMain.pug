@@ -57,25 +57,49 @@
         ul.list-group 
             +calculatedValue("Perímetro neumático:", "Gearbox.tirePerimeter", longitudeUnits)
             -var gear=1
-            -var gearCount = getProperty("Gearbox.gearCount")
-            while gear<=gearCount 
-                if gear+1<gearCount
-                    +calculatedValue("Caída entre marchas #{gear} y #{gear+1}:", "Gearbox.gearGap_#{gear}")
-                +calculatedValue("Velocidad máxima en marcha #{gear}", "Gearbox.gearSpeed_#{gear++}")
+            -var gearCount = getProperty(vehicleData, "Gearbox.gearCount")
+            while gear<=7 
+                if gear<7
+                    div(
+                        id="gearGapContainer_"+gear
+                        class= (gear>gearCount?"visually-hidden":"")
+                    )
+                        +calculatedValue("Caída entre marchas " +gear+" y "+ (parseInt(gear)+1) +" :", "Gearbox.gearGap_"+gear)
+                div(
+                    id="gearSpeedContainer_"+gear 
+                    class= (gear>gearCount?"visually-hidden":"")
+                )
+                    +calculatedValue("Velocidad máxima en marcha "+gear, "Gearbox.gearSpeed_" + gear++, speedUnits )
 script.
     function showHideGears() {
+        const containers=[
+            "gearRatioContainer_",
+            "gearGapContainer_",
+            "gearSpeedContainer_"
+        ]
         let gearCountElement = document.getElementById("gearbox_gearcount")
         let gearCount = parseInt(gearCountElement.value);
         if (!isNaN(gearCount) && gearCount>=3 && gearCount <=7){
             gearCountElement.classList.remove("is-invalid")
             for(let i=1; i<=7; i++) {
-                let el = document.getElementById("gearRatioContainer_" + i)
-                if(i<=gearCount) {
-                    el.classList.remove("visually-hidden")
-                    el.querySelector("input").setAttribute("required", true)
-                } else {
-                    el.classList.add("visually-hidden")
-                    el.querySelector("input").removeAttribute("required")
+                for(let container of containers) {
+                    let el = document.getElementById(container + i)
+                    if (el) {
+                        if(i<=gearCount) {
+                            el.classList.remove("visually-hidden")
+                            let inEl = el.querySelector("input")
+                            if (inEl) {
+                                inEl.setAttribute("required", true)
+                            }
+                        } else {
+                            el.classList.add("visually-hidden")
+                            let inEl = el.querySelector("input")
+                            if(inEl){
+                                inEl.removeAttribute("required")
+                            }
+                        }
+
+                    }
                 }
             }
         } else {

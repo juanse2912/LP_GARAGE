@@ -99,38 +99,43 @@ function updateDataBoundElements() {
   let elementCollection = document.querySelectorAll("[data-bound]")
   for (let element of elementCollection){
     let dataElement = getDataElement(element.getAttribute("data-bound"));
-    switch (element.nodeName) {
-      case "DIV":vehicleData
-      case "SPAN":vehicleData
-      case "P":
-      case "TD":
-        //element.innerText = dataElement;
-        updateCalculatedDataElement(dataElement,element.getAttribute("data-bound"))
-        break;
-      case "INPUT":
-        if (["text","number","range"].includes(element.type.toLowerCase())){
-          let vu = separateValueAndUnits(dataElement);
-          if (vu.units) {
-            let valueSelect = document.querySelector(`[data-from='${element.id}']`);
-            if (valueSelect && valueSelect.value!=vu.units) {
-              valueSelect.value = vu.units;
-            } else if(!valueSelect){
-              console.warn("Can't find units for "+ `[data-from="${element.id}"]`)
+    if (dataElement) {
+      switch (element.nodeName) {
+        case "DIV":vehicleData
+        case "SPAN":vehicleData
+        case "P":
+        case "TD":
+          //element.innerText = dataElement;
+          updateCalculatedDataElement(dataElement,element.getAttribute("data-bound"))
+          break;
+        case "INPUT":
+          if (["text","number","range"].includes(element.type.toLowerCase())){
+            let vu = separateValueAndUnits(dataElement);
+            if (vu.units) {
+              let valueSelect = document.querySelector(`[data-from='${element.id}']`);
+              if (valueSelect && valueSelect.value!=vu.units) {
+                valueSelect.value = vu.units;
+              } else if(!valueSelect){
+                console.warn("Can't find units for "+ `[data-from="${element.id}"]`)
+              }
+              
             }
-            
+            if(element.value != vu.value) {
+              element.value = vu.value;
+              element.classList.remove("is-invalid");
+            }
+          } else if(["radio,checkbox"].includes(element.type.toLowerCase()) ) {
+            if(element.value == dataElement) {
+              element.addAttribute("checked",true);
+            } else {
+              element.removeAttribute("checked");
+            }
           }
-          if(element.value != vu.value) {
-            element.value = vu.value;
-            element.classList.remove("is-invalid");
-          }
-        } else if(["radio,checkbox"].includes(element.type.toLowerCase()) ) {
-          if(element.value == dataElement) {
-            element.addAttribute("checked",true);
-          } else {
-            element.removeAttribute("checked");
-          }
-        }
-        break;
+          break;
+      }
+  
+    } else {
+      console.warn("Unable to found data for element "+element.id );
     }
   }
 

@@ -1,83 +1,28 @@
 {
     "inputParameters":{ 
-        "firstSecondModGap": {
-            "value": null,
-            "alias": "FSMGap"
-        },
-        "secondThirdModGap": {
-            "value": null,
-            "alias": "STMGap"
-        },
-        "thirdFourthModGap": {
-            "value": null,
-            "alias": "TFoMGap"
-        },
-        "fourthFifthModGap": {
-            "value": null,
-            "alias": "FoFiMGap"
-        },
-        "fifthSixthGapModGap": {
-            "value": null,
-            "alias": "FiSiMGap"
-        },
         "maxSpeedLastGear": {
-            "value": null,
-            "alias": "MSLG",
-            "units": "km/h"
-        },
-        "maxSpeedRPM": {
                 "value": null,
-                "alias": "MSn"
+                "alias": "MSLG"
+        },
+        "maximumRPMatSpeed": {
+            "value": null,
+            "alias": "nMaxS"
         }
     }, 
+    "formula_templates":{
+        "gearRatioMod": {
+            "alias":"RatioMod_${n}_${n+1}",
+            "formula":"(nMaxS*LASTGEARRATIOMOD)/(nMaxS*(NEWGAPLASTGEAR-1)" //se calcula desde la ultima a la primera
+        },
+        "gearSpeedMod":{
+            "alias":"SpeedMod_${n}",
+            "formula":"(nMaxS*((Tpr in km) / 1km)*60 )/(RatioMod_${n}_${n+1}*FFGR) * 1 km/h"
+        }
+    },
     "formulas":{
-        "firstGearModRatio":{
-            "alias":"Tpr",
-            "formula":""
-        },
-        "secondGearModRatio":{
-            "alias":"FSGap",
-            "formula":""
-        },
-        "thirdGearModRatio":{
-            "alias":"STGap",
-            "formula":""
-        },
-        "fouthGearModRatio":{
-            "alias":"FFGap",
-            "formula":""
-        },
-        "fifthGearModRatio":{
-            "alias":"FSiGap",
-            "formula":""
-        },
-        "sixthGearModRatio":{
-            "alias":"TFGap",
-            "formula":""
-        },
-        "firstGearModSpeed":{
-            "alias":"FSp",
-            "formula":"(MSn*(Tpr/1000000mm)*60km/h)/((FGR*FFGR))in km/h"
-        },
-        "secondGearModSpeed":{
-            "alias":"SSp",
-            "formula":"(MSn*(Tpr/1000000mm)*60km/h)/((SGR*FFGR))in km/h"
-        },
-        "thirdGearModSpeed":{
-            "alias":"TSp",
-            "formula":"(MSn*(Tpr/1000000mm)*60km/h)/((TGR*FFGR))in km/h"
-        },
-        "fourthGearModSpeed":{
-            "alias":"FoSp",
-            "formula":"(MSn*(Tpr/1000000mm)*60km/h)/((FoGR*FFGR))in km/h"
-        },
-        "fifthGearModSpeed":{
-            "alias":"FiSp",
-            "formula":"(MSn*(Tpr/1000000mm)*60km/h)/((FiGR*FFGR))in km/h"
-        },
-        "SixthGearModSpeed":{
-            "alias":"SiSp",
-            "formula":"(MSn*(Tpr/1000000mm)*60km/h)/((SiGR*FFGR))in km/h"
+        "lastGearSpeed":{
+            "alias":"LASTGEARRATIOMOD",
+            "formula":"(nMaxS*((Tpr in km) / 1km)*60 )/((MSLG/1km/h)*FFGR)"
         }
     }
 }

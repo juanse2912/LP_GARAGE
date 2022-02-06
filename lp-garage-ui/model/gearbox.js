@@ -28,7 +28,7 @@ class GearboxMod extends Part {
             partProperties.formulas[`gearRatioMod_${i}`] = {};
             partProperties.formulas[`gearRatioMod_${i}`]['alias'] = `gearRatioMod_${i}`
             if(i==gearGaps.length) {
-                partProperties.formulas[`gearRatioMod_${i}`]['formula'] = `(nMaxS*LASTGEARRATIOMOD)/(nMaxS-GGM_${i})`
+                partProperties.formulas[`gearRatioMod_${i}`]['formula'] = partProperties.formulas.lastGearSpeed.formula;
             } else {
                 partProperties.formulas[`gearRatioMod_${i}`]['formula'] = `(nMaxS*gearRatioMod_${i+1})/(nMaxS-GGM_${i})`
             }

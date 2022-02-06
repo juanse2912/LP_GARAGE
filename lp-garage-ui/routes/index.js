@@ -83,10 +83,11 @@ router.get('/Suspenssion', (req,res) => {
 
 })
 
-router.get('/Gearbox', (req,res) => {
+router.get('/Gearbox/:subpart', (req,res) => {
   partRenderVars(req.query.vehicleId, "Gearbox", req.params.subpart)
     .then( r => {
       r["page"] = "Gearbox";
+      r["subpartName"] = req.params.subpart || "GearboxMain"
       res.render("gearbox", r)
     })
     .catch(err => {

@@ -13,7 +13,47 @@ function templateReplacer(str, n) {
     return str;
 }
 
+
+class GearboxMod extends Part {
+    constructor(gearbox, maxSpeedLastGear, maximumRPMatSpeed, gearGaps){
+        let partProperties=require("./GearboxModProperties.json");
+        partProperties.inputParameters.maxSpeedLastGear.value = maxSpeedLastGear;
+        partProperties.inputParameters.maximumRPMatSpeed.value = maximumRPMatSpeed;
+        for(let i=0; i<gearGaps.length; i++){
+            partProperties.inputParameters[`gearGapMod_${i+1}`]={};
+            partProperties.inputParameters[`gearGapMod_${i+1}`]["value"]=gearGaps[i];
+            partProperties.inputParameters[`gearGapMod_${i+1}`]["alias"] = `GGM_${i+1}`;
+        }
+        for(let i=gearGaps.length; i>=1; i--) {
+            partProperties.formulas[`gearRatioMod_${i}`] = {};
+            partProperties.formulas[`gearRatioMod_${i}`]['alias'] = `gearRatioMod_${i}`
+            if(i==gearGaps.length) {
+                partProperties.formulas[`gearRatioMod_${i}`]['formula'] = `(nMaxS*LASTGEARRATIOMOD)/(nMaxS-GGM_${i})`
+            } else {
+                partProperties.formulas[`gearRatioMod_${i}`]['formula'] = `(nMaxS*gearRatioMod_${i+1})/(nMaxS-GGM_${i})`
+            }
+            partProperties.formulas[`gearSpeedMod_${i}`] = {};
+            partProperties.formulas[`gearSpeedMod_${i}`]['alias'] = `SpeedMod_${i}`
+            partProperties.formulas[`gearSpeedMod_${i}`]['formula'] = `(nMaxS*((Tpr in km) / 1km)*60 )/(gearRatioMod_${i}*FFGR) * 1 km/h`
+        }
+        super(gearbox.scope, partProperties);
+        this.scope = gearbox.scope;
+        
+    }
+    static fromJSON(gearbox,j) {
+        let params = [];
+        let i=1;
+        while(j.hasOwnProperty(`gearGapMod_${i}`)) {
+            params.push(j[`gearGapMod_${i}`])
+            i++;
+        }
+        return new GearboxMod(gearbox, j.maxSpeedLastGear,j.maximumRPMatSpeed, params);
+    }
+
+}
+
 const SUBPARTS = new Map();
+SUBPARTS.set("GearboxMod", GearboxMod);
 
 
 class Gearbox extends Part {
@@ -44,13 +84,13 @@ class Gearbox extends Part {
             }
             
         }
-        console.debug("Gearbox properties", gearboxProperties);
+        //console.debug("Gearbox properties", gearboxProperties);
         gearboxProperties.inputParameters.gearCount.value=parseInt(gearCount);
         super(vehicle.scope, gearboxProperties)
         this.scope = vehicle.scope;
         this.parts = {};
     }
-    _
+    
 
     static fromJSON(vehicle, j) {
         let params = [];
@@ -63,10 +103,20 @@ class Gearbox extends Part {
         let gearbox = new Gearbox(vehicle, j.gearCount, j.diffRatio, j.maximumRPM, params);
         for( let [partName, classH] of SUBPARTS) {
             if(j[partName]) {
-                gearbox.parts[partName] = classH.fromJSON(Gearbox, j[partName]);
+                gearbox.parts[partName] = classH.fromJSON(gearbox, j[partName]);
             }
         }
         return gearbox;
+    }
+
+    toJSON(includeSubparts) {
+        let result = super.toJSON();
+        if (includeSubparts) {
+            for (let partName in this.parts) {
+                result[partName] = this.parts[partName].toJSON();
+            }
+        }
+        return result;
     }
 
     /**

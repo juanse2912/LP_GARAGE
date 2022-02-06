@@ -1,0 +1,127 @@
+.col-10.col-md-4 
+    form#gearbox-mod.needs-validation(novalidate action="#", method="post")
+        label.form-label(for="gearboxMod_maxSpeedLastGear") Velocidad final de la recta
+        .input-group.mb-3
+            -var fData = getProperty(vehicleData, "Gearbox.GearboxMod.maxSpeedLastGear")
+            if(fData) 
+                -var maxSpeedLastGear = unitRE.exec(fData)[1] || ""
+                -var maxSpeedLastGearUnits = unitRE.exec(fData)[2] || "km / h"
+            else 
+                -var maxSpeedLastGear = ""
+                -var maxSpeedLastGearUnits = "km / h"
+            input.form-control.align-right(
+                id="gearboxMod_maxSpeedLastGear"
+                type="number"
+                step="any"
+                value= maxSpeedLastGear 
+                data-bound="Gearbox.GearboxMod.maxSpeedLastGear"
+                required
+            )
+            select.form-select.input-group-text.unit(
+                id="gearboxMod_maxSpeedLastGear_units"
+                aria-label="unidades Velocidad final de la recta"
+                data-from="gearboxMod_maxSpeedLastGear"
+            )
+                +unitOption("km / h", "Km/h", maxSpeedLastGearUnits)
+                +unitOption("mi / h", "MPH", maxSpeedLastGearUnits)
+        label.form-label(for="gearboxMod_maximumRPMatSpeed") RPMs en velocidad final 
+        input.form-control.align-right(
+            id="gearboxMod_maximumRPMatSpeed"
+            type="number"
+            step="any"
+            value= getProperty(vehicleData, "Gearbox.GearboxMod.maximumRPMatSpeed")
+            data-bound="Gearbox.GearboxMod.maximumRPMatSpeed"
+            required
+        )
+        -var gear=1
+        -var gearCount = getProperty(vehicleData, "Gearbox.gearCount")||5
+        while gear<gearCount 
+            -var gearGapMod = getProperty(vehicleData, "Gearbox.GearboxMod.gearGapMod_"+gear) || getProperty(vehicleData, "Gearbox.gearGap_"+gear)
+            label.form-label(for="gearboxMod_gearGapMod_" + gear) Caida entre marca #{gear} y  #{parseInt(gear)+1}
+            input.form-control.align-right(
+                id="gearboxMod_gearGapMod_"+ gear++ 
+                type="number"
+                step="any"
+                value= gearGapMod
+                required
+            )
+        if !getProperty(vehicleData, "Gearbox.GearboxMod")
+            .d-grid.pt-4 
+                button.btn.btn-primary(
+                    type="submit"
+                    if="btn-save"
+                    value="submit"
+                ) Guardar 
+.col-10.col-md-6 
+    if getProperty(vehicleData, "Gearbox.GearboxMod")
+        h3 Cálculos de Caja de Cambios Modificada 
+        ul.list-group 
+            -var gear=1
+            -var gearCount=getProperty(vehicleData, "Gearbox.gearCount")||5
+            while gear <= gearCount 
+                +calculatedValue("Relación en marcha " + gear, "Gearbox.GearboxMod.gearRatioMod_" + gear++)
+            -var gear=1
+            -var gearCount=getProperty(vehicleData, "Gearbox.gearCount")||5
+            while gear <= gearCount 
+                +calculatedValue("Velocidad en marcha " + gear, "Gearbox.GearboxMod.gearSpeedMod_" + gear++, speedUnits)
+
+if getProperty(vehicleData, "Gearbox.GearboxMod") 
+    script(src="/javascripts/formControls.js")
+    script.
+        //Scripts
+        var vehicleData= !{JSON.stringify(vehicleData)};
+        const partName="#{partName}";
+        const subpartName="#{subpartName}";        
+        document.addEventListener("DOMContentLoaded", ()=> {
+            setUnitSelectEventListener();
+            setInputEventListener();
+            setUnitButtonListener();
+        })
+else 
+    script.
+        var vehicleData=  !{JSON.stringify(vehicleData)};
+        function savePart() {
+            let payload={};
+            payload["maxSpeedLastGear"] = document.querySelector("#gearboxMod_maxSpeedLastGear").value + " " +
+                document.querySelector("#gearboxMod_maxSpeedLastGear_units").value
+            payload["maximumRPMatSpeed"] = document.querySelector("#gearboxMod_maximumRPMatSpeed").value
+            for (let i=1; i<=vehicleData.Gearbox.gearCount; i++) {
+                payload[`gearGapMod_${i}`] = document.querySelector(`#gearboxMod_gearGapMod_${i}`).value
+            }
+            fetch(
+                `/vehicle/${vehicleData.id}/Gearbox/GearboxMod`,
+                {
+                    "method":"post",
+                    "body":JSON.stringify(payload),
+                    "headers":{
+                        "Content-Type":"application/json"
+                    }
+                }
+            )
+                .then(res=>res.json())
+                .then(jsonData => {
+                    if(!jsonData.Error) {
+                        window.location.reload()
+                    } else {
+                        showAlert("Error creando sección de caja de cambios modificada", "ERROR")
+                        console.error("Error creating GearboxMod", jsonData)
+                    }
+                })
+                .catch(e=>{
+                    console.error("Error creating GearboxMod", e)
+                    showAlert("Error creando sección de caja de cambios modificada", "ERROR")
+                })
+        }           
+        document.querySelector("form#gearbox-mod").addEventListener(
+            "submit",
+            e => {
+                e.preventDefault();
+                e.stopPropagation();
+                let form=document.getElementById("gearbox-mod")
+                if (form.checkValidity()) {
+                    savePart();
+                } else {
+                    form.classList.add('was-validated');
+                }
+            }
+        )

@@ -2,6 +2,7 @@
     "inputParameters":{ 
         "maxSpeedLastGear": {
                 "value": null,
+                "units":"km / h",
                 "alias": "MSLG"
         },
         "maximumRPMatSpeed": {
@@ -9,20 +10,10 @@
             "alias": "nMaxS"
         }
     }, 
-    "formula_templates":{
-        "gearRatioMod": {
-            "alias":"RatioMod_${n}_${n+1}",
-            "formula":"(nMaxS*LASTGEARRATIOMOD)/(nMaxS*(NEWGAPLASTGEAR-1)" //se calcula desde la ultima a la primera
-        },
-        "gearSpeedMod":{
-            "alias":"SpeedMod_${n}",
-            "formula":"(nMaxS*((Tpr in km) / 1km)*60 )/(RatioMod_${n}_${n+1}*FFGR) * 1 km/h"
-        }
-    },
     "formulas":{
         "lastGearSpeed":{
             "alias":"LASTGEARRATIOMOD",
-            "formula":"(nMaxS*((Tpr in km) / 1km)*60 )/((MSLG/1km/h)*FFGR)"
+            "formula":"(nMaxS*((Tpr in km) / 1km)*60 )/((MSLG*1h/km)*FFGR)"
         }
     }
 }

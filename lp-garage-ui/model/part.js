@@ -102,12 +102,12 @@ class Part {
         for (let f in this.partProperties.formulas) {
             let alias = this.partProperties.formulas[f].alias;
             let formula = this.partProperties.formulas[f].formula;
-            console.debug("formula", this.partProperties.formulas[f])
+            //console.debug("formula", this.partProperties.formulas[f])
 
             let range = this.partProperties.formulas[f].range;
 
             if(range && Array.isArray(range) && range.length>=2) {
-                console.debug("is range")
+                //console.debug("is range")
                 const rangeValues = math.range(range[0], range[1], range[2]||1).toArray();
                 const rangeVariable = this.partProperties.formulas[f].rangeVariable||"x";
                 const rangeUnits = this.partProperties.formulas[f].rangeUnits||"";
@@ -120,11 +120,11 @@ class Part {
                 this.scope[alias] = results;
 
             } else {
-                console.debug("formula", this.partProperties.formulas[f])
+                //console.debug("formula", this.partProperties.formulas[f])
                 try {
                     this.scope[alias] = math.evaluate(formula, this.scope)
                     //math.evaluate( `${alias} = ${formula}`, this.scope)
-                    console.debug("value", this.scope[alias].toString())
+                    //console.debug("value", this.scope[alias].toString())
                 } catch (err) {
                     console.error(`Error evaluating: ${alias} = ${formula}`, err)
                     break;
@@ -185,8 +185,8 @@ class Part {
                     }
                     if (!r.yAxisUnit){
                         if(vArr[i][1] instanceof math.Unit) {
-                            console.debug(f, vArr[i][1].toString())
-                            console.debug("unit", unitRE.exec(vArr[i][1].toString()))
+                            //console.debug(f, vArr[i][1].toString())
+                            //console.debug("unit", unitRE.exec(vArr[i][1].toString()))
                             r.yAxisUnit = unitRE.exec(
                                 vArr[i][1].toString()
                             )[2]

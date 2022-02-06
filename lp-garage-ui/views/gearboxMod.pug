@@ -85,7 +85,7 @@ else
             payload["maxSpeedLastGear"] = document.querySelector("#gearboxMod_maxSpeedLastGear").value + " " +
                 document.querySelector("#gearboxMod_maxSpeedLastGear_units").value
             payload["maximumRPMatSpeed"] = document.querySelector("#gearboxMod_maximumRPMatSpeed").value
-            for (let i=1; i<=vehicleData.Gearbox.gearCount; i++) {
+            for (let i=1; i<=vehicleData.Gearbox.gearCount-1; i++) {
                 payload[`gearGapMod_${i}`] = document.querySelector(`#gearboxMod_gearGapMod_${i}`).value
             }
             fetch(

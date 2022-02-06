@@ -17,7 +17,7 @@ block content
                       li.nav-item 
                         a(
                           class="nav-link "+(subpartName=="GearboxMain"?"active":"")
-                          href=(subpartName=="GearboxMain"?"#":"/Gearbox/GearboxMain?vehicleId=" + vehicleData.id)
+                          href=(subpartName=="GearboxMain"?"#":"/Gearbox?vehicleId=" + vehicleData.id)
                         ) Datos Caja de Cambios 
                       li.nav-item 
                         if vehicleData.hasOwnProperty("Gearbox")

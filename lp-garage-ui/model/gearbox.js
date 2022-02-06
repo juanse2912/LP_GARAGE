@@ -24,10 +24,11 @@ class GearboxMod extends Part {
             partProperties.inputParameters[`gearGapMod_${i+1}`]["value"]=gearGaps[i];
             partProperties.inputParameters[`gearGapMod_${i+1}`]["alias"] = `GGM_${i+1}`;
         }
-        for(let i=gearGaps.length; i>=1; i--) {
+        console.debug("Gearbox", gearbox.scope.gearCount)
+        for(let i=parseInt(gearbox.scope.gearCount); i>=1; i--) {
             partProperties.formulas[`gearRatioMod_${i}`] = {};
             partProperties.formulas[`gearRatioMod_${i}`]['alias'] = `gearRatioMod_${i}`
-            if(i==gearGaps.length) {
+            if(i==parseInt(gearbox.scope.gearCount)) {
                 partProperties.formulas[`gearRatioMod_${i}`]['formula'] = partProperties.formulas.lastGearSpeed.formula;
             } else {
                 partProperties.formulas[`gearRatioMod_${i}`]['formula'] = `(nMaxS*gearRatioMod_${i+1})/(nMaxS-GGM_${i})`
@@ -36,6 +37,7 @@ class GearboxMod extends Part {
             partProperties.formulas[`gearSpeedMod_${i}`]['alias'] = `SpeedMod_${i}`
             partProperties.formulas[`gearSpeedMod_${i}`]['formula'] = `(nMaxS*((Tpr in km) / 1km)*60 )/(gearRatioMod_${i}*FFGR) * 1 km/h`
         }
+        console.debug("GearboxMod part properties", partProperties)
         super(gearbox.scope, partProperties);
         this.scope = gearbox.scope;
         

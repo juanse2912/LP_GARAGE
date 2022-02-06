@@ -36,6 +36,13 @@ class Vehicle extends Part{
                 }
             }
         }
+        partProperties.formulas = {
+            "tireRadius":{
+                "alias":"TR",
+                "formula":"(((2*(AR/100)*TWd)+(WRim in mm))/2) in cm"  
+            }
+        }
+
         let scope = {}
         super(scope, partProperties);
         this.scope=scope;

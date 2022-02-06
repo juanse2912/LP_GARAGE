@@ -70,10 +70,6 @@
         }
     },
     "formulas":{
-        "tireRadius":{
-            "alias":"TR",
-            "formula":"(((2*(AR/100)*TWd)+(WRim in mm))/2) in cm"  
-        },
         "heightOfCenterOfGravity":{
             "alias":"HCG",
             "formula":"(WB*(FAWRAE-FAWL))/(wt*(RAEH/sqrt((WB^2)-(RAEH^2))))+TR" 

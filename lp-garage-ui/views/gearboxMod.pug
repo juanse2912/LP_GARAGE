@@ -39,10 +39,11 @@
             -var gearGapMod = getProperty(vehicleData, "Gearbox.GearboxMod.gearGapMod_"+gear) || getProperty(vehicleData, "Gearbox.gearGap_"+gear)
             label.form-label(for="gearboxMod_gearGapMod_" + gear) Caida entre marca #{gear} y  #{parseInt(gear)+1}
             input.form-control.align-right(
-                id="gearboxMod_gearGapMod_"+ gear++ 
+                id="gearboxMod_gearGapMod_"+ gear 
                 type="number"
                 step="any"
                 value= gearGapMod
+                data-bound="Gearbox.GearboxMod.gearGapMod_"+gear++
                 required
             )
         if !getProperty(vehicleData, "Gearbox.GearboxMod")

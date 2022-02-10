@@ -3,7 +3,7 @@
 - var hideVehicleSelection
 nav.navbar.navbar-expand.navbar-dark.bg-dark.border-bottom
     .container-fluid
-        a.navbar-brand(href="#") LP Garage
+        a.navbar-brand(href="/") LP Garage
         //-
             button(
                 class="navbar-toggler"
@@ -46,10 +46,6 @@ nav.navbar.navbar-expand.navbar-dark.bg-dark.border-bottom
                                     hr.dropdown-divider                    
                                 each vid in availableVehicles 
                                     li
-                                        a(href="?vehicleId="+vid).dropdown-item= vid                         
-                li.nav-item 
-                    a(
-                        aria-current="page"
-                        href="#"
-                    ).nav-link Documentación
+                                        a(href="/vehicleData?vehicleId="+vid).dropdown-item= vid                         
+
 

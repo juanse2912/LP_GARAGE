@@ -9,20 +9,28 @@ block content
         //- navbar
         include navbar.pug 
         .container-fluid
-          .row
-            .col
-              h1 Sitio en construcción 
-              span Para comenzar, seleccione un vehículo o cree uno nuevo:
-              .dropdown 
-                button#vsDropdown.btn.btn-primary.dropdown-toggle(type="button" data-bs-toggle="dropdown" aria-expanded="false") Listado...
-                ul.dropdown-menu(aria-labelledby="vsDropdown")
-                  li
-                    a.dropdown-item(href="/newVehicle") Crear nuevo vehículo 
-                  li 
-                    hr.dropdown-divider                    
-                  each vid in availableVehicles 
-                      li
-                          a(href="/vehicleData?vehicleId="+vid).dropdown-item= vid
+          .px-4-py-5.my-5.text-center 
+            img.d-block.mx-auto.mb-4.img-fluid(
+              src="/images/lp_garage_logo.png"
+              alt="LP Garage Simulations Logo"
+              style="max-width=25%;height:auto"
+            )
+            h1.display-5.fw-bold  LP GARAGE SIMULATIONS 
+            .col-lg-6.mx-auto 
+                p.lead.-mb-4 Aplicación desarrollada para facilitar el cálculo de factores de diseño importantes en vehículos automotores. Se toman en cuenta cuatro sistemas principales, Motor, Caja de cambios, Suspensión y Frenos. 
+                p.lead.-mb-4 Las secciones en gris estarán disponibles para su uso una vez que se completen las secciones azules de la aplicación.
+                p.lead.-mb-4 Los cálculos podrán visualizarse en diferentes sistemas de unidades en base a la preferencia del usuario, para esto solo debe cambiar las unidades deseadas junto a cada campo. 
+            span Para comenzar seleccione un vehículo o cree uno nuevo:
+            .dropdown 
+              button#vsDropdown.btn.btn-primary.dropdown-toggle(type="button" data-bs-toggle="dropdown" aria-expanded="false") Listado...
+              ul.dropdown-menu(aria-labelledby="vsDropdown")
+                li
+                  a.dropdown-item(href="/newVehicle") Crear nuevo vehículo 
+                li 
+                  hr.dropdown-divider                    
+                each vid in availableVehicles 
+                    li
+                        a(href="/vehicleData?vehicleId="+vid).dropdown-item= vid
           .row 
             svg(width=1 height=800 style="z-index:1")
               use(href="#nothinghere")

@@ -23,7 +23,7 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-
+  win.setIcon( path.join(__dirname, "public", "images", "favicon.ico"))
   win.loadURL('http://localhost:' + port)
 }
 

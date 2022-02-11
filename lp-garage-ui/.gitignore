@@ -4,3 +4,4 @@ nodemon.json
 launch.json
 dist
 settings.json
+out/

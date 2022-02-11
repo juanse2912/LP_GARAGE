@@ -2,13 +2,18 @@
   "name": "lp-garage-ui",
   "version": "0.0.0",
   "private": true,
+  "main": "./main.js",
+  "description": "Permite el cálculo de factores de diseño importantes en vehículos automotores. Se toman en cuenta cuatro sistemas principales, Motor, Caja de cambios, Suspensión y Frenos.",
   "scripts": {
-    "start": "node ./bin/www",
-    "debug": "nodemon --inspect ./bin/www"
+    "start": "electron-forge start",
+    "debug": "nodemon --inspect ./bin/www",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "electron-squirrel-startup": "^1.0.0",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "mathjs": "^9.3.2",
@@ -16,6 +21,44 @@
     "pug": "^3.0.2"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
+    "@electron-forge/maker-deb": "^6.0.0-beta.63",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.63",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.63",
+    "@electron-forge/maker-zip": "^6.0.0-beta.63",
+    "electron": "17.0.0",
+    "electron-packager": "^15.4.0",
     "nodemon": "^2.0.7"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "linux": [
+          "rpm"
+        ]
+      },
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "lp_garage_ui"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }

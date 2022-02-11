@@ -2,6 +2,7 @@
   "name": "lp-garage-ui",
   "version": "0.1.0",
   "license": "MIT",
+  "author": {"email": "dalvarezt@outlook.com", "name": "Daniel Alvarez Torres"},
   "private": true,
   "main": "./main.js",
   "description": "Permite el cálculo de factores de diseño importantes en vehículos automotores. Se toman en cuenta cuatro sistemas principales, Motor, Caja de cambios, Suspensión y Frenos.",

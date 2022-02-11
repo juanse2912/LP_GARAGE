@@ -98,3 +98,28 @@ function showAlert(message, level) {
 
 }
 
+
+document.addEventListener("DOMContentLoaded", ()=> { 
+    window.addEventListener("beforeunload", ()=> {
+        let body = document.querySelector("div#main-body")
+        if (body) {
+            body.classList.add("visually-hidden")
+            let spinnerContainer = document.createElement("div")
+            spinnerContainer.classList.add("d-flex")
+            spinnerContainer.classList.add("justify-content-center")
+            let spinnerBorder = document.createElement("div")
+            spinnerBorder.classList.add("spinner-border")
+            spinnerBorder.setAttribute("role", "status")
+            let spinner = document.createElement("span")
+            spinner.classList.add("visually-hidden")
+            spinner.textContent = "Cargando..."
+            spinnerBorder.appendChild(spinner)
+            spinnerContainer.appendChild(spinnerBorder)
+
+            body.parentElement.appendChild(
+               spinnerContainer
+            )
+        }
+     
+    })
+})
